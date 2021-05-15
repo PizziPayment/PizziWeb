@@ -43,6 +43,15 @@
                   required
                   outlined
                 ></v-text-field>
+                <v-text-field
+                  label="Confirmation du mot de passe"
+                  type="password"
+                  clearable="true"
+                  v-model="confirmPassword"
+                  :rules="[(v) => !!v || 'Champ obligatoire']"
+                  required
+                  outlined
+                ></v-text-field>
               </v-card-text>
             </v-window-item>
 
@@ -93,6 +102,7 @@ export default {
     step: 1,
     email: null,
     password: null,
+    confirmPassword: null,
   }),
   computed: {
     currentTitle() {
