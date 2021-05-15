@@ -28,7 +28,7 @@
                 ></v-text-field>
                 <span class="caption grey--text text--darken-1">
                   Cette adresse e-mail sera utilisée pour vous connecter à votre
-                  compte Vaccilib.
+                  compte Pizzi.
                 </span>
               </v-card-text>
             </v-window-item>
