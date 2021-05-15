@@ -36,7 +36,7 @@
                   type="password"
                   v-model="password"
                 ></v-text-field>
-                <v-btn @click="processSignIn()" justify-center small color="#41b883"
+                <v-btn @click="processSignIn()" justify-center small color="primary"
                   >connexion</v-btn
                 >
                 <v-col>
