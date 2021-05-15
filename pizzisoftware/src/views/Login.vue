@@ -61,14 +61,15 @@ export default {
   }),
   computed: {},
   methods: {
-    // processSignIn() {
-    //   console.log("credentials : ", this.email, this.password);
-    //   this.$store.dispatch('defaultStore/signInUser', { email: this.email, password: this.password })
-    //   console.log(this.$store.state.defaultStore.isUserLoggedIn)
-    //   if (this.$store.state.defaultStore.isUserLoggedIn == true) {
-    //     this.$router.push({ path: '/dashboard' })
-    //   }
-    // }
+    processSignIn() {
+      this.$router.push({ path: '/dashboard' })
+      // console.log("credentials : ", this.email, this.password);
+      // this.$store.dispatch('defaultStore/signInUser', { email: this.email, password: this.password })
+      // console.log(this.$store.state.defaultStore.isUserLoggedIn)
+      // if (this.$store.state.defaultStore.isUserLoggedIn == true) {
+      //   this.$router.push({ path: '/dashboard' })
+      // }
+    }
   }
 };
 </script>
