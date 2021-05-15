@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <v-container class="background" fill-height fluid>
+    <v-container class="background ma-0 pt-16 pb-16" fluid fill-height>
       <v-col align="center">
         <v-card class="white" outlined max-width="1000">
           <v-container>

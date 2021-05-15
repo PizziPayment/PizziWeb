@@ -1,6 +1,5 @@
 <template>
-  <v-main>
-    <v-container class="background" fill-height fluid>
+    <div class="background ma-0 pt-16 pb-16" fluid fill-height>
       <v-col align="center">
         <v-card class="mx-auto" max-width="800">
           <v-card-title class="title font-weight-regular justify-space-between">
@@ -85,8 +84,7 @@
           </v-card-actions>
         </v-card>
       </v-col>
-    </v-container>
-  </v-main>
+    </div>
 </template>
 
 <script>
