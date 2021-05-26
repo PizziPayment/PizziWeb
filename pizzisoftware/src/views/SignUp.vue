@@ -17,7 +17,7 @@
               <v-card-text>
                 <v-text-field
                   label="Email"
-                  clearable="true"
+                  clearable
                   type="text"
                   id="mail"
                   v-model="email"
@@ -37,7 +37,7 @@
                 <v-text-field
                   label="Mot de passe"
                   type="password"
-                  clearable="true"
+                  clearable
                   v-model="password"
                   :rules="[(v) => !!v || 'Champ obligatoire']"
                   required
@@ -46,7 +46,7 @@
                 <v-text-field
                   label="Confirmation du mot de passe"
                   type="password"
-                  clearable="true"
+                  clearable
                   v-model="confirmPassword"
                   :rules="[(v) => !!v || 'Champ obligatoire']"
                   required
@@ -83,6 +83,16 @@
             </v-btn>
             <v-spacer></v-spacer>
             <v-btn
+              v-if="step === 2"
+              :disabled="step === 3"
+              color="primary"
+              depressed
+              @click="passwordConfirm()"
+            >
+              Suivant
+            </v-btn>
+            <v-btn
+              v-if="step !== 2"
               :disabled="step === 3"
               color="primary"
               depressed
@@ -103,6 +113,7 @@ export default {
     email: null,
     password: null,
     confirmPassword: null,
+    dialog: false,
   }),
   computed: {
     currentTitle() {
@@ -120,6 +131,22 @@ export default {
     processSignUp() {
       this.$store.dispatch('defaultStore/signUpUser', {email: this.email, password: this.password})
       this.$router.push({ path: '/login' })
+    },
+
+    passwordConfirm() {
+      if (!this.password || !this.confirmPassword) {
+        console.error("Error: fetching password input")
+        return
+      }
+      if (this.password !== this.confirmPassword) {
+        console.error("Error: passwords are different")
+        return
+      }
+      if (this.password.length < 8) {
+        console.error("Error: password should be more than 8 characters")
+        return
+      }
+      this.step++
     }
   }
 };
