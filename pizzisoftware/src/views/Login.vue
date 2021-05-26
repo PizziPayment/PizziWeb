@@ -25,6 +25,8 @@
                   label="adresse mail"
                   id="mail"
                   clearable
+                  :rules="[(v) => !!v || 'Champ obligatoire']"
+                  required
                   type="text"
                   v-model="email"
                 ></v-text-field>
@@ -33,6 +35,8 @@
                   label="mot de passe"
                   id="password"
                   clearable
+                  :rules="[(v) => !!v || 'Champ obligatoire']"
+                  required
                   type="password"
                   v-model="password"
                 ></v-text-field>
