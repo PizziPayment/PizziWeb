@@ -1,7 +1,9 @@
 <template>
-    <div class="background ma-0 pt-16 pb-16" fluid fill-height>
+  <v-app>
+    <v-content>
+    <v-container class="background" fluid fill-height>
       <v-col align="center">
-        <v-card class="mx-auto" max-width="800">
+        <v-card class="mx-auto" max-width="1100">
           <v-card-title class="title font-weight-regular justify-space-between">
             <span>{{ currentTitle }}</span>
             <v-avatar
@@ -103,7 +105,9 @@
           </v-card-actions>
         </v-card>
       </v-col>
-    </div>
+    </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
