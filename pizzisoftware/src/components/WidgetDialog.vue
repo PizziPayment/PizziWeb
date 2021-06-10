@@ -31,10 +31,10 @@
       </v-list>
       <v-row class="mt-6 mb-2">
         <v-col class="pa-6">
-          <v-btn color="white">Save</v-btn>
+          <v-btn color="white" @click="save">Save</v-btn>
         </v-col>
         <v-col class="pa-6">
-          <v-btn color="red" @click.stop="show=false" >Quit</v-btn>
+          <v-btn color="red" @click.stop="quit" >Quit</v-btn>
         </v-col>
       </v-row>
     </div>
@@ -47,6 +47,7 @@ export default {
   data() {
     return {
       selected : [],
+      selectedSave: [],
       widgets : [
         { icon: 'mdi-chart-bar', text: 'Graphs' },
         { icon: 'mdi-book-open-blank-variant', text: 'Sells'},
@@ -63,6 +64,17 @@ export default {
       set(value) {
         this.$emit('input', value)
       }
+    }
+  },
+  methods: {
+    save () {
+      this.selectedSave = [...this.selected]
+      this.show = false
+
+    },
+    quit () {
+      this.show = false
+      this.selected = [...this.selectedSave]
     }
   }
 }
