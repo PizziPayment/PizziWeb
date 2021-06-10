@@ -25,6 +25,7 @@
         </v-col>
       </v-row>
       <v-list class="mt-6">
+        <widgetDialog v-model="dialog"/>
         <v-list-item v-for="(link, i) in links" :key="i" @click="link.action">
           <v-list-item-icon>
             <v-icon color="rgb(112, 192, 242)" v-text="link.icon"></v-icon>
@@ -39,20 +40,23 @@
 </template>
 
 <script>
+  import widgetDialog from '@/components/WidgetDialog.vue'
   export default {
+    components: {widgetDialog},
     data () {
       return {
         drawer: false,
         links: [
-          { icon: 'mdi-plus', text: 'Add Widget', action: this.addWidget},
+          { icon: 'mdi-plus', text: 'Manage Widget', action: this.addWidget},
           { icon: 'mdi-account', text: 'Account', action: this.toAccountPage},
           { icon: 'mdi-cog', text: 'Settings', action: this.toSettingsPage},
-        ]
+        ],
+        dialog: false,
       }
     },
     methods: {
       addWidget() {
-        console.log('addWidget')
+        this.dialog = true
       },
       toAccountPage() {
         console.log('toAccountPage')

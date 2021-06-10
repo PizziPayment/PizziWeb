@@ -2,18 +2,18 @@
   <v-app>
     <v-content>
       <v-container fluid class="background">
-        <Navbar />
+        <navbar />
       </v-container>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import Navbar from '@/components/NavBar.vue'
+import navbar from '@/components/NavBar.vue'
 
 
 export default {
-  components : { Navbar },
+  components : { navbar },
   data () {
     return {
 
