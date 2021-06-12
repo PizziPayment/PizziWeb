@@ -30,7 +30,7 @@
           <v-list-item-icon>
             <v-icon color="rgb(112, 192, 242)" v-text="link.icon"></v-icon>
           </v-list-item-icon>
-          <v-list-item-content>
+          <v-list-item-content style="text-align: left;">
             <v-list-item-title class="white--text">{{ link.text }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
