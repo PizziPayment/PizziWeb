@@ -3,7 +3,7 @@
     <v-card color="#3a474e">
       <v-card-text>
         <v-card-title class="d-flex justify-center white--text">
-          Accept cash payment
+          Register cash payment
         </v-card-title>
         <v-text-field
           v-model="amount"
