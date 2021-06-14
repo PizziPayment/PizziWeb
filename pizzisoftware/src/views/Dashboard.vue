@@ -11,7 +11,7 @@
             <graphs />
           </v-col>
         </v-row>
-        <v-row class="pa-6">
+        <v-row class="pa-6 d-flex align-center">
           <v-col class="pa-6">
             <cashPayment />
           </v-col>
@@ -37,7 +37,7 @@ import navbar from '@/components/NavBar.vue'
 // to remove when widget manager finished
 import sales from '@/components/widgets/Sales.vue'
 import productReturn from '@/components/widgets/ProductReturn.vue'
-import cashPayment from '@/components/widgets/CashPayment.vue'
+import cashPayment from '@/components/widgets/CashPayment/CashPayment.vue'
 import graphs from '@/components/widgets/Graphs.vue'
 
 export default {
