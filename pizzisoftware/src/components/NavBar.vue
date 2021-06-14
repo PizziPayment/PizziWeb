@@ -20,7 +20,7 @@
             <v-icon>mdi-content-cut</v-icon>
           </v-avatar>
           <p class="white--text sub-heading mt-6 font-weight-bold">
-            Adult 'Hair
+            Art 'Hair
           </p>
         </v-col>
       </v-row>

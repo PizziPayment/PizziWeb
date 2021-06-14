@@ -4,6 +4,7 @@
     outlined 
     color="rgb(112, 192, 242)" 
     dark
-    append-icon="mdi-undo">
+    append-icon="mdi-undo"
+    prefix="#">
   </v-text-field>
 </template>
