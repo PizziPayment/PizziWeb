@@ -17,10 +17,10 @@
         </v-text-field>
         <v-row class="pa-6">
           <v-col>
-            <v-btn color="white" @click.stop="accept"> Accept </v-btn>
+            <v-btn color="green lighten-1" @click.stop="accept"> Accept </v-btn>
           </v-col>
           <v-col>
-            <v-btn color="red" @click.stop="quit"> Close </v-btn>
+            <v-btn color="red lighten-1" @click.stop="quit"> Close </v-btn>
           </v-col>
         </v-row>
       </v-card-text>
