@@ -58,6 +58,9 @@
 </template>
 
 <script>
+
+import axios from "axios";
+
 export default {
   name: "LoginComponent",
 
@@ -68,13 +71,20 @@ export default {
   computed: {},
   methods: {
     processSignIn() {
-      this.$router.push({ path: '/dashboard' })
-      // console.log("credentials : ", this.email, this.password);
-      // this.$store.dispatch('defaultStore/signInUser', { email: this.email, password: this.password })
-      // console.log(this.$store.state.defaultStore.isUserLoggedIn)
-      // if (this.$store.state.defaultStore.isUserLoggedIn == true) {
-      //   this.$router.push({ path: '/dashboard' })
-      // }
+      const body = JSON.stringify({
+        password: this.password,
+        email: this.email
+      })
+      const options = {
+        headers: { "Content-Type": "application/json" },
+      };
+
+      axios.post('https://pointecouteau.fr:40402/auth/shop/login', body, options).then(response => {
+        console.log(response)
+        this.$router.push('/dashboard')
+      }).catch(error => {
+        console.error(error)
+      })
     }
   }
 };
