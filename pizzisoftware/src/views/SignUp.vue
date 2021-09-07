@@ -3,7 +3,7 @@
     <v-content>
       <v-container class="background" fluid fill-height>
         <v-col align="center">
-          <v-card class="mx-auto" max-width="70%">
+          <v-card class="mx-auto" max-width="60%">
             <v-card-title
               class="title font-weight-regular justify-space-between"
             >
@@ -18,38 +18,6 @@
 
             <v-window v-model="step">
               <v-window-item :value="1">
-                <v-card-text>
-                  <v-text-field
-                    label="Prénom"
-                    clearable
-                    type="text"
-                    id="name"
-                    v-model="name"
-                    :rules="[(v) => !!v || 'Champ obligatoire']"
-                    required
-                    outlined
-                  ></v-text-field>
-                  <!-- <span class="caption grey--text text--darken-1">
-                    Cette adresse e-mail sera utilisée pour vous connecter à
-                    votre compte Pizzi.
-                  </span> -->
-                </v-card-text>
-                <v-card-text>
-                  <v-text-field
-                    label="Nom de famille"
-                    clearable
-                    type="text"
-                    id="surname"
-                    v-model="surname"
-                    :rules="[(v) => !!v || 'Champ obligatoire']"
-                    required
-                    outlined
-                  ></v-text-field>
-                  <!-- <span class="caption grey--text text--darken-1">
-                    Cette adresse e-mail sera utilisée pour vous connecter à
-                    votre compte Pizzi.
-                  </span> -->
-                </v-card-text>
                 <v-card-text>
                   <v-text-field
                     label="Email"
@@ -92,6 +60,47 @@
               </v-window-item>
 
               <v-window-item :value="3">
+                <v-card-text>
+                  <v-text-field
+                    label="Nom de votre commerce"
+                    type="text"
+                    clearable
+                    v-model="shopName"
+                    :rules="[(v) => !!v || 'Champ obligatoire']"
+                    required
+                    outlined
+                  ></v-text-field>
+                  <v-text-field
+                    label="Adresse"
+                    type="text"
+                    clearable
+                    v-model="address"
+                    :rules="[(v) => !!v || 'Champ obligatoire']"
+                    required
+                    outlined
+                  ></v-text-field>
+                  <v-text-field
+                    label="Ville"
+                    type="text"
+                    clearable
+                    v-model="city"
+                    :rules="[(v) => !!v || 'Champ obligatoire']"
+                    required
+                    outlined
+                  ></v-text-field>
+                  <v-text-field
+                    label="Code Postal"
+                    type="text"
+                    clearable
+                    v-model="zipCode"
+                    :rules="[(v) => !!v || 'Champ obligatoire']"
+                    required
+                    outlined
+                  ></v-text-field>
+                </v-card-text>
+              </v-window-item>
+
+              <v-window-item :value="4">
                 <div class="pa-4 text-center">
                   <v-img
                     class="mb-4"
@@ -121,8 +130,8 @@
               </v-btn>
               <v-spacer></v-spacer>
               <v-btn
-                v-if="step === 2"
-                :disabled="step === 3"
+                v-if="step === 4"
+                :disabled="step === 4"
                 color="primary"
                 depressed
                 @click="passwordConfirm()"
@@ -130,8 +139,8 @@
                 Suivant
               </v-btn>
               <v-btn
-                v-if="step !== 2"
-                :disabled="step === 3"
+                v-if="step !== 4"
+                :disabled="step === 4"
                 color="primary"
                 depressed
                 @click="step++"
@@ -152,10 +161,12 @@ import axios from "axios";
 export default {
   data: () => ({
     step: 1,
+    shopName: '',
+    address: '',
+    city: '',
+    zipCode: '',
     email: null,
     password: null,
-    name: null,
-    surname: null,
     confirmPassword: null,
     dialog: false,
   }),
@@ -166,6 +177,8 @@ export default {
           return "Inscription";
         case 2:
           return "Créez votre mot de passe";
+        case 3:
+          return "Informations sur votre commerce";
         default:
           return "Compte créé";
       }
@@ -177,23 +190,23 @@ export default {
         this.password &&
         this.password.length > 0 &&
         this.email &&
-        this.email.length > 0 &&
-        this.name &&
-        this.name.length > 0 &&
-        this.surname &&
-        this.surname.length > 0
+        this.email.length > 0
       ) {
-        const body = JSON.stringify({
-          name: this.name,
-          surname: this.surname,
+        const body = {
+          name: this.shopName,
+          place: {
+            address: this.address,
+            city: this.city,
+            zipcode: this.zipCode
+          },
           password: this.password,
           email: this.email,
-        });
-        const options = {
-          headers: { "Content-Type": "application/json" },
+          phone: '+33 6 12 34 56 78'
         };
+
+        const basicAuth = { Authorization: 'Basic ' + Buffer.from(`Pizzi-client:affe1896-a205-427a-aa94-26925d66c1ce`).toString('base64') }
         axios
-          .post("https://pointecouteau.fr:40401/shops", body, options)
+          .post("https://pointecouteau.fr:40401/shops", body, { headers: basicAuth })
           .then((response) => {
             console.log(response);
             this.$router.push({ path: "/login" });

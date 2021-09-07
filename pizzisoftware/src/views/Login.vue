@@ -71,15 +71,12 @@ export default {
   computed: {},
   methods: {
     processSignIn() {
-      const body = JSON.stringify({
-        password: this.password,
-        email: this.email
-      })
-      const options = {
-        headers: { "Content-Type": "application/json" },
-      };
-
-      axios.post('https://pointecouteau.fr:40402/auth/shop/login', body, options).then(response => {
+      const body = {
+        email: this.email,
+        password: this.password
+      }
+      const basicAuth = { Authorization: 'Basic ' + Buffer.from(`Pizzi-client:affe1896-a205-427a-aa94-26925d66c1ce`).toString('base64') }
+      axios.post('https://pointecouteau.fr:40402/auth/shop/login', body, { headers: basicAuth }).then(response => {
         console.log(response)
         this.$router.push('/dashboard')
       }).catch(error => {
