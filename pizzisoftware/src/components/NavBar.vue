@@ -10,23 +10,20 @@
         <span class="font-weight-light">Dashboard</span>
       </v-toolbar-title>
       <v-spacer />
-      <v-btn to="/login" text color="white">
-        <span>Sign Out</span>
-        <v-icon medium right>mdi-exit-to-app</v-icon>
-      </v-btn>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" app color="#3a474e">
       <v-row align-center>
         <v-col class="mt-6">
-          <v-avatar color="primary" size="100">
-            <v-icon>mdi-content-cut</v-icon>
+          <v-avatar size="100">
+            <img src="https://img.freepik.com/vecteurs-libre/illustration-vectorielle-outils-coiffeur-ciseaux-rasoir-poteau-ruban-echantillon-texte_74855-10555.jpg?size=338&ext=jpg&ga=GA1.2.1637736129.1624752000">
           </v-avatar>
           <p class="white--text sub-heading mt-6 font-weight-bold">Art 'Hair</p>
         </v-col>
       </v-row>
+      <v-divider dark>
+      </v-divider>
       <v-list class="mt-6">
-        <widgetDialog v-model="dialog" />
         <v-list-item v-for="(link, i) in links" :key="i" @click="link.action">
           <v-list-item-icon>
             <v-icon color="rgb(112, 192, 242)" v-text="link.icon"></v-icon>
@@ -43,33 +40,38 @@
 </template>
 
 <script>
-import widgetDialog from "@/components/WidgetDialog.vue";
 export default {
-  components: { widgetDialog },
   data() {
     return {
       drawer: false,
       links: [
-        { icon: "mdi-plus", text: "Manage Widget", action: this.addWidget },
-        { icon: "mdi-account", text: "Account", action: this.toAccountPage },
-        { icon: "mdi-cog", text: "Settings", action: this.toSettingsPage },
+        { icon: "mdi-view-dashboard", text: 'Dashboard', action: this.toDashboard },
+        { icon: "mdi-account", text: "Profile", action: this.toProfilePage },
+        { icon: "mdi-cog", text: "Settings", action: this.toSettingsPage},
+        { icon: "mdi-exit-to-app", text: "Sign Out", action: this.signOut}
       ],
       dialog: false,
     };
   },
   methods: {
-    addWidget() {
-      this.dialog = true;
+    toDashboard() {
+      this.$router.push({ path: '/dashboard' })
     },
-    toAccountPage() {
-      console.log("toAccountPage");
+    toProfilePage() {
+      this.$router.push({ path: '/profile' })
     },
     toSettingsPage() {
-      console.log("toSettingsPage");
+      this.$router.push({ path: '/settings' })
     },
+    signOut() {
+      this.$router.push({ path: '/login' })
+    }
   },
 };
 </script>
 
 <style>
+.theme--light.v-navigation-drawer .v-divider {
+    border-color: rgba(255, 255, 255, 0.4);
+}
 </style>
