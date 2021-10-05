@@ -1,8 +1,6 @@
 <template>
   <v-app>
-    <v-content>
       <v-container fluid class="background">
-        <navbar />
         <v-row justify="center" class="mt-12">
           <v-col cols="12" md="8">
             <material-card>
@@ -105,16 +103,14 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-content>
   </v-app>
 </template>
 
 <script>
-import navbar from "@/components/NavBar.vue";
 import materialCard from "@/components/MaterialCard.vue"
 
 export default {
-  components: { navbar, materialCard},
+  components: { materialCard},
   data() {
     return {};
   },
@@ -124,7 +120,6 @@ export default {
 
 <style>
 .background {
-  background-color: rgb(40, 50, 55);
   height: 100%;
 }
 </style>
