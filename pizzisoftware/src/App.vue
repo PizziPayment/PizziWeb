@@ -1,10 +1,14 @@
 <template>
   <v-app>
     <div class="app">
-    <router-view/>
+      <router-view  />
     </div>
   </v-app>
 </template>
+
+<script>
+  export default {}
+</script>
 
 <style lang="scss">
 #app {
@@ -13,6 +17,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: var(--v-background-base);
 }
 
 #nav {

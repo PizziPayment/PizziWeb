@@ -1,0 +1,84 @@
+<template>
+    <v-navigation-drawer v-model='show' app hide-overlay dark src="https://graphiste.com/blog/wp-content/uploads/2016/08/barbier-5.jpg">
+      <template v-slot:img="props">
+        <v-img 
+          v-bind="props" 
+          gradient="to top, rgba(0, 0, 0, .75), rgba(0, 0, 0, .90)"
+          ></v-img>
+      </template>
+      <v-list
+        nav
+        dense
+      >
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title>
+            <p class="headline font-weight-bold mt-4">
+              Faudra Tiff Hair
+            </p>
+            <p class="overline font-weight-thin mb-n4">
+              109 Rue Jean Soula
+            </p>
+            <p class="overline font-weight-thin">
+              33000 Bordeaux, France
+            </p>
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      </v-list>
+      <v-divider class="mb-2" />
+      <v-list flat class="mt-6">
+        <v-list-item-group v-model="model" color="green">
+        <v-list-item
+          v-for="(link, i) in links"
+          :key="i"
+          routeur :to="link.to"
+        >
+          <v-list-item-icon>
+            <v-icon v-text="link.icon"></v-icon>
+          </v-list-item-icon>
+          <v-list-item-content style="text-align: left">
+            <v-list-item-title v-text="link.text" ></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+</template>
+
+<script>
+export default {
+  name: 'CoreDrawer',
+  props: {
+    value: Boolean
+  },
+  data() {
+    return {
+      drawer: false,
+      links: [
+        { icon: "mdi-view-dashboard", text: 'Dashboard', to: '/dashboard' },
+        { icon: "mdi-account", text: "Profile", to: '/profile' },
+        { icon: "mdi-exit-to-app", text: "Sign Out", to: '/login'}
+      ],
+      model: 0
+    };
+  },
+  computed: {
+    show: {
+      get () {
+        return this.value
+      },
+      set (value) {
+         this.$emit('input', value)
+      }
+    }
+  }
+};
+</script>
+
+<style>
+  .v-navigation-drawer__border {
+    width: 1.5px!important;
+    background-color: rgba(255, 255, 255, 0.12)!important;
+  }
+</style>
