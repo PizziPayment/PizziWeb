@@ -1,4 +1,7 @@
 <template>
+  <div class="home" style="background-color: black;">
+    <HelloWorld/>
+  </div>
 </template>
 
 <script>
