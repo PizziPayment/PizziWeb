@@ -1,10 +1,4 @@
 <template>
-  <v-app>
-    <v-content style="background-color: black">
-      <img src="../assets/pizzi.png" />
-      <HelloWorld msg="Welcome to Your Vue.js App" />
-    </v-content>
-  </v-app>
 </template>
 
 <script>
