@@ -1,11 +1,10 @@
 <template>
-  <v-card v-bind="$attrs" :class="classes" class="v-card--material pa-3" color="rgb(40, 50, 55)">
+  <v-card v-bind="$attrs" :class="classes" class="v-card--material pa-3">
     <div class="d-flex grow flex-wrap">
       <v-avatar
         v-if="avatar"
         size="128"
         class="mx-auto v-card--material__avatar elevation-6"
-        color="grey"
       >
         <v-img :src="avatar" />
       </v-avatar>
@@ -68,7 +67,7 @@ export default {
     },
     color: {
       type: String,
-      default: "#3a474e",
+      default: "green",
     },
     icon: {
       type: String,

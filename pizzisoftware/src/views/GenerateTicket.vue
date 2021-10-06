@@ -20,7 +20,6 @@
                       v-model="input"
                       label="Item"
                       class="purple-input"
-                      dark
                       @keyup.enter="addToItems()"
                     />
                   </v-col>
@@ -44,8 +43,8 @@
             <v-card-text class="text-center">
               <h6 class="display-1 mb-1 grey--text">Receipt</h6>
 
-              <h4 class="display-2 font-weight-light mb-3 white--text">
-                Art'Hair
+              <h4 class="display-2 font-weight-light mb-3">
+                Faudra Tiff Hair
               </h4>
 
               <v-card

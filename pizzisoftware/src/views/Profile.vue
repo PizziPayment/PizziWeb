@@ -15,39 +15,38 @@
                 <v-container class="py-0">
                   <v-row>
                     <v-col cols="12" md="4">
-                      <v-text-field label="Company" dark/>
+                      <v-text-field label="Company"/>
                     </v-col>
 
                     <v-col cols="12" md="4">
-                      <v-text-field class="purple-input" label="User Name" dark/>
+                      <v-text-field class="purple-input" label="User Name"/>
                     </v-col>
 
                     <v-col cols="12" md="4">
                       <v-text-field
                         label="Email Address"
                         class="purple-input"
-                        dark
                       />
                     </v-col>
 
                     <v-col cols="12" md="6">
-                      <v-text-field label="First Name" class="purple-input" dark/>
+                      <v-text-field label="First Name" class="purple-input"/>
                     </v-col>
 
                     <v-col cols="12" md="6">
-                      <v-text-field label="Last Name" class="purple-input" dark/>
+                      <v-text-field label="Last Name" class="purple-input"/>
                     </v-col>
 
                     <v-col cols="12">
-                      <v-text-field label="Adress" class="purple-input" dark/>
+                      <v-text-field label="Adress" class="purple-input"/>
                     </v-col>
 
                     <v-col cols="12" md="4">
-                      <v-text-field label="City" class="purple-input" dark/>
+                      <v-text-field label="City" class="purple-input"/>
                     </v-col>
 
                     <v-col cols="12" md="4">
-                      <v-text-field label="Country" class="purple-input" dark/>
+                      <v-text-field label="Country" class="purple-input"/>
                     </v-col>
 
                     <v-col cols="12" md="4">
@@ -55,7 +54,7 @@
                         class="purple-input"
                         label="Postal Code"
                         type="number"
-                        dark
+                      
                       />
                     </v-col>
 
@@ -64,7 +63,7 @@
                         class="purple-input"
                         label="About My Company"
                         value=""
-                        dark
+                      
                       />
                     </v-col>
 
@@ -85,13 +84,13 @@
               avatar="https://img.freepik.com/vecteurs-libre/illustration-vectorielle-outils-coiffeur-ciseaux-rasoir-poteau-ruban-echantillon-texte_74855-10555.jpg?size=338&ext=jpg&ga=GA1.2.1637736129.1624752000"
             >
               <v-card-text class="text-center">
-                <h6 class="display-1 mb-1 grey--text">Hair Salon</h6>
+                <h6 class="display-1 mb-1">Hair Salon</h6>
 
-                <h4 class="display-2 font-weight-light mb-3 white--text">
-                  Art'Hair
+                <h4 class="display-2 font-weight-light mb-3">
+                  Faudra Tiff Hair
                 </h4>
 
-                <p class="font-weight-light grey--text">
+                <p class="font-weight-light">
                   Since 2019, Art'Hair is an innovative concept in the heart of Bordeaux in a warm atmosphere and a trendy decor. 
                   The promise? A real hair experience: a tailor-made cut, under the expert advice and artistic work of experienced and creative facial hairdressers. 
                   True masters of technique, everything is possible here: cuts, highlights, balayage, ombré hair, tie and dye, Japanese and Brazilian straightening.

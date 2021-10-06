@@ -3,13 +3,13 @@
   <v-content>
   <v-container class="background" fluid fill-height>
     <v-row class="text-center">
-      <v-col class="mb-4" style="color: white;">
+      <v-col class="mb-4">
         <img src="../assets/pizzi.png">
-        <h1 class="display-2 font-weight-bold mb-3">
+        <h1 class="display-2 font-weight-bold mb-3 white--text">
           Bienvenue sur Pizzi
         </h1>
 
-        <p class="subheading font-weight-regular">
+        <p class="subheading font-weight-regular white--text">
           <router-link to="/login">Connectez-vous</router-link>
            afin d'accéder à nos services
           <br>

@@ -3,7 +3,7 @@
     <v-content>
       <v-container class="background" fluid fill-height>
         <v-col align="center">
-          <v-card class="white" outlined max-width="1000">
+          <v-card outlined max-width="1000">
             <v-container>
               <v-row class="text-center">
                 <v-col cols="12">
@@ -30,8 +30,10 @@
                     required
                     type="text"
                     v-model="email"
+                    dark
                   ></v-text-field>
                   <v-text-field
+                    dark
                     name="password"
                     label="mot de passe"
                     id="password"
@@ -89,7 +91,6 @@ export default {
 
 <style>
 .background {
-  background-color: #030d0fd3;
   margin: 0px;
   height: 100%;
 }
