@@ -1,6 +1,5 @@
 <template>
   <v-footer color="pink">
-    titi
   </v-footer>
 </template>
 
