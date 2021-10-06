@@ -9,7 +9,7 @@
           <most-sold-graph></most-sold-graph>
         </v-col>
       </v-row>
-      <v-row class="my-6 d-flex align-center">
+      <v-row class="my-6">
         <v-col class="mx-6">
           <cashPayment />
         </v-col>

@@ -1,14 +1,16 @@
 <template>
-  <!-- <v-card> -->
-    <v-card color="transparent" elevation="0" class="mt-n12">
+  <div>
+    <v-card class="payment-list mb-n16 mx-auto" elevation="0">
+      <v-card-text class="mt-16">titi</v-card-text>
+    </v-card>
+    <v-card class="mx-auto" color="transparent" elevation="0">
       <cashPaymentDialog v-model="dialog" />
-      <v-btn rounded x-large color="green" @click.stop="acceptCashPayment">
+      <v-btn rounded large color="green" @click.stop="acceptCashPayment">
         <v-icon large color="white">mdi-cash-register</v-icon>
         <span class="white--text pa-12">Register Cash Payment </span>
       </v-btn>
     </v-card>
-    <!-- <v-card> titi </v-card>
-  </v-card> -->
+  </div>
 </template>
 
 <script>
@@ -27,3 +29,6 @@ export default {
   },
 };
 </script>
+
+<style>
+</style>
