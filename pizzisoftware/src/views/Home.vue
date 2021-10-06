@@ -1,10 +1,7 @@
 <template>
-  <v-app>
-    <v-content style="background-color: black">
-      <img src="../assets/pizzi.png" />
-      <HelloWorld msg="Welcome to Your Vue.js App" />
-    </v-content>
-  </v-app>
+  <div class="home" style="background-color: black;">
+    <HelloWorld/>
+  </div>
 </template>
 
 <script>
