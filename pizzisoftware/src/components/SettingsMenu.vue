@@ -8,6 +8,7 @@
       transition="slide-y-transition"
       nudge-bottom="10"
       content-class="v-settings"
+      max-width="300"
     >
       <template v-slot:activator="slotData">
         <slot v-if="$scopedSlots.activator" name="activator" v-bind="slotData" />
@@ -15,7 +16,7 @@
       <v-card>
         <v-card-text>
           <p class="font-weight-bold">Main Color</p>
-        <v-item-group v-model="color">
+        <v-item-group>
             <v-item
               v-for="color in colors"
               :key="color"

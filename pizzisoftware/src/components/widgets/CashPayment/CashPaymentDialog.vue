@@ -1,8 +1,8 @@
 <template>
   <v-dialog v-model="show" persistent max-width="30%">
-    <v-card color="#3a474e">
+    <v-card>
       <v-card-text>
-        <v-card-title class="d-flex justify-center white--text">
+        <v-card-title class="d-flex justify-center">
           Register cash payment
         </v-card-title>
         <v-text-field
@@ -11,7 +11,6 @@
           class="pa-6"
           append-icon="mdi-currency-eur"
           clear-icon="mdi-close-circle"
-          dark
           clearable
         >
         </v-text-field>

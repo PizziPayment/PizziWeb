@@ -1,11 +1,10 @@
 <template>
-  <v-card color="rgb(40, 50, 55)" elevation="0" class="mt-12" max-width="1000">
+  <v-card color='transparent' elevation="0">
     <cashPaymentDialog v-model="dialog" />
     <v-btn
       rounded
       x-large
-      block
-      color="#3a474e"
+      color="primary"
       @click.stop="acceptCashPayment"
     >
       <v-icon large color="white">mdi-cash-register</v-icon>
