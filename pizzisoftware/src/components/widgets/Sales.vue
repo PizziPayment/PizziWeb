@@ -1,5 +1,5 @@
 <template>
-  <v-card style="background-color: #3a474e;">
+  <v-card>
       <v-menu
           ref="menu"
           v-model="menu"
@@ -13,7 +13,6 @@
         >
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
-              dark
               v-model="date"
               prepend-icon="mdi-calendar"
               readonly
@@ -30,7 +29,7 @@
             <v-btn text color="primary" @click="$refs.menu.save(date)"> OK </v-btn>
           </v-date-picker>
         </v-menu>
-    <v-list dark color="#3a474e" class="pa-6">
+    <v-list class="pa-6 overflow-y-auto" style="max-height: 230px">
       <v-list-item v-for="(fakeProduct, i) in fakeProducts" :key="i">
         <v-list-item-content style="text-align: left;">
           <v-list-item-title v-text="fakeProduct.name"/>

@@ -1,8 +1,8 @@
 <template>
-  <v-card color="transparent" elevation="0">
-    <div class="white--text">
+  <v-card class="pa-6">
+    <div>
       <h2 class="d-flex text-right">Returned product</h2>
-      <p class="subtitle-2 d-flex text-left ml-6">
+      <p class="subtitle-2 d-flex text-left ml-6 font-italic">
         Enter Pizzi ID to return product in your stock
       </p>
     </div>
@@ -11,7 +11,6 @@
       outlined
       v-model="pizziId"
       color="rgb(112, 192, 242)"
-      dark
       append-icon="mdi-undo"
       prefix="#"
       @keyup.enter="returnProduct()"
