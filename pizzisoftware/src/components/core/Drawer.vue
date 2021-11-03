@@ -59,7 +59,8 @@ export default {
         { icon: "mdi-view-dashboard", text: 'Dashboard', to: '/dashboard' },
         { icon: "mdi-account", text: "Profile", to: '/profile' },
         { icon: "mdi-exit-to-app", text: "Sign Out", to: '/login'},
-        { icon: "mdi-text", text:"Generate Receipt", to: '/GenerateTicket'}
+        { icon: "mdi-text", text:"Generate Receipt", to: '/GenerateTicket'},
+        {icon : "mdi-notebook-multiple", text:"Product Register", to:'/RegisterProduct'}
       ],
       model: 0
     };
