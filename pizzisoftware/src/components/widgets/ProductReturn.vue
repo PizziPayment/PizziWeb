@@ -1,5 +1,5 @@
 <template>
-  <v-card class="pa-6">
+  <v-card class="pa-6" height='300px'>
     <div>
       <h2 class="d-flex text-right">Returned product</h2>
       <p class="subtitle-2 d-flex text-left ml-6 font-italic">
@@ -15,6 +15,7 @@
       prefix="#"
       @keyup.enter="returnProduct()"
       @click="returnProduct()"
+      class='mt-16'
     >
     </v-text-field>
   </v-card>
