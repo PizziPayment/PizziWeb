@@ -9,3 +9,7 @@ export function UPDATE_REFRESH_TOKEN (state, refreshToken) {
 export function UPDATE_EXPIRATION_TOKEN (state, expirationToken) {
     state.expirationToken = expirationToken
 }
+
+export function UPDATE_USER_LOGGED_IN (state, userLoggedStatus) {
+    state.userLoggedIn = userLoggedStatus
+}

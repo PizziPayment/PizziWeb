@@ -9,3 +9,7 @@ export function getRefreshToken (state) {
 export function getExpirationToken (state) {
     return state.expirationToken
 }
+
+export function getUserLoggedIn (state) {
+    return state.userLoggedIn
+}
