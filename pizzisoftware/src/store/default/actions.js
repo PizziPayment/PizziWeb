@@ -2,7 +2,6 @@
 
 export async function userLogin({ commit }, payload) {
   try {
-    console.log("payload", payload);
     commit("UPDATE_ACCESS_TOKEN", payload.accessToken);
     commit("UPDATE_REFRESH_TOKEN", payload.refreshToken);
     commit("UPDATE_EXPIRATION_TOKEN", payload.expirationToken);

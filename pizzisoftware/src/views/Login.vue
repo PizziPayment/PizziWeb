@@ -97,7 +97,6 @@ export default {
           headers: basicAuth,
         })
         .then((response) => {
-          console.log(response);
           const success = this.userLogin({
             accessToken: response.data.access_token,
             refreshToken: response.data.refresh_token,
