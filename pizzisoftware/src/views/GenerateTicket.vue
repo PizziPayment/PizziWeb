@@ -13,21 +13,34 @@
             </template>
             <v-form>
               <v-container class="py-0">
-                <v-row>
-                  <v-col cols="12" md="6">
-                    <v-text-field
-                      clearable
-                      v-model="input"
-                      label="Item"
-                      class="purple-input"
-                      @keyup.enter="addToItems()"
-                    />
-                  </v-col>
+                <v-row dense>
+                  <v-col v-for="(item, i) in products" :key="i" cols="6">
+                    <v-card :color="item.color" dark>
+                      <div class="d-flex flex-no-wrap justify-space-between">
+                        <div>
+                          <v-card-title
+                            class="text-h5"
+                            v-text="item.title"
+                          ></v-card-title>
 
-                  <v-col cols="12" class="text-center">
-                    <v-btn color="success" class="mr-0" @click="addToItems()">
-                      Add item
-                    </v-btn>
+                          <v-card-subtitle
+                            v-text="item.price + ' $'"
+                          ></v-card-subtitle>
+
+                          <v-card-actions>
+                            <v-btn
+                              class="ml-2 mt-5"
+                              outlined
+                              rounded
+                              small
+                              @click="addToItems(item)"
+                            >
+                              Add Item
+                            </v-btn>
+                          </v-card-actions>
+                        </div>
+                      </div>
+                    </v-card>
                   </v-col>
                 </v-row>
               </v-container>
@@ -47,46 +60,76 @@
                 Faudra Tiff Hair
               </h4>
 
-              <v-card
-                class="mx-auto ma-2"
-                max-width="500"
-                max-height="500"
-                style="overflow: auto;"
-              >
-                <v-list two-line>
-                  <v-list-item-group
-                    v-model="selected"
-                    active-class="blue--text"
-                    multiple
-                  >
-                    <template v-for="(item, index) in items">
-                      <v-list-item :key="item.title">
-                        <template>
-                          <v-list-item-content>
-                            <v-list-item-title
-                              v-text="item.title"
-                            ></v-list-item-title>
-                          </v-list-item-content>
-                        </template>
-                      </v-list-item>
+              <div v-if="items && items.length > 0">
+                <v-card
+                  class="mx-auto ma-2"
+                  max-width="500"
+                  max-height="500"
+                  style="overflow: auto;"
+                >
+                  <v-list two-line>
+                    <v-list-item-group
+                      v-model="selected"
+                      active-class="blue--text"
+                      multiple
+                    >
+                      <template v-for="(item, index) in items">
+                        <v-list-item :key="item.title">
+                          <template>
+                            <v-list-item-content>
+                              <v-list-item-title
+                                class="text-center"
+                                v-text="item.title"
+                              >
+                              </v-list-item-title>
+                              <v-list-item-title
+                                v-text="item.price + ' $'"
+                              ></v-list-item-title>
+                            </v-list-item-content>
+                            <v-list-item-action>
+                              <v-btn icon x-small @click="deleteItem(index)">
+                                <v-icon color="red lighten-1"
+                                  >mdi-trash-can</v-icon
+                                >
+                              </v-btn>
+                            </v-list-item-action>
+                          </template>
+                        </v-list-item>
 
-                      <v-divider
-                        v-if="index < items.length - 1"
-                        :key="index"
-                      ></v-divider>
-                    </template>
-                  </v-list-item-group>
-                </v-list>
-              </v-card>
+                        <v-divider
+                          v-if="index < items.length - 1"
+                          :key="index"
+                        ></v-divider>
+                      </template>
+                      <v-list-item-content>
+                        <v-list-item-title
+                          v-text="'Total TTC'"
+                        ></v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item-group>
+                  </v-list>
+                </v-card>
 
-              <v-btn
-                color="primary"
-                rounded
-                class="mr-0"
-                @click="generateReceipt()"
-              >
-                Download
-              </v-btn>
+                <v-btn
+                  color="primary"
+                  rounded
+                  class="mr-0"
+                  @click="generateReceipt()"
+                >
+                  Download
+                </v-btn>
+              </div>
+              <div v-else>
+                <v-btn
+                  disabled
+                  color="primary"
+                  rounded
+                  class="mr-0"
+                  @click="generateReceipt()"
+                >
+                  no items selected
+                </v-btn>
+              </div>
             </v-card-text>
           </material-card>
         </v-col>
@@ -103,25 +146,51 @@ export default {
   components: { materialCard },
 
   data: () => ({
-    input: null,
     selected: [2],
-    items: [
+    items: [],
+    products: [
       {
-        title: "Shampoing Nova Ultra Brillance",
+        color: "#1F7087",
+        title: "Coupe Homme",
+        price: "20",
       },
       {
-        title: "Coupe Homme",
+        color: "#952175",
+        title: "Coupe Femme",
+        price: "35",
+      },
+      {
+        color: "#1F7061",
+        title: "Coupe Enfant",
+        price: "10",
+      },
+      {
+        color: "#959175",
+        title: "Tarif Réduit",
+        price: "18",
+      },
+      {
+        color: "#1F7981",
+        title: "Shampoing Supernova Brillance",
+        price: "10",
+      },
+      {
+        color: "#959175",
+        title: "Café",
+        price: "5",
       },
     ],
   }),
 
   methods: {
-    addToItems() {
-      if (this.input && this.input.length > 0) {
-        const obj = { title: this.input.toString() };
-        this.items.push(obj);
-        this.input = "";
+    addToItems(item) {
+      if (item) {
+        this.items.push(item);
       }
+    },
+
+    deleteItem(index) {
+      this.items.splice(index, 1);
     },
 
     generateReceipt() {
