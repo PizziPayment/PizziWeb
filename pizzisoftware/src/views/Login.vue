@@ -43,7 +43,11 @@
                     type="password"
                     v-model="password"
                   ></v-text-field>
-                  <v-btn @click="processSignIn()" justify-center small color="primary"
+                  <v-btn
+                    @click="processSignIn()"
+                    justify-center
+                    small
+                    color="primary"
                     >connexion</v-btn
                   >
                   <v-col>
@@ -60,8 +64,8 @@
 </template>
 
 <script>
-
 import axios from "axios";
+import { mapActions } from "vuex";
 
 export default {
   name: "LoginComponent",
@@ -70,22 +74,46 @@ export default {
     email: null,
     password: null,
   }),
+
   computed: {},
+
   methods: {
-    processSignIn() {
+    ...mapActions("defaultStore", ["userLogin"]),
+
+    async processSignIn() {
       const body = {
         email: this.email,
-        password: this.password
-      }
-      const basicAuth = { Authorization: 'Basic ' + Buffer.from(`Pizzi-client:affe1896-a205-427a-aa94-26925d66c1ce`).toString('base64') }
-      axios.post('https://pointecouteau.fr:40402/auth/shop/login', body, { headers: basicAuth }).then(response => {
-        console.log(response)
-        this.$router.push('/dashboard')
-      }).catch(error => {
-        console.error(error)
-      })
-    }
-  }
+        password: this.password,
+      };
+      const basicAuth = {
+        Authorization:
+          "Basic " +
+          Buffer.from(
+            `Pizzi-client:affe1896-a205-427a-aa94-26925d66c1ce`
+          ).toString("base64"),
+      };
+      axios
+        .post("https://pointecouteau.fr:40402/auth/shop/login", body, {
+          headers: basicAuth,
+        })
+        .then((response) => {
+          const success = this.userLogin({
+            accessToken: response.data.access_token,
+            refreshToken: response.data.refresh_token,
+            expirationToken: response.data.access_token_expires_at,
+          });
+          if (success) {
+            this.$router.push("/dashboard");
+          } else {
+            console.error("Error login");
+            // to do handle case wrong login
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+  },
 };
 </script>
 
