@@ -1,16 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import VuexPersistence from 'vuex-persist'
+import createPersistedState from "vuex-persistedstate";
+import SecureLS from "secure-ls";
+const ls = new SecureLS(
+  {
+    encodingType: "aes",
+    encryptionSecret: process.env.VUE_APP_ENCRYPTION_SECRET,
+    isCompression: false
+  }
+);
 
 // import stores
 import defaultStore from './default'
 
 Vue.use(Vuex)
-const vuexLocal = new VuexPersistence({
-  key: 'DeepblooFront',
-  storage: localStorage,
-  modules: ['defaultStore']
-})
 
 const Store = new Vuex.Store({
   modules: {
@@ -19,7 +22,15 @@ const Store = new Vuex.Store({
   // enable strict mode (adds overhead!)
   // for dev mode and --debug builds only
   // strict: process.env.DEBUGGING,
-  plugins: [vuexLocal.plugin]
+  plugins: [
+    createPersistedState({
+      storage: {
+        getItem: key => ls.get(key),
+        setItem: (key, value) => ls.set(key, value),
+        removeItem: key => ls.remove(key)
+      }
+    })
+  ]
 })
 
 export default function (/* { ssrContext } */) {
