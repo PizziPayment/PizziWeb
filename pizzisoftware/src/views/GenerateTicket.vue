@@ -103,7 +103,7 @@
                       </template>
                       <v-list-item-content>
                         <v-list-item-title
-                          v-text="'Total TTC'"
+                          v-text="'Total ' + calculatePrice() + ' $'"
                         ></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item-group>
@@ -193,6 +193,16 @@ export default {
       this.items.splice(index, 1);
     },
 
+    calculatePrice() {
+      let result = 0
+      if (this.items && this.items.length) {
+        for(const item of this.items) {
+          result += parseInt(item.price)
+        }
+      }
+      return result
+    },
+
     generateReceipt() {
       const doc = new jsPDF();
 
@@ -201,17 +211,19 @@ export default {
         5,
         10
       );
-      doc.text("Pizzi Receipt", 85, 20);
-      doc.text("Art Hair", 85, 25);
+      doc.text("Pizzi Receipt 01", 85, 20);
+      doc.text("Faudra Tiff Hair", 85, 25);
 
       // add items to pdf
       let xPosition = 100;
       for (let i = 0; i < this.items.length; i++) {
         if (this.items[i] && this.items[i].title.length > 0) {
           doc.text(this.items[i].title, 10, xPosition);
-          xPosition += 10;
+          doc.text(this.items[i].price + ' $', 10, xPosition + 10);
+          xPosition += 20;
         }
       }
+      doc.text("Total: " + this.calculatePrice() + ' $', 10, xPosition + 10);
       doc.save("pizziReceiptArtHair.pdf");
     },
   },
