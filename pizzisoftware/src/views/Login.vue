@@ -85,15 +85,16 @@ export default {
         email: this.email,
         password: this.password,
       };
+
       const basicAuth = {
         Authorization:
           "Basic " +
           Buffer.from(
-            `Pizzi-client:affe1896-a205-427a-aa94-26925d66c1ce`
+            process.env.VUE_APP_CLIENT_ID + ':' + process.env.VUE_APP_SECRET
           ).toString("base64"),
       };
       axios
-        .post("https://pointecouteau.fr:40402/auth/shop/login", body, {
+        .post(process.env.VUE_APP_AUTHORIZATION_URL +"/auth/shop/login", body, {
           headers: basicAuth,
         })
         .then((response) => {
