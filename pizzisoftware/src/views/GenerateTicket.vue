@@ -110,6 +110,14 @@
                   </v-list>
                 </v-card>
 
+                <v-select
+                  :items="discount"
+                  v-model="appliedDiscount"
+                  dense
+                  outlined
+                  label="Apply Discount"
+                ></v-select>
+
                 <v-btn
                   color="primary"
                   rounded
@@ -146,7 +154,9 @@ export default {
   components: { materialCard },
 
   data: () => ({
+    appliedDiscount: 0,
     selected: [2],
+    discount: [0, 5, 10, 20, 30, 40, 50, 60, 70],
     items: [],
     products: [
       {
@@ -200,6 +210,7 @@ export default {
           result += parseInt(item.price)
         }
       }
+      result = result * (1 - this.appliedDiscount / 100)
       return result
     },
 
