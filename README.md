@@ -1,4 +1,4 @@
-# pizzisoftware
+# pizziWeb
 
 Shop Software App fueled by VueJS
 
