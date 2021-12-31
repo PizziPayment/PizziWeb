@@ -12,6 +12,7 @@
     "core-js": "^3.6.5",
     "echarts": "^5.1.2",
     "jspdf": "^2.4.0",
+    "labelmake": "^2.0.21",
     "moment": "^2.29.1",
     "vue": "^2.6.11",
     "vue-echarts": "^6.0.0-rc.6",
