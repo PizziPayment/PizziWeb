@@ -57,10 +57,11 @@ export default {
       drawer: false,
       links: [
         { icon: "mdi-view-dashboard", text: 'Dashboard', to: '/dashboard' },
-        { icon: "mdi-account", text: "Profile", to: '/profile' },
-        { icon: "mdi-exit-to-app", text: "Sign Out", to: '/login'},
         { icon: "mdi-text", text:"Generate Receipt", to: '/GenerateTicket'},
-        {icon : "mdi-notebook-multiple", text:"Product Register", to:'/RegisterProduct'}
+        {icon : "mdi-notebook-multiple", text:"Product Register", to:'/RegisterProduct'},
+        {icon : "mdi-cash", text:"Last Sales", to:'/ReceiptList'},
+        { icon: "mdi-account", text: "Profile", to: '/profile' },
+        { icon: "mdi-exit-to-app", text: "Sign Out", to: '/login'}
       ],
       model: 0
     };
