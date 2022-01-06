@@ -204,9 +204,15 @@ export default {
           phone: '+33 6 12 34 56 78'
         };
 
-        const basicAuth = { Authorization: 'Basic ' + Buffer.from(`Pizzi-client:affe1896-a205-427a-aa94-26925d66c1ce`).toString('base64') }
+        const basicAuth = {
+          Authorization:
+            "Basic " +
+            Buffer.from(
+              process.env.VUE_APP_CLIENT_ID + ':' + process.env.VUE_APP_SECRET
+            ).toString("base64"),
+        };
         axios
-          .post("https://pointecouteau.fr:40401/shops", body, { headers: basicAuth })
+          .post(process.env.VUE_APP_RESOURCE_URL + "/shops", body, { headers: basicAuth })
           .then((response) => {
             console.log(response);
             this.$router.push({ path: "/login" });
