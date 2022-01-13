@@ -13,27 +13,30 @@
             hide-details
           ></v-text-field>
         </v-card-title>
+        <!-- change cursor on row -->
         <v-data-table
           :headers="headers"
           :items="desserts"
           :search="search"
+          @click:row="showTicket"
         ></v-data-table>
       </v-card>
+      <ticket-view v-model="show" />
     </v-container>
   </v-app>
 </template>
 
 <script>
 import moment from 'moment'
+import ticketView from '@/components/TicketView.vue'
 
 export default {
-  components: {},
-
+  components: { ticketView },
   data: () => ({
     search: "",
     headers: [
       {
-        text: "Product",
+        text: "ID",
         align: "start",
         filterable: true,
         value: "name",
@@ -45,7 +48,7 @@ export default {
     ],
     desserts: [
       {
-        name: "Frozen Yogurt",
+        name: "#01489017",
         calories: 159,
         date: moment().format('LLL'),
         terminal: 1,
@@ -53,7 +56,7 @@ export default {
         vendor: "Sam",
       },
       {
-        name: "Ice cream sandwich",
+        name: "#01481922",
         calories: 237,
         date: moment().format('LLL'),
         fat: 9.0,
@@ -63,7 +66,7 @@ export default {
         vendor: "Sam",
       },
       {
-        name: "Eclair",
+        name: "#02182094",
         calories: 262,
         date: moment().format('LLL'),
         fat: 16.0,
@@ -73,7 +76,7 @@ export default {
         vendor: "Sam",
       },
       {
-        name: "Cupcake",
+        name: "#29283102",
         calories: 305,
         date: moment().format('LLL'),
         fat: 3.7,
@@ -83,7 +86,7 @@ export default {
         vendor: "Tom",
       },
       {
-        name: "Gingerbread",
+        name: "#02293728",
         calories: 356,
         fat: 16.0,
         terminal: 1,
@@ -93,7 +96,7 @@ export default {
         vendor: "John",
       },
       {
-        name: "Jelly bean",
+        name: "#83020281",
         calories: 375,
         date: moment().format('LLL'),
         fat: 0.0,
@@ -103,7 +106,7 @@ export default {
         vendor: "Tommy",
       },
       {
-        name: "Lollipop",
+        name: "#02182726",
         calories: 392,
         terminal: 1,
         date: moment().format('LLL'),
@@ -112,8 +115,14 @@ export default {
         vendor: "Sam",
       }
     ],
+    show: false,
   }),
-  methods: {},
+  methods: {
+    showTicket(row) {
+      this.show = true
+      console.log(row.name)
+    }
+  },
 };
 </script>
 
