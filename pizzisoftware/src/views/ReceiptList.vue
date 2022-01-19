@@ -25,12 +25,15 @@
 
 <script>
 import moment from 'moment'
+import axios from 'axios'
+import { mapGetters } from "vuex";
 
 export default {
   components: {},
 
   data: () => ({
     search: "",
+    receipts: [],
     headers: [
       {
         text: "Product",
@@ -45,7 +48,7 @@ export default {
     ],
     desserts: [
       {
-        name: "Frozen Yogurt",
+        name: "Coupe Homme",
         calories: 159,
         date: moment().format('LLL'),
         terminal: 1,
@@ -63,7 +66,7 @@ export default {
         vendor: "Sam",
       },
       {
-        name: "Eclair",
+        name: "Coupe Homme",
         calories: 262,
         date: moment().format('LLL'),
         fat: 16.0,
@@ -73,7 +76,7 @@ export default {
         vendor: "Sam",
       },
       {
-        name: "Cupcake",
+        name: "Shampoo",
         calories: 305,
         date: moment().format('LLL'),
         fat: 3.7,
@@ -83,7 +86,7 @@ export default {
         vendor: "Tom",
       },
       {
-        name: "Gingerbread",
+        name: "Coupe Femme",
         calories: 356,
         fat: 16.0,
         terminal: 1,
@@ -93,7 +96,7 @@ export default {
         vendor: "John",
       },
       {
-        name: "Jelly bean",
+        name: "Coupe Enfant",
         calories: 375,
         date: moment().format('LLL'),
         fat: 0.0,
@@ -103,7 +106,7 @@ export default {
         vendor: "Tommy",
       },
       {
-        name: "Lollipop",
+        name: "Shampoo",
         calories: 392,
         terminal: 1,
         date: moment().format('LLL'),
@@ -113,7 +116,40 @@ export default {
       }
     ],
   }),
-  methods: {},
+
+  computed: {
+    ...mapGetters('defaultStore', [
+      'getAccessToken',
+    ])
+  },
+
+  mounted() {
+    this.getReceipts()
+  },
+
+  methods: {
+    getReceipts () {
+      axios
+        .get(process.env.VUE_APP_RESOURCE_URL +"/receipts", { headers: { Authorization: 'Bearer eeb4d6b4665685a42e70c3c1639729c33fe54a71' } })
+        .then((response) => {
+          console.log("res", response)
+          // const success = this.userLogin({
+          //   accessToken: response.data.access_token,
+          //   refreshToken: response.data.refresh_token,
+          //   expirationToken: response.data.access_token_expires_at,
+          // });
+          // if (success) {
+          //   this.$router.push("/dashboard");
+          // } else {
+          //   console.error("Error login");
+          //   // to do handle case wrong login
+          // }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+  },
 };
 </script>
 
