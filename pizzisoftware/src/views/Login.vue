@@ -94,7 +94,7 @@ export default {
           ).toString("base64"),
       };
       axios
-        .post(process.env.VUE_APP_AUTHORIZATION_URL +"/auth/shop/login", body, {
+        .post(process.env.VUE_APP_AUTHORIZATION_URL +"/shop/login", body, {
           headers: basicAuth,
         })
         .then((response) => {

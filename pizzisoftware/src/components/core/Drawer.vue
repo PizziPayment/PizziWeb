@@ -41,13 +41,25 @@
             <v-list-item-title v-text="link.text" ></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item @click="signOut">
+          <sign-out-dialog v-model="signOutShow"/>
+          <v-list-item-icon class="mr-8">
+            <v-icon>mdi-exit-to-app</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content style="text-align: left">
+            <v-list-item-title>Sign Out</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
 </template>
 
 <script>
+import SignOutDialog from '@/components/SignOutDialog.vue';
+
 export default {
+  components: { SignOutDialog },
   name: 'CoreDrawer',
   props: {
     value: Boolean
@@ -55,13 +67,13 @@ export default {
   data() {
     return {
       drawer: false,
+      signOutShow: false,
       links: [
         { icon: "mdi-view-dashboard", text: 'Dashboard', to: '/dashboard' },
         { icon: "mdi-text", text:"Generate Receipt", to: '/GenerateTicket'},
         {icon : "mdi-notebook-multiple", text:"Product Register", to:'/RegisterProduct'},
         {icon : "mdi-cash", text:"Last Sales", to:'/ReceiptList'},
         { icon: "mdi-account", text: "Profile", to: '/profile' },
-        { icon: "mdi-exit-to-app", text: "Sign Out", to: '/login'}
       ],
       model: 0
     };
@@ -74,6 +86,11 @@ export default {
       set (value) {
          this.$emit('input', value)
       }
+    }
+  },
+  methods: {
+    signOut() {
+      this.signOutShow = true
     }
   }
 };

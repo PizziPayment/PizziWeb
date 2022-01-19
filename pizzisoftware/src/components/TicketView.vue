@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="show" max-width="500">
-    <v-container max-width="500" class="mx-auto" style="background-color: white;">
+    <v-card max-width="500" class="mx-auto">
       <v-row class="d-flex justify-center pa-4">
         <v-avatar size="100">
           <img
@@ -8,8 +8,7 @@
           alt="Logo">
         </v-avatar>
       </v-row>
-      <v-divider></v-divider>
-      <v-row dense class="flex-column my-4 pl-2">
+      <v-row dense class="flex-column my-4 ml-3">
         <v-row dense>
           #01489017
         </v-row>
@@ -21,40 +20,40 @@
         </v-row>
       </v-row>
       <v-divider></v-divider>
-      <v-row dense class="flex-column pl-2">
+      <v-row dense class="flex-column">
         <v-row dense class="pt-4">
-         <v-col>
+         <v-col class="d-flex justify-start ml-4">
           Payment
          </v-col>
-         <v-col class="d-flex justify-end">
+         <v-col class="d-flex justify-end mr-4">
            Status
          </v-col>
         </v-row>
         <v-row dense class="pb-2">
-          <v-col>
+          <v-col class="d-flex justify-start ml-4">
             Means
           </v-col>
-          <v-col class="d-flex justify-end">
+          <v-col class="d-flex justify-end mr-4">
             Card
           </v-col>
         </v-row>
         <v-row dense>
-          <v-col>
+          <v-col class="d-flex justify-start ml-4">
             Date
           </v-col>
-          <v-col class="d-flex justify-end">
+          <v-col class="d-flex justify-end mr-4">
             16:30 13/01/2022
           </v-col>
         </v-row>
       </v-row>
       <v-divider></v-divider>
-      <v-row dense v-for="(detail, idx) in transaction" :key="idx" class="mx-2 my-2">
-        <v-col>
+      <v-row dense v-for="(detail, idx) in transaction" :key="idx" class="my-2">
+        <v-col class="d-flex justify-start ml-4">
           <div>
             1 x {{detail.product}}
           </div>
         </v-col>
-        <v-col class="d-flex justify-end">
+        <v-col class="d-flex justify-end mr-4">
           <div>
             {{detail.price}}€
           </div>
@@ -62,32 +61,32 @@
       </v-row>
       <v-divider></v-divider>
       <v-row dense class="flex-column pl-2">
-        <v-row dense class="pt-4 mx-2">
-         <v-col class="font-weight-bold">
+        <v-row dense class="pt-4">
+         <v-col class="font-weight-bold d-flex justify-start ml-4">
           Total
          </v-col>
-         <v-col class="d-flex justify-end">
+         <v-col class="d-flex justify-end mr-4">
            47€
          </v-col>
         </v-row>
-        <v-row dense class="pb-2 mx-2">
-          <v-col class="font-weight-bold">
+        <v-row dense class="pb-2">
+          <v-col class="font-weight-bold d-flex justify-start ml-4">
             TVA
           </v-col>
-          <v-col class="d-flex justify-end">
+          <v-col class="d-flex justify-end mr-4">
             0€
           </v-col>
         </v-row>
-        <v-row dense class="mx-2">
-          <v-col class="font-weight-bold">
+        <v-row dense>
+          <v-col class="font-weight-bold d-flex justify-start ml-4">
             Eco-Part
           </v-col>
-          <v-col class="d-flex justify-end">
+          <v-col class="d-flex justify-end mr-4">
             0€
           </v-col>
         </v-row>
       </v-row>
-    </v-container>
+    </v-card>
   </v-dialog>
 </template>
 
