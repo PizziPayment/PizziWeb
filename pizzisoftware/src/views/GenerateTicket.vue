@@ -5,7 +5,7 @@
         <v-col cols="12" md="8">
           <material-card>
             <template v-slot:heading>
-              <div class="display-2 font-weight-light">Edit Receipt</div>
+              <div class="display-2 font-weight-light">Generate Receipt</div>
 
               <div class="subtitle-1 font-weight-light">
                 Add Items to the receipt

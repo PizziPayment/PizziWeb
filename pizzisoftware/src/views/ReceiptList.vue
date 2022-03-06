@@ -56,16 +56,6 @@ export default {
         vendor: "Sam",
       },
       {
-        name: "Ice cream sandwich",
-        calories: 237,
-        date: moment().format('LLL'),
-        fat: 9.0,
-        terminal: 1,
-        carbs: 37,
-        protein: 4.3,
-        vendor: "Sam",
-      },
-      {
         name: "Coupe Homme",
         calories: 262,
         date: moment().format('LLL'),
