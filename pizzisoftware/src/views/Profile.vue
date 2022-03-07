@@ -99,12 +99,24 @@
 
               <div>
                 <div>
-                  <v-btn small color="grey" rounded class="ma-2 mr-0" @click.stop="showResetEmail()">
+                  <v-btn
+                    small
+                    color="grey"
+                    rounded
+                    class="ma-2 mr-0"
+                    @click.stop="showResetEmail()"
+                  >
                     Reset email</v-btn
                   >
                 </div>
                 <div>
-                  <v-btn small color="grey" rounded class="ma-2 mr-0">
+                  <v-btn
+                    small
+                    color="grey"
+                    rounded
+                    class="ma-2 mr-0"
+                    @click.stop="showResetPassword()"
+                  >
                     Reset password</v-btn
                   >
                 </div>
@@ -113,7 +125,8 @@
           </material-card>
         </v-col>
       </v-row>
-      <ResetEmail ref="ResetEmailDialog"/>
+      <ResetEmail ref="ResetEmailDialog" />
+      <ResetPassword ref="ResetPasswordDialog" />
     </v-container>
   </v-app>
 </template>
@@ -121,16 +134,20 @@
 <script>
 import materialCard from "@/components/MaterialCard.vue";
 import ResetEmail from "@/components/dialog/ResetEmail.vue";
+import ResetPassword from "@/components/dialog/ResetPassword.vue";
 
 export default {
-  components: { materialCard, ResetEmail },
+  components: { materialCard, ResetEmail, ResetPassword },
   data() {
     return {};
   },
   methods: {
     showResetEmail() {
-      this.$refs.ResetEmailDialog.show()
-    }
+      this.$refs.ResetEmailDialog.show();
+    },
+    showResetPassword() {
+      this.$refs.ResetPasswordDialog.show();
+    },
   },
 };
 </script>
