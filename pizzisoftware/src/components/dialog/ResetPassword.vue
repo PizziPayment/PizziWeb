@@ -81,7 +81,7 @@ export default {
         };
         axios
           .put(
-            process.env.VUE_APP_AUTHORIZATION_URL + "/shops/me/password",
+            process.env.VUE_APP_RESOURCE_URL + "/shops/me/password",
             body,
             {
               headers: bearerAuth,

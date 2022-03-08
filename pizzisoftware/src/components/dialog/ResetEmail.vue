@@ -36,7 +36,7 @@
             </div>
           </div>
         </v-card-text>
-        <v-row class="pa-6">
+        <v-row class="pa-2">
           <v-col>
             <v-btn color="primary" @click.stop="processReset()"> Reset </v-btn>
           </v-col>
@@ -81,11 +81,11 @@ export default {
         };
         axios
           .patch(
-            process.env.VUE_APP_AUTHORIZATION_URL + "/shops/me/email",
+            process.env.VUE_APP_RESOURCE_URL + "/shops/me/email",
             body,
             {
               headers: bearerAuth,
-            }
+            },
           )
           .then((response) => {
             console.log(
