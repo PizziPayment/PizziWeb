@@ -5,6 +5,9 @@ import Home from '../views/Home.vue'
 Vue.use(VueRouter)
 
 const routes = [
+  { path: "*", 
+  component: () => import(/* webpackChunkName: "about" */ '../views/Error404.vue')
+  },
   {
     path: '/',
     name: 'Home',
