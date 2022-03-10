@@ -5,7 +5,7 @@
         <v-card-title>
           <v-text-field
             v-model="search"
-            prepend-icon="mdi-magnify"
+            prepend-inner-icon="mdi-magnify"
             label="Search"
             single-line
             hide-details
@@ -20,8 +20,9 @@
           multisort
           pagination.sync="pagination"
           item-key="id"
-          loading="true"
           :items-per-page="10"
+          :loading="itemsData.length > 0 ? false : true"
+          loading-text="Loading... Please wait"
           :search="search"
           :footer-props="{
             showFirstLastPage: true,
