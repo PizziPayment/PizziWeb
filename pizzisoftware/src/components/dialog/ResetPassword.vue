@@ -20,6 +20,10 @@
                 clear-icon="mdi-close-circle"
                 clearable
                 width="300"
+                secret
+                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="show1 ? 'text' : 'password'"
+                @click:append="show1 = !show1"
               >
               </v-text-field>
             </div>
@@ -31,6 +35,9 @@
                 clear-icon="mdi-close-circle"
                 clearable
                 width="300"
+                :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="show2 ? 'text' : 'password'"
+                @click:append="show2 = !show2"
               >
               </v-text-field>
             </div>
@@ -53,6 +60,8 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
+      show1: false,
+      show2: false,
       oldPassword: null,
       newPassword: null,
       dialog: false,
@@ -92,6 +101,7 @@ export default {
               "🚀 ~ file: ResetPassword.vue ~ line 92 ~ .then ~ response",
               response
             );
+            this.dialog = false
            // if success - dialog false
           })
           .catch((error) => {
