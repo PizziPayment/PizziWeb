@@ -164,38 +164,7 @@ export default {
     selected: [2],
     discount: [0, 5, 10, 20, 30, 40, 50, 60, 70],
     items: [],
-    products: [
-      {
-        color: "#1F7087",
-        title: "Coupe Homme",
-        price: "20",
-      },
-      {
-        color: "#952175",
-        title: "Coupe Femme",
-        price: "35",
-      },
-      {
-        color: "#1F7061",
-        title: "Coupe Enfant",
-        price: "10",
-      },
-      {
-        color: "#959175",
-        title: "Tarif Réduit",
-        price: "18",
-      },
-      {
-        color: "#1F7981",
-        title: "Shampoing Supernova Brillance",
-        price: "10",
-      },
-      {
-        color: "#959175",
-        title: "Café",
-        price: "5",
-      },
-    ],
+    products: [],
   }),
 
   mounted() {
@@ -409,8 +378,8 @@ export default {
     getSelectedProducts () {
       let result = "\n"
       for (let i = 0; i < this.items.length; i++) {
-        if (this.items[i] && this.items[i].title.length > 0) {
-          result += this.items[i].title
+        if (this.items[i] && this.items[i].name.length > 0) {
+          result += this.items[i].name
           result += '   '
           result += this.items[i].price
           result += ' $ '
@@ -424,8 +393,8 @@ export default {
     let products = []
       for (let i = 0; i < this.items.length; i++) {
         let productObj = {}
-        if (this.items[i] && this.items[i].title.length > 0) {
-          productObj.productName = this.items[i].title
+        if (this.items[i] && this.items[i].name.length > 0) {
+          productObj.productName = this.items[i].name
           productObj.quantity = 1
           productObj.priceUnit = this.items[i].price
           productObj.warranty = moment().format('LLL').toString()
