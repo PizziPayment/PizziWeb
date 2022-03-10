@@ -15,12 +15,12 @@
               <v-container class="py-0">
                 <v-row dense>
                   <v-col v-for="(item, i) in products" :key="i" cols="6">
-                    <v-card :color="item.color" dark>
+                    <v-card :color="randomColor()" dark>
                       <div class="d-flex flex-no-wrap justify-space-between">
                         <div>
                           <v-card-title
                             class="text-h5"
-                            v-text="item.title"
+                            v-text="item.name"
                           ></v-card-title>
 
                           <v-card-subtitle
@@ -74,12 +74,12 @@
                       multiple
                     >
                       <template v-for="(item, index) in items">
-                        <v-list-item :key="item.title">
+                        <v-list-item :key="item.name">
                           <template>
                             <v-list-item-content>
                               <v-list-item-title
                                 class="text-center"
-                                v-text="item.title"
+                                v-text="item.name"
                               >
                               </v-list-item-title>
                               <v-list-item-title
@@ -149,9 +149,15 @@
 import materialCard from "@/components/MaterialCard.vue";
 import labelmake from "labelmake";
 import moment from "moment";
+import axios from "axios";
+import { mapGetters } from "vuex";
 
 export default {
   components: { materialCard },
+
+  computed: {
+    ...mapGetters("defaultStore", ["getAccessToken"]),
+  },
 
   data: () => ({
     appliedDiscount: 0,
@@ -192,6 +198,10 @@ export default {
     ],
   }),
 
+  mounted() {
+    this.loadShopItems()
+  },
+
   methods: {
     addToItems(item) {
       if (item) {
@@ -201,6 +211,25 @@ export default {
 
     deleteItem(index) {
       this.items.splice(index, 1);
+    },
+
+    loadShopItems() {
+      const bearerAuth = {
+        Authorization: "Bearer " + this.getAccessToken,
+      };
+      axios
+        .get(process.env.VUE_APP_RESOURCE_URL + "/shops/me/items", {
+          headers: bearerAuth,
+        })
+        .then((response) => {
+          if (response.data.items) {
+            this.products = response.data.items
+          }
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
 
     calculatePrice() {
@@ -225,6 +254,10 @@ export default {
       link.remove();
       // in case the Blob uses a lot of memory
       setTimeout(() => URL.revokeObjectURL(link.href), 7000);
+    },
+
+    randomColor() {
+      return '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
     },
 
     async generateReceipt() {
