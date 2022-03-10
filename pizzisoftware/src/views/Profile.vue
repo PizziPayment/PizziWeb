@@ -99,6 +99,7 @@
 
               <div>
                 <div>
+                  <v-btn @click="loadProfile()" color="success">load</v-btn>
                   <v-btn
                     small
                     color="grey"
@@ -136,10 +137,20 @@ import materialCard from "@/components/MaterialCard.vue";
 import ResetEmail from "@/components/dialog/ResetEmail.vue";
 import ResetPassword from "@/components/dialog/ResetPassword.vue";
 
+import axios from "axios";
+import { mapGetters } from "vuex";
+
 export default {
   components: { materialCard, ResetEmail, ResetPassword },
   data() {
-    return {};
+    return {
+      profile: null,
+    };
+  },
+  computed: {
+    ...mapGetters('defaultStore', [
+      'getAccessToken',
+    ])
   },
   methods: {
     showResetEmail() {
@@ -147,6 +158,29 @@ export default {
     },
     showResetPassword() {
       this.$refs.ResetPasswordDialog.show();
+    },
+
+    async loadProfile () {
+        const bearerAuth = {
+          Authorization:
+            "Bearer " + this.getAccessToken,
+        };
+        axios
+          .get(
+            process.env.VUE_APP_RESOURCE_URL + "/shops",
+            {
+              headers: bearerAuth,
+            }
+          )
+          .then((response) => {
+            console.log(
+              "🚀 response",
+              response
+            );
+          })
+          .catch((error) => {
+            console.error(error);
+          });
     },
   },
 };
