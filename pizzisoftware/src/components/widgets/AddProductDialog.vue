@@ -103,6 +103,7 @@ export default {
           this.$emit("addItem")
           this.openSnackbar()
           this.clearItem();
+          this.dialog = false
         })
         .catch((error) => {
           console.error(error);
