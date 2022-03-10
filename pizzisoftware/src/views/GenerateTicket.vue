@@ -15,12 +15,12 @@
               <v-container class="py-0">
                 <v-row dense>
                   <v-col v-for="(item, i) in products" :key="i" cols="6">
-                    <v-card :color="item.color" dark>
+                    <v-card :color="randomColor()" dark>
                       <div class="d-flex flex-no-wrap justify-space-between">
                         <div>
                           <v-card-title
                             class="text-h5"
-                            v-text="item.title"
+                            v-text="item.name"
                           ></v-card-title>
 
                           <v-card-subtitle
@@ -74,12 +74,12 @@
                       multiple
                     >
                       <template v-for="(item, index) in items">
-                        <v-list-item :key="item.title">
+                        <v-list-item :key="item.name">
                           <template>
                             <v-list-item-content>
                               <v-list-item-title
                                 class="text-center"
-                                v-text="item.title"
+                                v-text="item.name"
                               >
                               </v-list-item-title>
                               <v-list-item-title
@@ -149,48 +149,27 @@
 import materialCard from "@/components/MaterialCard.vue";
 import labelmake from "labelmake";
 import moment from "moment";
+import axios from "axios";
+import { mapGetters } from "vuex";
 
 export default {
   components: { materialCard },
+
+  computed: {
+    ...mapGetters("defaultStore", ["getAccessToken"]),
+  },
 
   data: () => ({
     appliedDiscount: 0,
     selected: [2],
     discount: [0, 5, 10, 20, 30, 40, 50, 60, 70],
     items: [],
-    products: [
-      {
-        color: "#1F7087",
-        title: "Coupe Homme",
-        price: "20",
-      },
-      {
-        color: "#952175",
-        title: "Coupe Femme",
-        price: "35",
-      },
-      {
-        color: "#1F7061",
-        title: "Coupe Enfant",
-        price: "10",
-      },
-      {
-        color: "#959175",
-        title: "Tarif Réduit",
-        price: "18",
-      },
-      {
-        color: "#1F7981",
-        title: "Shampoing Supernova Brillance",
-        price: "10",
-      },
-      {
-        color: "#959175",
-        title: "Café",
-        price: "5",
-      },
-    ],
+    products: [],
   }),
+
+  mounted() {
+    this.loadShopItems()
+  },
 
   methods: {
     addToItems(item) {
@@ -201,6 +180,25 @@ export default {
 
     deleteItem(index) {
       this.items.splice(index, 1);
+    },
+
+    loadShopItems() {
+      const bearerAuth = {
+        Authorization: "Bearer " + this.getAccessToken,
+      };
+      axios
+        .get(process.env.VUE_APP_RESOURCE_URL + "/shops/me/items", {
+          headers: bearerAuth,
+        })
+        .then((response) => {
+          if (response.data.items) {
+            this.products = response.data.items
+          }
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
 
     calculatePrice() {
@@ -225,6 +223,10 @@ export default {
       link.remove();
       // in case the Blob uses a lot of memory
       setTimeout(() => URL.revokeObjectURL(link.href), 7000);
+    },
+
+    randomColor() {
+      return '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
     },
 
     async generateReceipt() {
@@ -376,8 +378,8 @@ export default {
     getSelectedProducts () {
       let result = "\n"
       for (let i = 0; i < this.items.length; i++) {
-        if (this.items[i] && this.items[i].title.length > 0) {
-          result += this.items[i].title
+        if (this.items[i] && this.items[i].name.length > 0) {
+          result += this.items[i].name
           result += '   '
           result += this.items[i].price
           result += ' $ '
@@ -391,8 +393,8 @@ export default {
     let products = []
       for (let i = 0; i < this.items.length; i++) {
         let productObj = {}
-        if (this.items[i] && this.items[i].title.length > 0) {
-          productObj.productName = this.items[i].title
+        if (this.items[i] && this.items[i].name.length > 0) {
+          productObj.productName = this.items[i].name
           productObj.quantity = 1
           productObj.priceUnit = this.items[i].price
           productObj.warranty = moment().format('LLL').toString()
