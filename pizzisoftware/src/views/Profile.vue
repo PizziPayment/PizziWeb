@@ -173,10 +173,9 @@ export default {
             }
           )
           .then((response) => {
-            console.log(
-              "🚀 response",
-              response
-            );
+            if(response.data) {
+              this.profile = response.data
+            }
           })
           .catch((error) => {
             console.error(error);
