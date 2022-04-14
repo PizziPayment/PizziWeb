@@ -14,10 +14,9 @@ export async function userLogin({ commit }, payload) {
 }
 
 export async function userLogout({ commit }) {
-  commit("UPDATE_USER_LOGGED_IN", 0);
   // clear tokens
+  commit("UPDATE_USER_LOGGED_IN", 0);
   commit("UPDATE_ACCESS_TOKEN", null);
   commit("UPDATE_REFRESH_TOKEN", null);
   commit("UPDATE_EXPIRATION_TOKEN", null);
-  commit("UPDATE_USER_LOGGED_IN", 1);
 }
