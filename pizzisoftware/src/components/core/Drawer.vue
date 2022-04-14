@@ -61,6 +61,7 @@ export default {
         {icon : "mdi-notebook-multiple", text:"Product Register", to:'/RegisterProduct'},
         {icon : "mdi-cash", text:"Last Sales", to:'/ReceiptList'},
         { icon: "mdi-account", text: "Profile", to: '/profile' },
+        {icon: "mdi-undo", text: "Return Product", to:'/ProductReturn'},
         { icon: "mdi-exit-to-app", text: "Sign Out", to: '/login'}
       ],
       model: 0
