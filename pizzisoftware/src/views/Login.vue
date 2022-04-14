@@ -45,6 +45,7 @@
                   ></v-text-field>
                   <v-btn
                     @click="processSignIn()"
+                    :disabled="!email && !password"
                     justify-center
                     small
                     color="primary"
