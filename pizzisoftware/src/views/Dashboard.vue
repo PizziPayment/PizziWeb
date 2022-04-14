@@ -14,7 +14,7 @@
           <cashPayment />
         </v-col>
         <v-col class="mx-6">
-          <productReturn />
+          <calendar />
         </v-col>
       </v-row>
       <v-row class="ma-6">
@@ -28,7 +28,7 @@
 <script>
 // to remove when widget manager finished
 import sales from "@/components/widgets/Sales.vue";
-import productReturn from "@/components/widgets/ProductReturn.vue";
+import calendar from "@/components/widgets/Calendar/Calendar.vue";
 import cashPayment from "@/components/widgets/CashPayment/CashPayment.vue";
 import SalesRevenueGraph from "@/components/widgets/Charts/SalesRevenueGraph.vue";
 import MostSoldGraph from "@/components/widgets/Charts/MostSoldGraph.vue";
