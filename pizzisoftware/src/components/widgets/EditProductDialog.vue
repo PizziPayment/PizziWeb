@@ -3,23 +3,25 @@
     <v-dialog v-model="dialog" width="500" @click:outside="closeDialog()">
       <v-card elevation="5">
         <v-card-title class="text-h6" style="background-color: #05c39b;">
-          Add product
+          Edit product
         </v-card-title>
 
-        <v-card-text class="mt-6">
+        <v-card-text v-if="oldItem" class="mt-6">
           <v-container>
             <v-row>
               <v-text-field
-                v-model="name"
-                label="Product name"
+                v-model="oldItem.name"
+                label="Name"
+                :placeholder="oldItem.name"
                 filled
                 clearable
               ></v-text-field>
             </v-row>
             <v-row>
               <v-text-field
-                v-model="price"
+                v-model="oldItem.price"
                 label="Price"
+                :placeholder="oldItem.price"
                 filled
                 type="number"
                 clearable
@@ -32,14 +34,14 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green" text @click="saveItem()">
+          <v-btn color="green" text @click="editItem()">
             Save
           </v-btn>
         </v-card-actions>
       </v-card>
       <v-snackbar color="green" v-model="snackbar" :timeout="1500">
         <div class="text-center">
-          Item saved
+          Saved
         </div>
       </v-snackbar>
     </v-dialog>
@@ -53,6 +55,7 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
+      oldItem: null,
       snackbar: false,
       name: "",
       price: "",
@@ -65,7 +68,8 @@ export default {
   },
 
   methods: {
-    show() {
+    show(oldItem) {
+      this.oldItem = oldItem
       this.dialog = true;
     },
 
@@ -74,32 +78,27 @@ export default {
     },
 
     clearItem() {
-      this.name = "";
-      this.price = "";
+      this.oldItem = null;
     },
 
     openSnackbar() {
       this.snackbar = true
     },
 
-    async saveItem() {
+    async editItem() {
       const bearerAuth = {
         Authorization: "Bearer " + this.getAccessToken,
       };
       const body = {
-        items: [
-          {
-            name: this.name,
-            price: this.price,
-          },
-        ],
+        name: this.oldItem.name,
+        price: this.oldItem.price,
       };
       axios
-        .post(process.env.VUE_APP_RESOURCE_URL + "/shops/me/items", body, {
+        .patch(process.env.VUE_APP_RESOURCE_URL + "/shops/me/items/" + this.oldItem.id , body, {
           headers: bearerAuth,
         })
         .then(() => {
-          this.$emit("addItem")
+          this.$emit("editItem")
           this.openSnackbar()
           this.clearItem();
           this.dialog = false
