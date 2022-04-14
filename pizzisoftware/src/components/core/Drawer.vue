@@ -42,11 +42,17 @@
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
+      <v-btn @click.stop="processSignOut()" class="ma-3" icon color="red">
+        <v-icon>mdi-exit-to-app</v-icon>
+        Sign Out
+      </v-btn>
       </v-list>
     </v-navigation-drawer>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: 'CoreDrawer',
   props: {
@@ -61,7 +67,6 @@ export default {
         {icon : "mdi-notebook-multiple", text:"Product Register", to:'/RegisterProduct'},
         {icon : "mdi-cash", text:"Last Sales", to:'/ReceiptList'},
         { icon: "mdi-account", text: "Profile", to: '/profile' },
-        { icon: "mdi-exit-to-app", text: "Sign Out", to: '/login'}
       ],
       model: 0
     };
@@ -74,6 +79,14 @@ export default {
       set (value) {
          this.$emit('input', value)
       }
+    }
+  },
+  methods: {
+    ...mapActions("defaultStore", ["userLogout"]),
+
+    processSignOut() {
+      this.userLogout()
+      this.$router.push("/login");
     }
   }
 };
