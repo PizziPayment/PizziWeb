@@ -1,7 +1,7 @@
 <template>
   <v-app>
 
-    <core-app-bar @showDialog='show =! show'/>
+    <core-app-bar @showDialog='show =! show' id='app-bar'/>
 
     <core-drawer v-model='show'/>
 
@@ -22,7 +22,7 @@
       return {
         show: true
       }
-    }
+    },
   }
 
 </script>
