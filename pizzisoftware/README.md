@@ -7,6 +7,14 @@ Shop Software App fueled by VueJS
 - [Node.js](https://nodejs.org/en/download/package-manager/)
 - NPM
 
+## Environment Variables
+
+```
+- Contact us in order for us to provide you the environment variable.
+- Add the variables in a .env file at the root of the repository.
+- Please make sure to not push this env file.
+```
+
 ## Project setup
 
 ```
