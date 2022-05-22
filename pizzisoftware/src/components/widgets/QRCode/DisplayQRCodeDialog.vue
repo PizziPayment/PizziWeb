@@ -36,7 +36,7 @@ export default {
       snackbar: false,
       dialog: false,
       value: 'https://youtube.com',
-      size: 500,
+      size: 400,
     };
   },
 
