@@ -51,6 +51,7 @@
                     color="primary"
                     >connexion</v-btn
                   >
+
                   <v-col>
                     <router-link to="/signup">Créez votre compte</router-link>
                   </v-col>
@@ -91,11 +92,11 @@ export default {
         Authorization:
           "Basic " +
           Buffer.from(
-            process.env.VUE_APP_CLIENT_ID + ':' + process.env.VUE_APP_SECRET
+            process.env.VUE_APP_CLIENT_ID + ":" + process.env.VUE_APP_SECRET
           ).toString("base64"),
       };
       axios
-        .post(process.env.VUE_APP_AUTHORIZATION_URL +"/shop/login", body, {
+        .post(process.env.VUE_APP_AUTHORIZATION_URL + "/shop/login", body, {
           headers: basicAuth,
         })
         .then((response) => {

@@ -3,6 +3,7 @@ export default function() {
     accessToken: null,
     refreshToken: null,
     expirationToken: null,
-    userLoggedIn: false
+    userLoggedIn: false,
+    isDarkTheme: true
   };
 }

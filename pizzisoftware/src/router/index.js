@@ -101,7 +101,7 @@ const router = new VueRouter({
 
 
 router.beforeEach((to, from, next)=>{
-  if (to.path !== '/login' && router.app.$store.state.defaultStore.userLoggedIn !== 1){
+  if (to.path !== '/signup' && to.path !== '/login' && router.app.$store.state.defaultStore.userLoggedIn !== 1){
     next({
       path: '/login',
       replace: true

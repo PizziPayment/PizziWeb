@@ -20,3 +20,7 @@ export async function userLogout({ commit }) {
   commit("UPDATE_REFRESH_TOKEN", null);
   commit("UPDATE_EXPIRATION_TOKEN", null);
 }
+
+export async function setDarkTheme({ commit }, isDarkTheme) {
+  commit("UPDATE_DARK_MODE", isDarkTheme);
+}

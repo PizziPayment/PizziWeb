@@ -1,5 +1,5 @@
 <template>
-  <v-card class="pa-6" height='300px'>
+  <v-card class="pa-6 returnThemeStyleCard" height="300px">
     <div>
       <h2 class="d-flex text-right">Returned product</h2>
       <p class="subtitle-2 d-flex text-left ml-6 font-italic">
@@ -10,17 +10,15 @@
       label="Pizzi ID"
       outlined
       v-model="pizziId"
-      color="rgb(112, 192, 242)"
       append-icon="mdi-undo"
       prefix="#"
       @keyup.enter="returnProduct()"
       @click="returnProduct()"
-      class='mt-16'
+      class="mt-16 themeSelector"
     >
     </v-text-field>
   </v-card>
 </template>
-
 
 <script>
 export default {
@@ -37,3 +35,13 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.returnThemeStyleCard {
+  color: var(--pizzi-color2) !important;
+  background: var(--pizzi-bg-chart) !important;
+}
+.themeSelector {
+  color: var(--pizzi-green) !important;
+}
+</style>

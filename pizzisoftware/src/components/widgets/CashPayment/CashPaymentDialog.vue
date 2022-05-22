@@ -1,14 +1,14 @@
 <template>
   <v-dialog v-model="show" persistent max-width="30%">
-    <v-card>
+    <v-card class="themeStyleCard">
       <v-card-text>
-        <v-card-title class="d-flex justify-center">
+        <v-card-title class="d-flex justify-center themeStyleCard">
           Register cash payment
         </v-card-title>
         <v-text-field
           v-model="amount"
           :rules="[rules.number]"
-          class="pa-6"
+          class="pa-6 themeStyleCard"
           append-icon="mdi-currency-eur"
           clear-icon="mdi-close-circle"
           clearable
