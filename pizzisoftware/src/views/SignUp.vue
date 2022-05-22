@@ -157,6 +157,7 @@
 
 <script>
 import axios from "axios";
+import Bugsnag from '@bugsnag/js';
 
 export default {
   data: () => ({
@@ -214,11 +215,12 @@ export default {
         axios
           .post(process.env.VUE_APP_RESOURCE_URL + "/shops", body, { headers: basicAuth })
           .then((response) => {
-            console.log(response);
+            Bugsnag.leaveBreadcrumb('New user subscribed', response)
             this.$router.push({ path: "/login" });
           })
           .catch((error) => {
             this.$router.push("/");
+            Bugsnag.notify(error)
             console.error(error);
           });
       }
