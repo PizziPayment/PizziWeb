@@ -21,6 +21,11 @@
         <sales />
       </v-row>
     </v-container>
+     <AppTour
+      :config="configTutorial"
+      @event="tutorialEvent($event)"
+      @close="panels = [0, 1]"
+    />
   </v-app>
 </template>
 
@@ -31,6 +36,7 @@ import calendar from "@/components/widgets/Calendar/Calendar.vue";
 import cashPayment from "@/components/widgets/CashPayment/CashPayment.vue";
 import SalesRevenueGraph from "@/components/widgets/Charts/SalesRevenueGraph.vue";
 import MostSoldGraph from "@/components/widgets/Charts/MostSoldGraph.vue";
+import AppTour from "@/components/core/AppTour.vue"
 
 export default {
   components: {
@@ -39,42 +45,31 @@ export default {
     SalesRevenueGraph,
     calendar,
     sales,
+    AppTour
   },
   data: () => ({
-    steps: [
-      {
-        target: "#app-bar",
-        content: `Welcome on your <strong>Pizzi Dashboard</strong>`,
-      },
-      {
-        target: "#graph-div",
-        content: `You can consult your <strong>incomes</strong> and <strong>bestsellers</strong>`,
-      },
-      {
-        target: "#cash-button",
-        content: `You can accept <strong>cash</strong> quickly from this button<br/>and consult last <strong>cash payments</strong>`,
-      },
-      {
-        target: '#last-sales',
-        content: `View your <strong>latest sales</strong> from this widget`
-      },
-      {
-        target: '#drawer-header',
-        content: `Pizzi also allows you <strong>to</strong> ...`,
-      },
-      {
-        target: '#drawer-generate',
-        content: `Generate a receipt,`,
-      },
-      {
-        target: '#drawer-register',
-        content: `Add a product to your inventory,`
-      },
-      {
-        target: '#drawer-return',
-        content: `Accept the return of a product`
-      }
-    ],
+    configTutorial: {
+      title: "PizziDashboard",
+      fields: [
+        {
+          id: "shopCard",
+          text: "Your shop information",
+          borderRadius: "15px",
+        },
+        {
+          id: "DashboardLink",
+          text: "Link to Dashboard",
+        },
+        {
+          id: "GenerateReceiptLink",
+          text: "Link to Blabla",
+        },
+        {
+          id: ["DashboardLink", "GenerateReceiptLink"],
+          text: "tu peux faire aussi du multi id ",
+        },
+      ],
+    },
   }),
 };
 </script>
