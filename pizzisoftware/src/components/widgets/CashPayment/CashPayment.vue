@@ -2,7 +2,7 @@
   <div>
     <cashPaymentDialog v-model="dialog" />
     <v-card class="mx-auto" height='476px'>
-      <v-btn class='mt-n8' rounded large color="green" @click.stop="acceptCashPayment">
+      <v-btn class='mt-n8' rounded large color="green" @click.stop="acceptCashPayment" id="cash-button">
         <v-icon large color="white">mdi-cash-register</v-icon>
         <span class="white--text pa-12">Register Cash Payment </span>
       </v-btn>

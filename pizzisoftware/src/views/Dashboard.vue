@@ -35,10 +35,10 @@ import MostSoldGraph from "@/components/widgets/Charts/MostSoldGraph.vue";
 
 export default {
   components: {
-    productReturn,
     cashPayment,
     MostSoldGraph,
     SalesRevenueGraph,
+    calendar,
     sales,
   },
   data: () => ({
@@ -56,13 +56,25 @@ export default {
         content: `You can accept <strong>cash</strong> quickly from this button<br/>and consult last <strong>cash payments</strong>`,
       },
       {
-        target: "#return-product",
-        content: `Enter the <strong>Pizzi ID</strong> of a product to accept a return`
-      },
-      {
         target: '#last-sales',
         content: `View your <strong>latest sales</strong> from this widget`
       },
+      {
+        target: '#drawer-header',
+        content: `Pizzi also allows you <strong>to</strong> ...`,
+      },
+      {
+        target: '#drawer-generate',
+        content: `Generate a receipt,`,
+      },
+      {
+        target: '#drawer-register',
+        content: `Add a product to your inventory,`
+      },
+      {
+        target: '#drawer-return',
+        content: `Accept the return of a product`
+      }
     ],
   }),
   mounted() {

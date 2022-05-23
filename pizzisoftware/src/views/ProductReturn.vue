@@ -1,5 +1,5 @@
 <template>
-  <material-card class="ma-12">
+  <material-card class="ma-12" max-width="95%">
     <template v-slot:heading>
       <div class="display-2 font-weight-light">Product Return</div>
       <div class="subtitle-1 font-weight-light">
@@ -109,6 +109,7 @@ export default {
   components: { materialCard },
   data() {
     return {
+      valid: null,
       pizziId: null,
       returnedReason: null,
       nameRules: [
