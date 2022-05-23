@@ -21,7 +21,6 @@
         <sales />
       </v-row>
     </v-container>
-    <v-tour name="myTour" :steps="steps"></v-tour>
   </v-app>
 </template>
 
@@ -77,10 +76,6 @@ export default {
       }
     ],
   }),
-  mounted() {
-    console.log(this.$tours);
-    this.$tours["myTour"].start();
-  },
 };
 </script>
 
