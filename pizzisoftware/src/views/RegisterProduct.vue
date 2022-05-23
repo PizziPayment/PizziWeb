@@ -53,6 +53,7 @@
 import AddProductDialog from "@/components/widgets/AddProductDialog.vue";
 import EditProductDialog from "@/components/widgets/EditProductDialog.vue";
 import axios from "axios";
+import Bugsnag from '@bugsnag/js'
 import { mapGetters } from "vuex";
 
 export default {
@@ -109,6 +110,7 @@ export default {
         })
         .catch((error) => {
           console.error(error);
+          Bugsnag.notify(error)
         });
     },
 
@@ -127,6 +129,7 @@ export default {
         })
         .catch((error) => {
           console.error(error);
+          Bugsnag.notify(error)
         });
     },
   },

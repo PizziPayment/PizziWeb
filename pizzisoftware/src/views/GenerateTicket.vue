@@ -151,6 +151,7 @@ import DisplayQRCodeDialog from '@/components/widgets/QRCode/DisplayQRCodeDialog
 import labelmake from "labelmake";
 import moment from "moment";
 import axios from "axios";
+import Bugsnag from '@bugsnag/js'
 import { mapGetters } from "vuex";
 
 export default {
@@ -197,6 +198,7 @@ export default {
           }
         })
         .catch((error) => {
+          Bugsnag.notify(error)
           console.error(error);
         });
     },
