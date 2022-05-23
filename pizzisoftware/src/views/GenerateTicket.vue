@@ -203,6 +203,25 @@ export default {
         });
     },
 
+     async createTransaction () {
+      const total_price = this.calculatePrice()
+      const items = this.getProducts()
+      const bearerAuth = {
+        Authorization: "Bearer " + this.getAccessToken,
+      }
+      const body = {
+        tva_percentage : 20,
+        total_price : total_price,
+        items : items
+      }
+      axios
+        .post(process.env.VUE_APP_RESOURCE_URL + "/shops/me/transactions", body, { 
+          headers : bearerAuth
+        }).then((response) => {
+          console.log(response)
+        })
+    },
+
     calculatePrice() {
       let result = 0;
       if (this.items && this.items.length) {
@@ -236,6 +255,7 @@ export default {
     },
 
     async generateReceipt() {
+      this.createTransaction()
       const template = {
         basePdf: { width: 210, height: 297 },
         schemas: [
