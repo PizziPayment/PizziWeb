@@ -26,6 +26,7 @@
 <script>
 import moment from 'moment'
 import axios from 'axios'
+import Bugsnag from '@bugsnag/js'
 import { mapGetters } from "vuex";
 
 export default {
@@ -123,19 +124,9 @@ export default {
         .get(process.env.VUE_APP_RESOURCE_URL +"/receipts", { headers: { Authorization: 'Bearer eeb4d6b4665685a42e70c3c1639729c33fe54a71' } })
         .then((response) => {
           console.log("res", response)
-          // const success = this.userLogin({
-          //   accessToken: response.data.access_token,
-          //   refreshToken: response.data.refresh_token,
-          //   expirationToken: response.data.access_token_expires_at,
-          // });
-          // if (success) {
-          //   this.$router.push("/dashboard");
-          // } else {
-          //   console.error("Error login");
-          //   // to do handle case wrong login
-          // }
         })
         .catch((error) => {
+          Bugsnag.notify(error)
           console.error(error);
         });
     },

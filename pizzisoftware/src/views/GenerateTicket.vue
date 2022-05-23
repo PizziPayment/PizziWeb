@@ -60,6 +60,10 @@
                 Faudra Tiff Hair
               </h4>
 
+              <v-btn @click.stop="openQrCodeDialog" color="primary" rounded class="ma-2 mr-0">
+                Connect User
+              </v-btn>
+
               <div v-if="items && items.length > 0">
                 <v-card
                   class="mx-auto ma-2"
@@ -128,12 +132,7 @@
                 </v-btn>
               </div>
               <div v-else>
-                <v-btn
-                  disabled
-                  color="primary"
-                  rounded
-                  class="mr-0"
-                >
+                <v-btn disabled color="primary" rounded class="mr-0">
                   no items selected
                 </v-btn>
               </div>
@@ -141,19 +140,22 @@
           </material-card>
         </v-col>
       </v-row>
+      <DisplayQRCodeDialog ref="QRCodeDialog" />
     </v-container>
   </v-app>
 </template>
 
 <script>
 import materialCard from "@/components/MaterialCard.vue";
+import DisplayQRCodeDialog from '@/components/widgets/QRCode/DisplayQRCodeDialog.vue'
 import labelmake from "labelmake";
 import moment from "moment";
 import axios from "axios";
+import Bugsnag from '@bugsnag/js'
 import { mapGetters } from "vuex";
 
 export default {
-  components: { materialCard },
+  components: { materialCard, DisplayQRCodeDialog },
 
   computed: {
     ...mapGetters("defaultStore", ["getAccessToken"]),
@@ -194,9 +196,9 @@ export default {
           if (response.data.items) {
             this.products = response.data.items
           }
-          console.log(response);
         })
         .catch((error) => {
+          Bugsnag.notify(error)
           console.error(error);
         });
     },
@@ -227,6 +229,10 @@ export default {
 
     randomColor() {
       return '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
+    },
+
+    openQrCodeDialog() {
+      this.$refs.QRCodeDialog.show()
     },
 
     async generateReceipt() {

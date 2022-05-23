@@ -48,6 +48,7 @@
 
 <script>
 import axios from "axios";
+import Bugsnag from '@bugsnag/js'
 import { mapGetters } from "vuex";
 
 export default {
@@ -102,9 +103,11 @@ export default {
           this.$emit("addItem")
           this.openSnackbar()
           this.clearItem();
+          Bugsnag.Breadcrumb('New item added into DB')
           this.dialog = false
         })
         .catch((error) => {
+          Bugsnag.notify(error)
           console.error(error);
         });
     },
