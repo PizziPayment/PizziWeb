@@ -1,16 +1,19 @@
 <template>
-    <v-navigation-drawer v-model='show' app hide-overlay dark src="https://graphiste.com/blog/wp-content/uploads/2016/08/barbier-5.jpg">
-      <template v-slot:img="props">
-        <v-img 
-          v-bind="props" 
-          gradient="to top, rgba(0, 0, 0, .75), rgba(0, 0, 0, .90)"
-          ></v-img>
-      </template>
-      <v-list
-        nav
-        dense
-      >
-      <v-list-item>
+  <v-navigation-drawer
+    v-model="show"
+    app
+    hide-overlay
+    dark
+    src="https://graphiste.com/blog/wp-content/uploads/2016/08/barbier-5.jpg"
+  >
+    <template v-slot:img="props">
+      <v-img
+        v-bind="props"
+        gradient="to top, rgba(0, 0, 0, .75), rgba(0, 0, 0, .90)"
+      ></v-img>
+    </template>
+    <v-list nav dense>
+      <v-list-item id="shopCard">
         <v-list-item-content>
           <v-list-item-title>
             <p class="headline font-weight-bold mt-4">
@@ -25,20 +28,22 @@
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      </v-list>
-      <v-divider class="mb-2" />
-      <v-list flat class="mt-6">
-        <v-list-item-group v-model="model" color="green">
+    </v-list>
+    <v-divider class="mb-2" />
+    <v-list flat class="mt-6">
+      <v-list-item-group v-model="model" color="green">
         <v-list-item
           v-for="(link, i) in links"
           :key="i"
-          routeur :to="link.to"
+          routeur
+          :to="link.to"
+          :id="link && link.id ? link.id : i"
         >
           <v-list-item-icon>
             <v-icon v-text="link.icon"></v-icon>
           </v-list-item-icon>
           <v-list-item-content style="text-align: left">
-            <v-list-item-title v-text="link.text" ></v-list-item-title>
+            <v-list-item-title v-text="link.text"></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
@@ -46,55 +51,69 @@
         <v-icon>mdi-exit-to-app</v-icon>
         Sign Out
       </v-btn>
-      </v-list>
-    </v-navigation-drawer>
+    </v-list>
+  </v-navigation-drawer>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 
 export default {
-  name: 'CoreDrawer',
+  name: "CoreDrawer",
   props: {
-    value: Boolean
+    value: Boolean,
   },
   data() {
     return {
       drawer: false,
       links: [
-        { icon: "mdi-view-dashboard", text: 'Dashboard', to: '/dashboard' },
-        { icon: "mdi-text", text:"Generate Receipt", to: '/GenerateTicket'},
-        {icon : "mdi-notebook-multiple", text:"Product Register", to:'/RegisterProduct'},
-        {icon : "mdi-cash", text:"Last Sales", to:'/ReceiptList'},
-        { icon: "mdi-account", text: "Profile", to: '/profile' },
+        {
+          id: "DashboardLink",
+          icon: "mdi-view-dashboard",
+          text: "Dashboard",
+          to: "/dashboard",
+        },
+        {
+          id: "GenerateReceiptLink",
+          icon: "mdi-text",
+          text: "Generate Receipt",
+          to: "/GenerateTicket",
+        },
+        {
+          icon: "mdi-notebook-multiple",
+          text: "Product Register",
+          to: "/RegisterProduct",
+        },
+        { icon: "mdi-cash", text: "Last Sales", to: "/ReceiptList" },
+        { icon: "mdi-account", text: "Profile", to: "/profile" },
       ],
-      model: 0
+      model: 0,
     };
   },
   computed: {
     show: {
-      get () {
-        return this.value
+      get() {
+        return this.value;
       },
-      set (value) {
-         this.$emit('input', value)
-      }
-    }
+      set(value) {
+        this.$emit("input", value);
+      },
+    },
   },
   methods: {
     ...mapActions("defaultStore", ["userLogout"]),
 
     processSignOut() {
-      this.userLogout()
+      this.userLogout();
       this.$router.push("/login");
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style>
-  .v-navigation-drawer__border {
-    width: 1.5px!important;
-    background-color: rgba(255, 255, 255, 0.12)!important;
-  }
+.v-navigation-drawer__border {
+  width: 1.5px !important;
+  background-color: rgba(255, 255, 255, 0.12) !important;
+}
 </style>
