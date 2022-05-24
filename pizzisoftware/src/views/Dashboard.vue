@@ -13,7 +13,7 @@
         <v-col class="mx-6" id="cash-payment">
           <cashPayment />
         </v-col>
-        <v-col class="mx-6">
+        <v-col class="mx-6" id="calendar">
           <calendar />
         </v-col>
       </v-row>
@@ -52,22 +52,43 @@ export default {
       title: "PizziDashboard",
       fields: [
         {
-          id: "shopCard",
-          text: "Your shop information",
-          borderRadius: "15px",
+          text: "Welcome to your PizziDashboard",
         },
         {
-          id: "DashboardLink",
-          text: "Link to Dashboard",
+          id: "drawer-header",
+          text: "From here you can monitor your whole business",
         },
         {
-          id: "GenerateReceiptLink",
-          text: "Link to Blabla",
+          id: "drawer-generate",
+          text: "You can generate a receipt...",
         },
         {
-          id: ["DashboardLink", "GenerateReceiptLink"],
-          text: "tu peux faire aussi du multi id ",
+          id: "drawer-register",
+          text: "You can register your products and modify them...",
         },
+        {
+          id: "drawer-last-sales",
+          text: "View your last sales...",
+        },
+        {
+          id: "drawer-return",
+          text: "Or even accept a product return",
+        },
+        {
+          id: ["most-sold-graph", "sales-revenue-graph"],
+          text: "From the main page you can monitor some of your activities...",
+        },
+        {
+          id: "cash-payment",
+          text: "Accept a cash payment...",
+        },
+        {
+          id: "calendar",
+          text: "Or even check your next appointments",
+        },
+        {
+          text: "Have a good time with your future essential tool, the PizziDashboard !"
+        }
       ],
     },
   }),
