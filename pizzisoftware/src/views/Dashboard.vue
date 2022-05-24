@@ -3,22 +3,22 @@
     <v-container fluid class="background containerThemeStyle">
       <v-row class="my-6">
         <v-col class="mx-6">
-          <sales-revenue-graph></sales-revenue-graph>
+          <SalesRevenueGraph />
         </v-col>
         <v-col class="mx-6">
-          <most-sold-graph></most-sold-graph>
+          <MostSoldGraph />
         </v-col>
       </v-row>
       <v-row class="my-6">
         <v-col class="mx-6">
-          <cashPayment />
+          <CashPayment />
         </v-col>
         <v-col class="mx-6">
-          <productReturn />
+          <ProductReturn />
         </v-col>
       </v-row>
       <v-row class="ma-6">
-        <sales />
+        <Sales />
       </v-row>
     </v-container>
   </v-app>
@@ -26,19 +26,19 @@
 
 <script>
 // to remove when widget manager finished
-import sales from "@/components/widgets/Sales.vue";
-import productReturn from "@/components/widgets/ProductReturn.vue";
-import cashPayment from "@/components/widgets/CashPayment/CashPayment.vue";
+import Sales from "@/components/widgets/Sales.vue";
+import ProductReturn from "@/components/widgets/ProductReturn.vue";
+import CashPayment from "@/components/widgets/CashPayment/CashPayment.vue";
 import SalesRevenueGraph from "@/components/widgets/Charts/SalesRevenueGraph.vue";
 import MostSoldGraph from "@/components/widgets/Charts/MostSoldGraph.vue";
 
 export default {
   components: {
-    productReturn,
-    cashPayment,
+    ProductReturn,
+    CashPayment,
     MostSoldGraph,
     SalesRevenueGraph,
-    sales,
+    Sales,
   },
   data() {
     return {
@@ -53,13 +53,10 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .containerThemeStyle {
   background: var(--pizzi-bg2) !important;
 }
-</style>
-
-<style>
 .background {
   height: 100%;
 }

@@ -11,6 +11,9 @@ export default {};
 </script>
 
 <style lang="scss">
+.containerThemeStyle {
+  background: var(--pizzi-bg2) !important;
+}
 .colorTheme {
   color: var(--pizzi-color) !important;
 }

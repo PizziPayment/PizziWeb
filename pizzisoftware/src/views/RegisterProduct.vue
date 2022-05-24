@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <v-container fluid class="background">
+  <v-app class="containerThemeStyle">
+    <v-container fluid class="background containerThemeStyle">
       <v-card class="mt-4 mx-2 pa-4">
         <v-card-title>
           <v-text-field
@@ -11,7 +11,9 @@
             hide-details
             clearable
           ></v-text-field>
-          <v-btn @click.stop="openAddProduct()" class="mx-3" color="primary"> add </v-btn>
+          <v-btn @click.stop="openAddProduct()" class="mx-3" color="primary">
+            add
+          </v-btn>
         </v-card-title>
         <v-data-table
           class="itemsTable"
@@ -29,7 +31,7 @@
             firstIcon: 'mdi-arrow-collapse-left',
             lastIcon: 'mdi-arrow-collapse-right',
             prevIcon: 'mdi-minus',
-            nextIcon: 'mdi-plus'
+            nextIcon: 'mdi-plus',
           }"
         >
           <template v-slot:item.actions="{ item }">
@@ -43,8 +45,8 @@
         </v-data-table>
       </v-card>
 
-      <AddProductDialog ref="AddProductRef" @addItem="loadItems()"/>
-      <EditProductDialog ref="EditProductRef" @editItem="loadItems()"/>
+      <AddProductDialog ref="AddProductRef" @addItem="loadItems()" />
+      <EditProductDialog ref="EditProductRef" @editItem="loadItems()" />
     </v-container>
   </v-app>
 </template>
@@ -63,36 +65,36 @@ export default {
   },
 
   data: () => ({
-    search: '',
+    search: "",
     headers: [
       {
-        text: 'ID',
-        align: 'start',
+        text: "ID",
+        align: "start",
         filterable: false,
-        value: 'id',
+        value: "id",
       },
-      { text: 'Item', value: 'name' },
-      { text: 'Price', value: 'price', sortable: true },
-      { text: 'Creation date', value: 'created_at' },
-      { text: 'Actions', value: 'actions', sortable: false }
+      { text: "Item", value: "name" },
+      { text: "Price", value: "price", sortable: true },
+      { text: "Creation date", value: "created_at" },
+      { text: "Actions", value: "actions", sortable: false },
     ],
     itemsData: [],
   }),
 
   mounted() {
-    this.loadItems()
+    this.loadItems();
   },
 
   methods: {
-    openAddProduct () {
+    openAddProduct() {
       if (this.$refs.AddProductRef) {
-        this.$refs.AddProductRef.show()
+        this.$refs.AddProductRef.show();
       }
     },
 
     async editItem(item) {
       if (this.$refs.EditProductRef) {
-        this.$refs.EditProductRef.show(item)
+        this.$refs.EditProductRef.show(item);
       }
     },
 
@@ -101,11 +103,14 @@ export default {
         Authorization: "Bearer " + this.getAccessToken,
       };
       axios
-        .delete(process.env.VUE_APP_RESOURCE_URL + "/shops/me/items/" + item.id, {
-          headers: bearerAuth,
-        })
+        .delete(
+          process.env.VUE_APP_RESOURCE_URL + "/shops/me/items/" + item.id,
+          {
+            headers: bearerAuth,
+          }
+        )
         .then(() => {
-          this.loadItems()
+          this.loadItems();
         })
         .catch((error) => {
           console.error(error);
@@ -122,7 +127,7 @@ export default {
         })
         .then((response) => {
           if (response.data.items) {
-            this.itemsData = response.data.items
+            this.itemsData = response.data.items;
           }
         })
         .catch((error) => {

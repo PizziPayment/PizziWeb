@@ -77,4 +77,9 @@ export default {
 .colorThemeLocal {
   color: var(--pizzi-color2) !important;
 }
+
+.theme--light.v-input input,
+.theme--light.v-input textarea {
+  color: var(--pizzi-color2) !important;
+}
 </style>

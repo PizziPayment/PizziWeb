@@ -496,12 +496,6 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-.containerThemeStyle {
-  background: var(--pizzi-bg2) !important;
-}
-</style>
-
 <style>
 .background {
   height: 100%;
