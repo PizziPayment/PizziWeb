@@ -202,9 +202,10 @@ export default {
           },
           password: this.password,
           email: this.email,
-          phone: '+33 6 12 34 56 78'
+          phone: '+33 6 12 34 56 78',
+          siret: '43014643100019' 
         };
-
+        console.log(body)
         const basicAuth = {
           Authorization:
             "Basic " +

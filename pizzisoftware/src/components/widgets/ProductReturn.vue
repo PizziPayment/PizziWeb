@@ -16,6 +16,7 @@
       @keyup.enter="returnProduct()"
       @click="returnProduct()"
       class='mt-16'
+      id="return-product"
     >
     </v-text-field>
   </v-card>

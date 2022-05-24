@@ -60,7 +60,7 @@
                 Faudra Tiff Hair
               </h4>
 
-              <v-btn @click.stop="openQrCodeDialog" color="primary" rounded class="ma-2 mr-0">
+              <v-btn @click.stop="openQrCodeDialog" color="primary" rounded class="ma-2 mr-0" v-if="transactionCreated">
                 Connect User
               </v-btn>
 
@@ -140,7 +140,7 @@
           </material-card>
         </v-col>
       </v-row>
-      <DisplayQRCodeDialog ref="QRCodeDialog" />
+      <DisplayQRCodeDialog ref="QRCodeDialog" v-if="transactionCreated" :id="transactionId" :token="transactionToken"/>
     </v-container>
   </v-app>
 </template>
@@ -167,6 +167,9 @@ export default {
     discount: [0, 5, 10, 20, 30, 40, 50, 60, 70],
     items: [],
     products: [],
+    transactionId : '',
+    transactionToken: '',
+    transactionCreated: false
   }),
 
   mounted() {
@@ -174,6 +177,7 @@ export default {
   },
 
   methods: {
+
     addToItems(item) {
       if (item) {
         this.items.push(item);
@@ -201,6 +205,43 @@ export default {
           Bugsnag.notify(error)
           console.error(error);
         });
+    },
+
+    setTransactionItemObject () {
+      const items = this.getProducts()
+      const transactionItemArray = []
+      for (let i = 0; i < items.length; i++) {
+        let transactionObj = {}
+        transactionObj.shop_item_id = items[i].id
+        transactionObj.discount = items[i].reduction
+        transactionObj.eco_tax = items[i].ecoTax
+        transactionObj.quantity = items[i].quantity
+        transactionObj.warranty = items[i].warranty
+        transactionItemArray.push(transactionObj)
+      }
+      return transactionItemArray
+    },
+
+     async createTransaction () {
+      const total_price = this.calculatePrice()
+      const items = this.setTransactionItemObject()
+      const bearerAuth = {
+        Authorization: "Bearer " + this.getAccessToken,
+      }
+      const body = {
+        tva_percentage : 20,
+        total_price : total_price,
+        payment_method: "card",
+        items : items
+      }
+      axios
+        .post(process.env.VUE_APP_RESOURCE_URL + "/shops/me/transactions", body, { 
+          headers : bearerAuth
+        }).then((response) => {
+          this.transactionId = response.data.id
+          this.transactionToken = response.data.token
+          this.transactionCreated = true
+        })
     },
 
     calculatePrice() {
@@ -236,6 +277,7 @@ export default {
     },
 
     async generateReceipt() {
+      this.createTransaction()
       const template = {
         basePdf: { width: 210, height: 297 },
         schemas: [
@@ -400,6 +442,7 @@ export default {
       for (let i = 0; i < this.items.length; i++) {
         let productObj = {}
         if (this.items[i] && this.items[i].name.length > 0) {
+          productObj.id = this.items[i].id
           productObj.productName = this.items[i].name
           productObj.quantity = 1
           productObj.priceUnit = this.items[i].price

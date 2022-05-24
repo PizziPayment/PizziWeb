@@ -31,11 +31,24 @@ export default {
     QrcodeVue,
   },
 
+  props : {
+    id: {
+      type: Number,
+      required: true
+    },
+    token: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       snackbar: false,
       dialog: false,
-      value: 'https://youtube.com',
+      value: JSON.stringify({
+        id: this.id,
+        token: this.token,
+      }),
       size: 400,
     };
   },
