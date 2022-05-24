@@ -1,14 +1,14 @@
 <template>
   <div>
     <cashPaymentDialog v-model="dialog" />
-    <v-card class="mx-auto" height='100%'>
-      <v-btn class='mt-n8' rounded large color="green" @click.stop="acceptCashPayment">
+    <v-card class="mx-auto" height='476px'>
+      <v-btn class='mt-n8' rounded large color="green" @click.stop="acceptCashPayment" id="cash-button">
         <v-icon large color="white">mdi-cash-register</v-icon>
         <span class="white--text pa-12">Register Cash Payment </span>
       </v-btn>
       <v-subheader>Last Cash Payments</v-subheader>
       <v-divider inset></v-divider>
-      <v-list dense class="pa-6 overflow-y-auto" style="max-height: 230px">
+      <v-list dense class="pa-6 overflow-y-auto" style="max-height: 330px">
       <v-list-item v-for="(fakeProduct, i) in fakeProducts" :key="i">
         <v-list-item-content style="text-align: left;">
           <v-list-item-title v-text="fakeProduct.name"/>

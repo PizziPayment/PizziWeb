@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card id="sales-revenue-graph">
     <v-card-title>
       <v-chart
         v-if="$vuetify.theme.dark"

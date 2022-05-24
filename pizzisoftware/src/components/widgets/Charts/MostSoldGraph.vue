@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card id="most-sold-graph">
     <v-card-title>
       <v-chart v-if='$vuetify.theme.dark' class="chart" :option="option" theme='dark' autoresize></v-chart>
       <v-chart v-else class="chart" :option="option" autoresize></v-chart>

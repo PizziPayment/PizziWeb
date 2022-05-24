@@ -9,6 +9,7 @@
       <v-list
         nav
         dense
+        id="drawer-header"
       >
       <v-list-item>
         <v-list-item-content>
@@ -33,6 +34,7 @@
           v-for="(link, i) in links"
           :key="i"
           routeur :to="link.to"
+          :id="link.id"
         >
           <v-list-item-icon>
             <v-icon v-text="link.icon"></v-icon>
@@ -42,7 +44,7 @@
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
-      <v-btn @click.stop="processSignOut()" class="ma-3" icon color="red">
+      <v-btn @click.stop="processSignOut()" class="ma-3 mt-16" icon color="red">
         <v-icon>mdi-exit-to-app</v-icon>
         Sign Out
       </v-btn>
@@ -62,11 +64,12 @@ export default {
     return {
       drawer: false,
       links: [
-        { icon: "mdi-view-dashboard", text: 'Dashboard', to: '/dashboard' },
-        { icon: "mdi-text", text:"Generate Receipt", to: '/GenerateTicket'},
-        {icon : "mdi-notebook-multiple", text:"Product Register", to:'/RegisterProduct'},
-        {icon : "mdi-cash", text:"Last Sales", to:'/ReceiptList'},
-        { icon: "mdi-account", text: "Profile", to: '/profile' },
+        { icon: "mdi-view-dashboard", text: 'Dashboard', to: '/dashboard', id: 'drawer-dashboard'},
+        { icon: "mdi-text", text:"Generate Receipt", to: '/GenerateTicket', id: 'drawer-generate'},
+        {icon : "mdi-notebook-multiple", text:"Product Register", to:'/RegisterProduct', id: 'drawer-register'},
+        {icon : "mdi-cash", text:"Last Sales", to:'/ReceiptList', id:'drawer-last-sales'},
+        { icon: "mdi-account", text: "Profile", to: '/profile', id: 'drawer-profile'},
+        {icon: "mdi-undo", text: "Return Product", to:'/ProductReturn', id: 'drawer-return'},
       ],
       model: 0
     };

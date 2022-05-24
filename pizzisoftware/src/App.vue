@@ -1,13 +1,14 @@
 <template>
   <v-app>
     <div class="app">
-      <router-view  />
+      <router-view/>
     </div>
   </v-app>
 </template>
 
 <script>
-  export default {}
+export default {
+};
 </script>
 
 <style lang="scss">
@@ -29,5 +30,19 @@
       color: #42b983;
     }
   }
+}
+</style>
+<style>
+.v-step {
+  background-color: transparent !important;
+  backdrop-filter: blur(10px) !important;
+  max-width: fit-content !important;
+  border: thin dotted white !important;
+}
+.v-step__content {
+  font-size: 20px !important;
+}
+.v-step__arrow {
+  background-color: white !important
 }
 </style>
