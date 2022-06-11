@@ -50,6 +50,7 @@
 
 <script>
 import axios from "axios";
+import Bugsnag from '@bugsnag/js'
 import { mapGetters } from "vuex";
 
 export default {
@@ -104,6 +105,7 @@ export default {
           this.dialog = false
         })
         .catch((error) => {
+          Bugsnag.notify(error)
           console.error(error);
         });
     },

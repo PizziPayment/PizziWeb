@@ -65,6 +65,7 @@
 
 <script>
 import axios from "axios";
+import Bugsnag from '@bugsnag/js'
 import { mapActions } from "vuex";
 
 export default {
@@ -104,8 +105,10 @@ export default {
             expirationToken: response.data.access_token_expires_at,
           });
           if (success) {
+            Bugsnag.Breadcrumb("User Login", this.email)
             this.$router.push("/dashboard");
           } else {
+            Bugsnag.notify('Error happened during login', this.email)
             console.error("Error login");
             // to do handle case wrong login
           }

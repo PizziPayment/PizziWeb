@@ -1,5 +1,5 @@
 <template>
-  <v-card class="themeStyleCard">
+  <v-card class="themeStyleCard" id="most-sold-graph">
     <v-card-title>
       <v-chart
         class="chart themeStyleCard"

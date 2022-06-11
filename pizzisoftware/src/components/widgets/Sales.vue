@@ -1,5 +1,5 @@
 <template>
-  <v-card class="themeStyleCard">
+  <v-card id="last-sales" class="themeStyleCard">
     <v-menu
       ref="menu"
       v-model="menu"

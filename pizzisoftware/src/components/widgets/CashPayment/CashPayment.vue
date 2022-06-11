@@ -1,13 +1,14 @@
 <template>
   <div>
     <cashPaymentDialog v-model="dialog" />
-    <v-card class="mx-auto themeStyleCardLocal" height="100%">
+    <v-card class="mx-auto themeStyleCardLocal" height="476px">
       <v-btn
         class="mt-n8"
         rounded
         large
         color="green"
         @click.stop="acceptCashPayment"
+        id="cash-button"
       >
         <v-icon large color="white">mdi-cash-register</v-icon>
         <span class="white--text pa-12">Register Cash Payment </span>
@@ -17,7 +18,7 @@
       <v-list
         dense
         class="pa-6 overflow-y-auto themeStyleCardLocal"
-        style="max-height: 230px"
+        style="max-height: 330px"
       >
         <v-list-item
           class="themeStyleCardLocal"
