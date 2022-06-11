@@ -30,10 +30,8 @@
                     required
                     type="text"
                     v-model="email"
-                    dark
                   ></v-text-field>
                   <v-text-field
-                    dark
                     name="password"
                     label="mot de passe"
                     id="password"
