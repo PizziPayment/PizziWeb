@@ -5,10 +5,12 @@
         <v-col cols="12" md="8">
           <material-card class="themeStyleCard">
             <template v-slot:heading>
-              <div class="display-2 font-weight-light">Generate Receipt</div>
+              <div class="display-2 font-weight-light">
+                {{ $translate.getTranslation("Generate Receipt") }}
+              </div>
 
               <div class="subtitle-1 font-weight-light">
-                Add Items to the receipt
+                {{ $translate.getTranslation("Add Items to the receipt") }}
               </div>
             </template>
             <v-form>
@@ -35,7 +37,7 @@
                               small
                               @click="addToItems(item)"
                             >
-                              Add Item
+                              {{ $translate.getTranslation("Add Item") }}
                             </v-btn>
                           </v-card-actions>
                         </div>
@@ -54,7 +56,9 @@
             avatar="https://img.freepik.com/vecteurs-libre/illustration-vectorielle-outils-coiffeur-ciseaux-rasoir-poteau-ruban-echantillon-texte_74855-10555.jpg?size=338&ext=jpg&ga=GA1.2.1637736129.1624752000"
           >
             <v-card-text class="text-center">
-              <h6 class="display-1 mb-1 grey--text">Receipt</h6>
+              <h6 class="display-1 mb-1 grey--text">
+                {{ $translate.getTranslation("Receipt") }}
+              </h6>
 
               <h4 class="display-2 font-weight-light mb-3">
                 Faudra Tiff Hair
@@ -67,7 +71,7 @@
                 class="ma-2 mr-0"
                 v-if="transactionCreated"
               >
-                Connect User
+                {{ $translate.getTranslation("Connect User") }}
               </v-btn>
 
               <div v-if="items && items.length > 0">
@@ -135,12 +139,12 @@
                   class="mr-0"
                   @click="generateReceipt()"
                 >
-                  Download
+                  {{ $translate.getTranslation("Download") }}
                 </v-btn>
               </div>
               <div v-else>
                 <v-btn disabled color="primary" rounded class="mr-0">
-                  no items selected
+                  {{ $translate.getTranslation("No items selected") }}
                 </v-btn>
               </div>
             </v-card-text>

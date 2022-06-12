@@ -2,9 +2,16 @@
   <v-card class="themeStyleCard" id="most-sold-graph">
     <v-card-title>
       <v-chart
+        v-if="$vuetify.theme.dark"
         class="chart themeStyleCard"
         :option="option"
-        :theme="isDarkTheme ? 'dark' : ''"
+        theme="dark"
+        autoresize
+      ></v-chart>
+      <v-chart
+        v-else
+        class="chart themeStyleCard"
+        :option="option"
         autoresize
       ></v-chart>
     </v-card-title>
@@ -48,8 +55,8 @@ export default {
           bottom: "bottom",
         },
         title: {
-          text: "Best Sellers",
-          subtext: "Updated 10 min ago",
+          text: this.$translate.getTranslation("Best Sellers"),
+          subtext: this.$translate.getTranslation("Updated 10 min ago"),
           padding: [0, 0, 0, 0],
           textStyle: {
             fontWeight: "bold",
@@ -99,6 +106,7 @@ export default {
   },
   watch: {
     isDarkTheme() {
+      console.debug("cc");
       this.updateOptionsColor();
     },
   },

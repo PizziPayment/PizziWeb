@@ -11,9 +11,13 @@
         id="cash-button"
       >
         <v-icon large color="white">mdi-cash-register</v-icon>
-        <span class="white--text pa-12">Register Cash Payment </span>
+        <span class="white--text pa-12">
+          {{ $translate.getTranslation("Register cash payment") }}
+        </span>
       </v-btn>
-      <v-subheader class="themeStyleCardLocal">Last Cash Payments</v-subheader>
+      <v-subheader class="themeStyleCardLocal">
+        {{ $translate.getTranslation("Last Cash Payments") }}
+      </v-subheader>
       <v-divider inset></v-divider>
       <v-list
         dense

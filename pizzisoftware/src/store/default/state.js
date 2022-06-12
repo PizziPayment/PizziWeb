@@ -4,6 +4,7 @@ export default function() {
     refreshToken: null,
     expirationToken: null,
     userLoggedIn: false,
-    isDarkTheme: true
+    language: 'fr',
+    isDarkTheme: true,
   };
 }

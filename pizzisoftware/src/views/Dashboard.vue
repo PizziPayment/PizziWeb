@@ -21,11 +21,7 @@
         <Sales />
       </v-row>
     </v-container>
-    <AppTour
-      :config="configTutorial"
-      @event="tutorialEvent($event)"
-      @close="panels = [0, 1]"
-    />
+    <AppTour :config="configTutorial" @close="panels = [0, 1]" />
   </v-app>
 </template>
 

@@ -16,7 +16,7 @@
         <div style="height: fit-content">
           <div class="tutorial_header">
             <div class="tutorial_header_title">
-              {{ config.title || "Tutorial" }}
+              {{ $translate.getTranslation(config.title || "Tutorial") }}
             </div>
           </div>
           <v-btn
@@ -34,7 +34,11 @@
         >
           <div class="d-flex justify-center flex-column tutorial_body">
             <div id="tutorial_text">
-              <span> {{ config.fields[currentIndex].text }} </span>
+              <span>
+                {{
+                  $translate.getTranslation(config.fields[currentIndex].text)
+                }}
+              </span>
             </div>
             <div class="bullets d-inline-flex justify-center align-center">
               <v-btn

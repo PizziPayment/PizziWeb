@@ -21,6 +21,9 @@ export async function userLogout({ commit }) {
   commit("UPDATE_EXPIRATION_TOKEN", null);
 }
 
+export function setLanguage({ commit}, language ) {
+  commit("UPDATE_LANGUAGE", language);
+}
 export async function setDarkTheme({ commit }, isDarkTheme) {
   commit("UPDATE_DARK_MODE", isDarkTheme);
 }

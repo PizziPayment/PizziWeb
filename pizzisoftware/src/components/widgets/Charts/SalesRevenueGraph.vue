@@ -51,8 +51,8 @@ export default {
           bottom: "bottom",
         },
         title: {
-          text: "Income",
-          subtext: "Updated 10 min ago",
+          text: this.$translate.getTranslation("Income"),
+          subtext: this.$translate.getTranslation("Updated 10 min ago"),
           padding: [0, 0, 0, 0],
           textStyle: {
             fontWeight: "bold",

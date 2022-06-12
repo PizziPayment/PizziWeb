@@ -3,7 +3,7 @@
     <v-container fluid class="background containerThemeStyle">
       <v-card>
         <v-card-title>
-          Last Sales
+          {{ $translate.getTranslation("Last Sales") }}
           <v-spacer></v-spacer>
           <v-text-field
             v-model="search"

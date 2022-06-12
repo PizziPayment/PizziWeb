@@ -1,0 +1,32 @@
+{
+    "Welcome to your PizziDashboard": {
+        "fr": "Bienvenu sur le DashBoard Pizzi"
+    },
+    "From here you can monitor your whole business": {
+        "fr": "De là, vous pouvez surveiller l'ensemble de votre entreprise"
+    },
+    "You can generate a receipt...": {
+        "fr": "Vous pouvez générer un reçu..."
+    },
+    "You can register your products and modify them...": {
+        "fr": "Vous pouvez enregistrer vos produits et les modifier..."
+    },
+    "View your last sales...": {
+        "fr": "Consultez vos dernières ventes..."
+    },
+    "Or even accept a product return": {
+        "fr": "Ou même accepter un retour de produit"
+    },
+    "From the main page you can monitor some of your activities...": {
+        "fr": "Depuis la page principale, vous pouvez suivre certaines de vos activités..."
+    },
+    "Accept a cash payment...": {
+        "fr": "Accepter un paiement en espèces..."
+    }, 
+    "Or even check your next appointments": {
+        "fr": "Ou même vérifier vos prochains rendez-vous"
+    },
+    "Have a good time with your future essential tool, the PizziDashboard !" : {
+        "fr": "Passez du bon temps avec votre futur outil indispensable, le Dashboard Pizzi !"
+    }
+}

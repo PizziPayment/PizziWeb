@@ -1,0 +1,144 @@
+{
+    "": {
+        "fr": ""
+    },
+    "Dashboard": {
+        "fr": "Tableau de bord"
+    },
+    "Generate Receipt": {
+        "fr": "Générer un reçu"
+    },
+    "Product Register": {
+        "fr": "Registre des produits"
+    },
+    "Last Sales": {
+        "fr": "Dernières ventes"
+    },
+    "Profile": {
+        "fr": "Profil"
+    },
+    "Return Product": {
+        "fr": "Produit de retour"
+    },
+    "Sign Out": {
+        "fr": "Déconnexion"
+    },
+    "Income": {
+        "fr": "Revenu"
+    },
+    "Updated 10 min ago": {
+        "fr": "Mise a jour il y a 10 min"
+    },
+    "Last year": {
+        "fr": "L’année dernier"
+    },
+    "This year": {
+        "fr": "Cette années"
+    },
+    "Register cash payment": {
+        "fr": "Enregistrer un paiement en espèces"
+    },
+    "Accept": {
+        "fr": "Valider"
+    },
+    "Close": {
+        "fr": "Fermer"
+    },
+    "Last Cash Payments": {
+        "fr": "Derniers paiements en espèces"
+    },
+    "Best Sellers": {
+        "fr": "Meilleures ventes"
+    },
+    "Add Items to the receipt": {
+        "fr": "Ajouter des articles au reçu"
+    },
+    "Add Item": {
+        "fr": "Ajouter un item"
+    },
+    "Receipt": {
+        "fr": "Reçu"
+    },
+    "Connect User": {
+        "fr": "Connecter l'utilisateur"
+    },
+    "Download": {
+        "fr": "Télécharger"
+    },
+    "No items selected": {
+        "fr": "Pas d'item sélectionné"
+    },
+    "Edit Profile": {
+        "fr": "Editer le profil"
+    },
+    "Complete your profile": {
+        "fr": "Complète ton profil"
+    },
+    "Company": {
+        "fr": "Compagnie"
+    },
+    "User Name": {
+        "fr": "Nom d'utilisateur"
+    },
+    "Email Address": {
+        "fr": "Adresse e-mail"
+    },
+    "First Name": {
+        "fr": "Prénom"
+    },
+    "Last Name": {
+        "fr": "Nom de famille"
+    },
+    "Address": {
+        "fr": "Adresse"
+    },
+    "City": {
+        "fr": "Ville"
+    },
+    "Country": {
+        "fr": "Pays"
+    },
+    "Postal Code": {
+        "fr": "code postal"
+    },
+    "About My Company": {
+        "fr": "À propos de mon entreprise"
+    },
+    "Update Profile": {
+        "fr": "Mettre à jour le profil"
+    },
+    "Reset email": {
+        "fr": "Réinitialiser l'e-mail"
+    },
+    "Reset password": {
+        "fr": "Réinitialiser le mot de passe"
+    },
+    "Product Return": {
+        "fr": "Retour de produit"
+    },
+    "Enter returned product informations": {
+        "fr": "Saisir les informations sur le produit retourné"
+    },
+    "Reason": {
+        "fr": "Raison"
+    },
+    "Search": {
+        "fr": "Chercher"
+    },
+    "Last Returned Products": {
+        "fr": "Derniers produits retournés"
+    },
+    "Main Color": {
+        "fr": "Couleur Principal"
+    },
+    "Dark Mode": {
+        "fr": "Mode Sombre"
+    },
+    "Drawer Image": {
+        "fr": "Image du tiroir"
+    },
+    "Language": {
+        "fr": "Langue"
+    }
+
+}
