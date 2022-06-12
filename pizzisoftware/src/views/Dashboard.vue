@@ -1,27 +1,27 @@
 <template>
   <v-app>
-    <v-container fluid class="background">
+    <v-container fluid class="background containerThemeStyle">
       <v-row class="my-6" id="graph-div">
         <v-col class="mx-6">
-          <sales-revenue-graph></sales-revenue-graph>
+          <SalesRevenueGraph />
         </v-col>
         <v-col class="mx-6">
-          <most-sold-graph></most-sold-graph>
+          <MostSoldGraph />
         </v-col>
       </v-row>
       <v-row class="my-6">
         <v-col class="mx-6" id="cash-payment">
-          <cashPayment />
+          <CashPayment />
         </v-col>
         <v-col class="mx-6" id="calendar">
-          <calendar />
+          <Calendar />
         </v-col>
       </v-row>
       <v-row class="ma-6">
-        <sales />
+        <Sales />
       </v-row>
     </v-container>
-     <AppTour
+    <AppTour
       :config="configTutorial"
       @event="tutorialEvent($event)"
       @close="panels = [0, 1]"
@@ -31,21 +31,21 @@
 
 <script>
 // to remove when widget manager finished
-import sales from "@/components/widgets/Sales.vue";
-import calendar from "@/components/widgets/Calendar/Calendar.vue";
-import cashPayment from "@/components/widgets/CashPayment/CashPayment.vue";
+import CashPayment from "@/components/widgets/CashPayment/CashPayment.vue";
 import SalesRevenueGraph from "@/components/widgets/Charts/SalesRevenueGraph.vue";
 import MostSoldGraph from "@/components/widgets/Charts/MostSoldGraph.vue";
-import AppTour from "@/components/core/AppTour.vue"
+import Sales from "@/components/widgets/Sales.vue";
+import Calendar from "@/components/widgets/Calendar/Calendar.vue";
+import AppTour from "@/components/core/AppTour.vue";
 
 export default {
   components: {
-    cashPayment,
+    CashPayment,
     MostSoldGraph,
     SalesRevenueGraph,
-    calendar,
-    sales,
-    AppTour
+    Calendar,
+    Sales,
+    AppTour,
   },
   data: () => ({
     configTutorial: {
@@ -87,15 +87,19 @@ export default {
           text: "Or even check your next appointments",
         },
         {
-          text: "Have a good time with your future essential tool, the PizziDashboard !"
-        }
+          text:
+            "Have a good time with your future essential tool, the PizziDashboard !",
+        },
       ],
     },
   }),
 };
 </script>
 
-<style>
+<style lang="scss">
+.containerThemeStyle {
+  background: var(--pizzi-bg2) !important;
+}
 .background {
   height: 100%;
 }

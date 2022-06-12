@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <v-container fluid class="background">
+  <v-app class="containerThemeStyle">
+    <v-container fluid class="background containerThemeStyle">
       <v-card>
         <v-card-title>
           Last Sales
@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import moment from 'moment'
-import axios from 'axios'
-import Bugsnag from '@bugsnag/js'
+import moment from "moment";
+import axios from "axios";
+import Bugsnag from "@bugsnag/js";
 import { mapGetters } from "vuex";
 
 export default {
@@ -51,7 +51,7 @@ export default {
       {
         name: "Coupe Homme",
         calories: 159,
-        date: moment().format('LLL'),
+        date: moment().format("LLL"),
         terminal: 1,
         protein: 4.0,
         vendor: "Sam",
@@ -59,7 +59,7 @@ export default {
       {
         name: "Coupe Homme",
         calories: 262,
-        date: moment().format('LLL'),
+        date: moment().format("LLL"),
         fat: 16.0,
         terminal: 1,
         carbs: 23,
@@ -69,7 +69,7 @@ export default {
       {
         name: "Shampoo",
         calories: 305,
-        date: moment().format('LLL'),
+        date: moment().format("LLL"),
         fat: 3.7,
         terminal: 1,
         carbs: 67,
@@ -81,7 +81,7 @@ export default {
         calories: 356,
         fat: 16.0,
         terminal: 1,
-        date: moment().format('LLL'),
+        date: moment().format("LLL"),
         carbs: 49,
         protein: 3.9,
         vendor: "John",
@@ -89,7 +89,7 @@ export default {
       {
         name: "Coupe Enfant",
         calories: 375,
-        date: moment().format('LLL'),
+        date: moment().format("LLL"),
         fat: 0.0,
         carbs: 94,
         terminal: 1,
@@ -100,33 +100,35 @@ export default {
         name: "Shampoo",
         calories: 392,
         terminal: 1,
-        date: moment().format('LLL'),
+        date: moment().format("LLL"),
         fat: 0.2,
         carbs: 98,
         vendor: "Sam",
-      }
+      },
     ],
   }),
 
   computed: {
-    ...mapGetters('defaultStore', [
-      'getAccessToken',
-    ])
+    ...mapGetters("defaultStore", ["getAccessToken"]),
   },
 
   mounted() {
-    this.getReceipts()
+    this.getReceipts();
   },
 
   methods: {
-    getReceipts () {
+    getReceipts() {
       axios
-        .get(process.env.VUE_APP_RESOURCE_URL +"/receipts", { headers: { Authorization: 'Bearer eeb4d6b4665685a42e70c3c1639729c33fe54a71' } })
+        .get(process.env.VUE_APP_RESOURCE_URL + "/receipts", {
+          headers: {
+            Authorization: "Bearer eeb4d6b4665685a42e70c3c1639729c33fe54a71",
+          },
+        })
         .then((response) => {
-          console.log("res", response)
+          console.log("res", response);
         })
         .catch((error) => {
-          Bugsnag.notify(error)
+          Bugsnag.notify(error);
           console.error(error);
         });
     },

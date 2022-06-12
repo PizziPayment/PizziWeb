@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <v-container fluid class="background">
+    <v-container fluid class="background containerThemeStyle">
       <v-row justify="center" class="mt-12">
         <v-col cols="12" md="8">
-          <material-card>
+          <material-card class="themeStyleCard">
             <template v-slot:heading>
               <div class="display-2 font-weight-light">Generate Receipt</div>
 
@@ -12,7 +12,7 @@
               </div>
             </template>
             <v-form>
-              <v-container class="py-0">
+              <v-container class="py-0 themeStyleCard">
                 <v-row dense>
                   <v-col v-for="(item, i) in products" :key="i" cols="6">
                     <v-card :color="randomColor()" dark>
@@ -60,7 +60,13 @@
                 Faudra Tiff Hair
               </h4>
 
-              <v-btn @click.stop="openQrCodeDialog" color="primary" rounded class="ma-2 mr-0" v-if="transactionCreated">
+              <v-btn
+                @click.stop="openQrCodeDialog"
+                color="primary"
+                rounded
+                class="ma-2 mr-0"
+                v-if="transactionCreated"
+              >
                 Connect User
               </v-btn>
 
@@ -69,6 +75,7 @@
                   class="mx-auto ma-2"
                   max-width="500"
                   max-height="500"
+                  containerThemeStyle
                   style="overflow: auto;"
                 >
                   <v-list two-line>
@@ -140,18 +147,23 @@
           </material-card>
         </v-col>
       </v-row>
-      <DisplayQRCodeDialog ref="QRCodeDialog" v-if="transactionCreated" :id="transactionId" :token="transactionToken"/>
+      <DisplayQRCodeDialog
+        ref="QRCodeDialog"
+        v-if="transactionCreated"
+        :id="transactionId"
+        :token="transactionToken"
+      />
     </v-container>
   </v-app>
 </template>
 
 <script>
 import materialCard from "@/components/MaterialCard.vue";
-import DisplayQRCodeDialog from '@/components/widgets/QRCode/DisplayQRCodeDialog.vue'
+import DisplayQRCodeDialog from "@/components/widgets/QRCode/DisplayQRCodeDialog.vue";
 import labelmake from "labelmake";
 import moment from "moment";
 import axios from "axios";
-import Bugsnag from '@bugsnag/js'
+import Bugsnag from "@bugsnag/js";
 import { mapGetters } from "vuex";
 
 export default {
@@ -167,17 +179,16 @@ export default {
     discount: [0, 5, 10, 20, 30, 40, 50, 60, 70],
     items: [],
     products: [],
-    transactionId : '',
-    transactionToken: '',
-    transactionCreated: false
+    transactionId: "",
+    transactionToken: "",
+    transactionCreated: false,
   }),
 
   mounted() {
-    this.loadShopItems()
+    this.loadShopItems();
   },
 
   methods: {
-
     addToItems(item) {
       if (item) {
         this.items.push(item);
@@ -198,50 +209,55 @@ export default {
         })
         .then((response) => {
           if (response.data.items) {
-            this.products = response.data.items
+            this.products = response.data.items;
           }
         })
         .catch((error) => {
-          Bugsnag.notify(error)
+          Bugsnag.notify(error);
           console.error(error);
         });
     },
 
-    setTransactionItemObject () {
-      const items = this.getProducts()
-      const transactionItemArray = []
+    setTransactionItemObject() {
+      const items = this.getProducts();
+      const transactionItemArray = [];
       for (let i = 0; i < items.length; i++) {
-        let transactionObj = {}
-        transactionObj.shop_item_id = items[i].id
-        transactionObj.discount = items[i].reduction
-        transactionObj.eco_tax = items[i].ecoTax
-        transactionObj.quantity = items[i].quantity
-        transactionObj.warranty = items[i].warranty
-        transactionItemArray.push(transactionObj)
+        let transactionObj = {};
+        transactionObj.shop_item_id = items[i].id;
+        transactionObj.discount = items[i].reduction;
+        transactionObj.eco_tax = items[i].ecoTax;
+        transactionObj.quantity = items[i].quantity;
+        transactionObj.warranty = items[i].warranty;
+        transactionItemArray.push(transactionObj);
       }
-      return transactionItemArray
+      return transactionItemArray;
     },
 
-     async createTransaction () {
-      const total_price = this.calculatePrice()
-      const items = this.setTransactionItemObject()
+    async createTransaction() {
+      const total_price = this.calculatePrice();
+      const items = this.setTransactionItemObject();
       const bearerAuth = {
         Authorization: "Bearer " + this.getAccessToken,
-      }
+      };
       const body = {
-        tva_percentage : 20,
-        total_price : total_price,
+        tva_percentage: 20,
+        total_price: total_price,
         payment_method: "card",
-        items : items
-      }
+        items: items,
+      };
       axios
-        .post(process.env.VUE_APP_RESOURCE_URL + "/shops/me/transactions", body, { 
-          headers : bearerAuth
-        }).then((response) => {
-          this.transactionId = response.data.id
-          this.transactionToken = response.data.token
-          this.transactionCreated = true
-        })
+        .post(
+          process.env.VUE_APP_RESOURCE_URL + "/shops/me/transactions",
+          body,
+          {
+            headers: bearerAuth,
+          }
+        )
+        .then((response) => {
+          this.transactionId = response.data.id;
+          this.transactionToken = response.data.token;
+          this.transactionCreated = true;
+        });
     },
 
     calculatePrice() {
@@ -269,15 +285,17 @@ export default {
     },
 
     randomColor() {
-      return '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
+      return (
+        "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0")
+      );
     },
 
     openQrCodeDialog() {
-      this.$refs.QRCodeDialog.show()
+      this.$refs.QRCodeDialog.show();
     },
 
     async generateReceipt() {
-      this.createTransaction()
+      this.createTransaction();
       const template = {
         basePdf: { width: 210, height: 297 },
         schemas: [
@@ -410,7 +428,7 @@ export default {
           address: "32 rue de la boetie, 33000 Bordeaux",
           products: this.getSelectedProducts(),
           divider2: "------------------------------------------------",
-          date: moment().format('LLL'),
+          date: moment().format("LLL"),
         },
       ];
       const pdf = await labelmake({ template, inputs });
@@ -419,87 +437,91 @@ export default {
         this.saveBlob(blob, "pizziReceiptArtHair.pdf");
       }
 
-      let finalOjb = this.getReceiptObject()
-      console.log("final json obj is:", finalOjb)
+      let finalOjb = this.getReceiptObject();
+      console.log("final json obj is:", finalOjb);
     },
 
-    getSelectedProducts () {
-      let result = "\n"
+    getSelectedProducts() {
+      let result = "\n";
       for (let i = 0; i < this.items.length; i++) {
         if (this.items[i] && this.items[i].name.length > 0) {
-          result += this.items[i].name
-          result += '   '
-          result += this.items[i].price
-          result += ' $ '
-          result += '\n\n'
+          result += this.items[i].name;
+          result += "   ";
+          result += this.items[i].price;
+          result += " $ ";
+          result += "\n\n";
         }
       }
-      return result
+      return result;
     },
 
     getProducts() {
-    let products = []
+      let products = [];
       for (let i = 0; i < this.items.length; i++) {
-        let productObj = {}
+        let productObj = {};
         if (this.items[i] && this.items[i].name.length > 0) {
-          productObj.id = this.items[i].id
-          productObj.productName = this.items[i].name
-          productObj.quantity = 1
-          productObj.priceUnit = this.items[i].price
-          productObj.warranty = moment().format('LLL').toString()
-          productObj.ecoTax = 0
-          productObj.reduction = 0
+          productObj.id = this.items[i].id;
+          productObj.productName = this.items[i].name;
+          productObj.quantity = 1;
+          productObj.priceUnit = this.items[i].price;
+          productObj.warranty = moment()
+            .format("LLL")
+            .toString();
+          productObj.ecoTax = 0;
+          productObj.reduction = 0;
         }
-        products.push(productObj)
+        products.push(productObj);
       }
-      return products
+      return products;
     },
 
     getSocials() {
-      let socials = {}
-      socials.website = 'https://www.faudratiffhair.com'
-      socials.instagram = 'faudratiffhair'
-      socials.linkedin = 'faudratiffhair'
-      socials.snapchat = 'faudratiffhair'
-      socials.tiktok = 'faudratiffhair'
-      socials.facebook = 'faudratiffhair'
-      socials.twitter = 'faudratiffhair'
-      return socials
+      let socials = {};
+      socials.website = "https://www.faudratiffhair.com";
+      socials.instagram = "faudratiffhair";
+      socials.linkedin = "faudratiffhair";
+      socials.snapchat = "faudratiffhair";
+      socials.tiktok = "faudratiffhair";
+      socials.facebook = "faudratiffhair";
+      socials.twitter = "faudratiffhair";
+      return socials;
     },
 
     getVendor() {
-      let vendor = {}
+      let vendor = {};
       // set header
-      vendor.logo = ''
-      vendor.name = 'Faudra Tiff Hair'
-      vendor.siret = '4379217493821'
-      vendor.shopNumber = '562-234-43234'
+      vendor.logo = "";
+      vendor.name = "Faudra Tiff Hair";
+      vendor.siret = "4379217493821";
+      vendor.shopNumber = "562-234-43234";
       // set address
-      vendor.address = {}
-      vendor.address.street = '19 rue jean soula'
-      vendor.address.city = 'Bordeaux'
-      vendor.address.postalCode = '33000'
-      return vendor
+      vendor.address = {};
+      vendor.address.street = "19 rue jean soula";
+      vendor.address.city = "Bordeaux";
+      vendor.address.postalCode = "33000";
+      return vendor;
     },
 
     getReceiptObject() {
-      let newReceipt = {}
+      let newReceipt = {};
 
-      newReceipt.vendor = this.getVendor()
-      newReceipt.socials = this.getSocials()
-      newReceipt.products = this.getProducts()
+      newReceipt.vendor = this.getVendor();
+      newReceipt.socials = this.getSocials();
+      newReceipt.products = this.getProducts();
 
       // Receipt total
-      newReceipt.creationDate = moment().format('LLL').toString()
-      newReceipt.paymentType = 'card'
-      newReceipt.TvaPercentage = 0
-      newReceipt.discount = this.appliedDiscount
-      newReceipt.TotalHt =  this.calculatePrice()
-      newReceipt.TotalTtc =  this.calculatePrice()
+      newReceipt.creationDate = moment()
+        .format("LLL")
+        .toString();
+      newReceipt.paymentType = "card";
+      newReceipt.TvaPercentage = 0;
+      newReceipt.discount = this.appliedDiscount;
+      newReceipt.TotalHt = this.calculatePrice();
+      newReceipt.TotalTtc = this.calculatePrice();
 
       // Receipt Message
-      newReceipt.message = 'Merci pour votre confiance et à bientôt'
-      return JSON.stringify(newReceipt)
+      newReceipt.message = "Merci pour votre confiance et à bientôt";
+      return JSON.stringify(newReceipt);
     },
 
     // generateReceipt() {
