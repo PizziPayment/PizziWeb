@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <v-container fluid class="background">
+    <v-container fluid class="background containerThemeStyle">
       <v-row justify="center" class="mt-12">
         <v-col cols="12" md="8">
-          <material-card>
+          <material-card class="themeStyleCard">
             <template v-slot:heading>
               <div class="display-2 font-weight-light">
                 {{ $translate.getTranslation("Generate Receipt") }}
@@ -14,10 +14,10 @@
               </div>
             </template>
             <v-form>
-              <v-container class="py-0">
+              <v-container class="py-0 themeStyleCard">
                 <v-row dense>
                   <v-col v-for="(item, i) in products" :key="i" cols="6">
-                    <v-card :color="randomColor()" dark>
+                    <v-card color="grey" dark>
                       <div class="d-flex flex-no-wrap justify-space-between">
                         <div>
                           <v-card-title
@@ -79,6 +79,7 @@
                   class="mx-auto ma-2"
                   max-width="500"
                   max-height="500"
+                  containerThemeStyle
                   style="overflow: auto;"
                 >
                   <v-list two-line>
@@ -287,11 +288,11 @@ export default {
       setTimeout(() => URL.revokeObjectURL(link.href), 7000);
     },
 
-    randomColor() {
-      return (
-        "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0")
-      );
-    },
+    // randomColor() {
+    //   return (
+    //     "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0")
+    //   );
+    // },
 
     openQrCodeDialog() {
       this.$refs.QRCodeDialog.show();
@@ -526,30 +527,6 @@ export default {
       newReceipt.message = "Merci pour votre confiance et à bientôt";
       return JSON.stringify(newReceipt);
     },
-
-    // generateReceipt() {
-    //   const doc = new jsPDF();
-
-    //   doc.addImage(
-    //     "https://img.freepik.com/vecteurs-libre/illustration-vectorielle-outils-coiffeur-ciseaux-rasoir-poteau-ruban-echantillon-texte_74855-10555.jpg?size=338&ext=jpg&ga=GA1.2.1637736129.1624752000",
-    //     5,
-    //     10
-    //   );
-    //   doc.text("Pizzi Receipt 01", 85, 20);
-    //   doc.text("Faudra Tiff Hair", 85, 25);
-
-    //   // add items to pdf
-    //   let xPosition = 100;
-    //   for (let i = 0; i < this.items.length; i++) {
-    //     if (this.items[i] && this.items[i].title.length > 0) {
-    //       doc.text(this.items[i].title, 10, xPosition);
-    //       doc.text(this.items[i].price + " $", 10, xPosition + 10);
-    //       xPosition += 20;
-    //     }
-    //   }
-    //   doc.text("Total: " + this.calculatePrice() + " $", 10, xPosition + 10);
-    //   doc.save("pizziReceiptArtHair.pdf");
-    // },
   },
 };
 </script>

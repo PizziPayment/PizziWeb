@@ -4,18 +4,18 @@ import Vuetify from 'vuetify/lib/framework';
 Vue.use(Vuetify);
 
 export default new Vuetify({
-  theme: {
-    dark : true,
-    themes: {
-      light: {
-        background: '#eee'
-      },
-      dark: {
-        background: '#121212'
-      },
-    },
-    options: {
-      customProperties: true
-    },
-  }
+  // theme: {
+  //   dark : true,
+  //   themes: {
+  //     light: {
+  //       background: '#eee'
+  //     },
+  //     dark: {
+  //       background: '#121212'
+  //     },
+  //   },
+  //   options: {
+  //     customProperties: true
+  //   },
+  // }
 });

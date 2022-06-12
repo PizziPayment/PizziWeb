@@ -17,9 +17,9 @@
           v-bind="slotData"
         />
       </template>
-      <v-card>
+      <v-card class="themeStyle">
         <v-card-text>
-          <p class="font-weight-bold">
+          <p class="font-weight-bold themeStyle">
             {{ $translate.getTranslation("Main Color") }}
           </p>
           <v-item-group>
@@ -40,22 +40,23 @@
               </template>
             </v-item>
           </v-item-group>
-          <v-divider class="my-4" />
-          <v-list>
-            <v-list-item>
-              <v-list-item-action>
+          <v-divider class="my-4 dividerThemeStyle" />
+          <v-list class="themeStyle">
+            <v-list-item class="themeStyle">
+              <v-list-item-action class="themeStyle">
                 {{ $translate.getTranslation("Dark Mode") }}
               </v-list-item-action>
               <v-list-item-content>
                 <v-switch
-                  v-model="$vuetify.theme.dark"
+                  @click="switchTheme()"
+                  v-model="darkTheme"
                   color="green"
                 ></v-switch>
               </v-list-item-content>
             </v-list-item>
 
-            <v-list-item>
-              <v-list-item-action>
+            <v-list-item class="themeStyle">
+              <v-list-item-action class="themeStyle">
                 {{ $translate.getTranslation("Drawer Image") }}
               </v-list-item-action>
               <v-list-item-content>
@@ -63,8 +64,8 @@
               </v-list-item-content>
             </v-list-item>
 
-            <v-list-item>
-              <v-list-item-action>
+            <v-list-item class="themeStyle">
+              <v-list-item-action class="themeStyle">
                 {{ $translate.getTranslation("Language") }}
               </v-list-item-action>
               <!-- <v-list-item-title> -->
@@ -77,13 +78,16 @@
                     </v-btn>
                   </template>
 
-                  <v-list>
+                  <v-list class="themeStyle">
                     <v-list-item
+                      class="themeStyle"
                       @click="setLanguage(item)"
                       v-for="(item, i) in ['en', 'fr']"
                       :key="i"
                     >
-                      <v-list-item-title>{{ item }}</v-list-item-title>
+                      <v-list-item-title class="themeStyle">{{
+                        item
+                      }}</v-list-item-title>
                     </v-list-item>
                   </v-list>
                 </v-menu>
@@ -103,11 +107,13 @@ export default {
     value: Boolean,
   },
   data: () => ({
+    darkTheme: true,
+    container: undefined,
     drawerImage: true,
     colors: ["#9C27b0", "#00CAE3", "#4CAF50", "#ff9800", "#E91E63", "#FF5252"],
   }),
-  methods: {
-    ...mapActions("defaultStore", ["setLanguage"]),
+  mounted() {
+    this.container = document.getElementsByClassName("customContainer")[0];
   },
   computed: {
     ...mapState("defaultStore", ["language"]),
@@ -118,6 +124,17 @@ export default {
       set(value) {
         this.$emit("input", value);
       },
+    },
+  },
+  methods: {
+    ...mapActions("defaultStore", ["setDarkTheme", "setLanguage"]),
+
+    switchTheme() {
+      this.setDarkTheme(this.darkTheme);
+      this.$vuetify.theme.dark = this.darkTheme;
+      this.darkTheme
+        ? this.container.removeAttribute("data-theme")
+        : this.container.setAttribute("data-theme", "light");
     },
   },
 };

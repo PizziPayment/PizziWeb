@@ -1,7 +1,7 @@
 <template>
   <div>
     <cashPaymentDialog v-model="dialog" />
-    <v-card class="mx-auto" height="476px">
+    <v-card class="mx-auto themeStyleCardLocal" height="476px">
       <v-btn
         class="mt-n8"
         rounded
@@ -15,19 +15,30 @@
           {{ $translate.getTranslation("Register cash payment") }}
         </span>
       </v-btn>
-      <v-subheader>
+      <v-subheader class="themeStyleCardLocal">
         {{ $translate.getTranslation("Last Cash Payments") }}
       </v-subheader>
       <v-divider inset></v-divider>
-      <v-list dense class="pa-6 overflow-y-auto" style="max-height: 330px">
-        <v-list-item v-for="(fakeProduct, i) in fakeProducts" :key="i">
-          <v-list-item-content style="text-align: left;">
+      <v-list
+        dense
+        class="pa-6 overflow-y-auto themeStyleCardLocal"
+        style="max-height: 330px"
+      >
+        <v-list-item
+          class="themeStyleCardLocal"
+          v-for="(fakeProduct, i) in fakeProducts"
+          :key="i"
+        >
+          <v-list-item-content
+            class="colorThemeLocal"
+            style="text-align: left;"
+          >
             <v-list-item-title v-text="fakeProduct.name" />
           </v-list-item-content>
           <v-spacer />
-          <v-list-item-icon>
+          <v-list-item-icon class="colorThemeLocal">
             {{ fakeProduct.price }}
-            <v-icon small>mdi-currency-eur</v-icon>
+            <v-icon class="colorThemeLocal" small>mdi-currency-eur</v-icon>
           </v-list-item-icon>
         </v-list-item>
       </v-list>
@@ -64,4 +75,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.colorThemeLocal,
+.themeStyleCardLocal {
+  color: var(--pizzi-color2) !important;
+}
+.themeStyleCardLocal {
+  color: var(--pizzi-color2) !important;
+  background: var(--pizzi-bg-chart) !important;
+}
+</style>

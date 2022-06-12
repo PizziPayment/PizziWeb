@@ -1,14 +1,12 @@
 <template>
-  <v-card id="sales-revenue-graph">
+  <v-card class="themeStyleCard" id="sales-revenue-graph">
     <v-card-title>
       <v-chart
-        v-if="$vuetify.theme.dark"
-        class="chart"
+        class="chart themeStyleCard"
         :option="option"
-        theme="dark"
+        :theme="isDarkTheme ? 'dark' : ''"
         autoresize
       ></v-chart>
-      <v-chart v-else class="chart" :option="option" autoresize></v-chart>
     </v-card-title>
   </v-card>
 </template>
@@ -25,6 +23,7 @@ import {
   TooltipComponent,
 } from "echarts/components";
 import VChart from "vue-echarts";
+import { mapState } from "vuex";
 
 use([
   GridComponent,
@@ -127,6 +126,26 @@ export default {
         ],
       },
     };
+  },
+  mounted() {
+    this.updateOptionsColor();
+  },
+  computed: {
+    ...mapState("defaultStore", ["isDarkTheme"]),
+  },
+  methods: {
+    updateOptionsColor() {
+      if (this.isDarkTheme) {
+        this.option.title.textStyle.color = "white";
+      } else {
+        this.option.title.textStyle.color = "#02c39a";
+      }
+    },
+  },
+  watch: {
+    isDarkTheme() {
+      this.updateOptionsColor();
+    },
   },
 };
 </script>

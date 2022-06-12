@@ -1,14 +1,19 @@
 <template>
-  <v-card id="most-sold-graph">
+  <v-card class="themeStyleCard" id="most-sold-graph">
     <v-card-title>
       <v-chart
         v-if="$vuetify.theme.dark"
-        class="chart"
+        class="chart themeStyleCard"
         :option="option"
         theme="dark"
         autoresize
       ></v-chart>
-      <v-chart v-else class="chart" :option="option" autoresize></v-chart>
+      <v-chart
+        v-else
+        class="chart themeStyleCard"
+        :option="option"
+        autoresize
+      ></v-chart>
     </v-card-title>
   </v-card>
 </template>
@@ -24,6 +29,7 @@ import {
   TitleComponent,
 } from "echarts/components";
 import VChart from "vue-echarts";
+import { mapState } from "vuex";
 
 use([
   CanvasRenderer,
@@ -82,6 +88,27 @@ export default {
         ],
       },
     };
+  },
+  mounted() {
+    this.updateOptionsColor();
+  },
+  computed: {
+    ...mapState("defaultStore", ["isDarkTheme"]),
+  },
+  methods: {
+    updateOptionsColor() {
+      if (this.isDarkTheme) {
+        this.option.title.textStyle.color = "white";
+      } else {
+        this.option.title.textStyle.color = "#02c39a";
+      }
+    },
+  },
+  watch: {
+    isDarkTheme() {
+      console.debug("cc");
+      this.updateOptionsColor();
+    },
   },
 };
 </script>

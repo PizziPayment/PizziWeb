@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <v-container fluid class="background">
+  <v-app class="containerThemeStyle">
+    <v-container fluid class="background containerThemeStyle">
       <v-card>
         <v-card-title>
           {{ $translate.getTranslation("Last Sales") }}

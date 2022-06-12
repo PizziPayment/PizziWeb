@@ -1,24 +1,24 @@
 <template>
   <v-app>
-    <v-container fluid class="background">
+    <v-container fluid class="background containerThemeStyle">
       <v-row class="my-6" id="graph-div">
         <v-col class="mx-6">
-          <sales-revenue-graph></sales-revenue-graph>
+          <SalesRevenueGraph />
         </v-col>
         <v-col class="mx-6">
-          <most-sold-graph></most-sold-graph>
+          <MostSoldGraph />
         </v-col>
       </v-row>
       <v-row class="my-6">
         <v-col class="mx-6" id="cash-payment">
-          <cashPayment />
+          <CashPayment />
         </v-col>
         <v-col class="mx-6" id="calendar">
-          <calendar />
+          <Calendar />
         </v-col>
       </v-row>
       <v-row class="ma-6">
-        <sales />
+        <Sales />
       </v-row>
     </v-container>
     <AppTour :config="configTutorial" @close="panels = [0, 1]" />
@@ -27,20 +27,20 @@
 
 <script>
 // to remove when widget manager finished
-import sales from "@/components/widgets/Sales.vue";
-import calendar from "@/components/widgets/Calendar/Calendar.vue";
-import cashPayment from "@/components/widgets/CashPayment/CashPayment.vue";
+import CashPayment from "@/components/widgets/CashPayment/CashPayment.vue";
 import SalesRevenueGraph from "@/components/widgets/Charts/SalesRevenueGraph.vue";
 import MostSoldGraph from "@/components/widgets/Charts/MostSoldGraph.vue";
+import Sales from "@/components/widgets/Sales.vue";
+import Calendar from "@/components/widgets/Calendar/Calendar.vue";
 import AppTour from "@/components/core/AppTour.vue";
 
 export default {
   components: {
-    cashPayment,
+    CashPayment,
     MostSoldGraph,
     SalesRevenueGraph,
-    calendar,
-    sales,
+    Calendar,
+    Sales,
     AppTour,
   },
   data: () => ({
@@ -92,7 +92,10 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+.containerThemeStyle {
+  background: var(--pizzi-bg2) !important;
+}
 .background {
   height: 100%;
 }

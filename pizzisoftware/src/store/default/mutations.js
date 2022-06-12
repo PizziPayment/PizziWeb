@@ -17,3 +17,6 @@ export function UPDATE_USER_LOGGED_IN (state, userLoggedStatus) {
 export function UPDATE_LANGUAGE (state, language) {
     state.language = language
 }
+export function UPDATE_DARK_MODE (state, isDarkTheme) {
+    state.isDarkTheme = isDarkTheme
+}

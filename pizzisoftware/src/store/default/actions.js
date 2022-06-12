@@ -24,3 +24,6 @@ export async function userLogout({ commit }) {
 export function setLanguage({ commit}, language ) {
   commit("UPDATE_LANGUAGE", language);
 }
+export async function setDarkTheme({ commit }, isDarkTheme) {
+  commit("UPDATE_DARK_MODE", isDarkTheme);
+}
