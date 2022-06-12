@@ -5,66 +5,91 @@
         <v-col cols="12" md="8">
           <material-card>
             <template v-slot:heading>
-              <div class="display-2 font-weight-light">Edit Profile</div>
+              <div class="display-2 font-weight-light">
+                {{ $translate.getTranslation("Edit Profile") }}
+              </div>
 
               <div class="subtitle-1 font-weight-light">
-                Complete your profile
+                {{ $translate.getTranslation("Complete your profile") }}
               </div>
             </template>
             <v-form>
               <v-container class="py-0">
                 <v-row>
                   <v-col cols="12" md="4">
-                    <v-text-field label="Company" />
-                  </v-col>
-
-                  <v-col cols="12" md="4">
-                    <v-text-field class="purple-input" label="User Name" />
-                  </v-col>
-
-                  <v-col cols="12" md="4">
-                    <v-text-field label="Email Address" class="purple-input" />
-                  </v-col>
-
-                  <v-col cols="12" md="6">
-                    <v-text-field label="First Name" class="purple-input" />
-                  </v-col>
-
-                  <v-col cols="12" md="6">
-                    <v-text-field label="Last Name" class="purple-input" />
-                  </v-col>
-
-                  <v-col cols="12">
-                    <v-text-field label="Adress" class="purple-input" />
-                  </v-col>
-
-                  <v-col cols="12" md="4">
-                    <v-text-field label="City" class="purple-input" />
-                  </v-col>
-
-                  <v-col cols="12" md="4">
-                    <v-text-field label="Country" class="purple-input" />
+                    <v-text-field
+                      :label="$translate.getTranslation('Company')"
+                    />
                   </v-col>
 
                   <v-col cols="12" md="4">
                     <v-text-field
                       class="purple-input"
-                      label="Postal Code"
+                      :label="$translate.getTranslation('User Name')"
+                    />
+                  </v-col>
+
+                  <v-col cols="12" md="4">
+                    <v-text-field
+                      class="purple-input"
+                      :label="$translate.getTranslation('Email Address')"
+                    />
+                  </v-col>
+
+                  <v-col cols="12" md="6">
+                    <v-text-field
+                      class="purple-input"
+                      :label="$translate.getTranslation('First Name')"
+                    />
+                  </v-col>
+
+                  <v-col cols="12" md="6">
+                    <v-text-field
+                      class="purple-input"
+                      :label="$translate.getTranslation('Last Name')"
+                    />
+                  </v-col>
+
+                  <v-col cols="12">
+                    <v-text-field
+                      class="purple-input"
+                      :label="$translate.getTranslation('Address')"
+                    />
+                  </v-col>
+
+                  <v-col cols="12" md="4">
+                    <v-text-field
+                      class="purple-input"
+                      :label="$translate.getTranslation('City')"
+                    />
+                  </v-col>
+
+                  <v-col cols="12" md="4">
+                    <v-text-field
+                      class="purple-input"
+                      :label="$translate.getTranslation('Country')"
+                    />
+                  </v-col>
+
+                  <v-col cols="12" md="4">
+                    <v-text-field
+                      class="purple-input"
                       type="number"
+                      :label="$translate.getTranslation('Postal Code')"
                     />
                   </v-col>
 
                   <v-col cols="12">
                     <v-textarea
                       class="purple-input"
-                      label="About My Company"
+                      :label="$translate.getTranslation('About My Company')"
                       value=""
                     />
                   </v-col>
 
                   <v-col cols="12" class="text-right">
                     <v-btn color="success" class="mr-0">
-                      Update Profile
+                      {{ this.$translate.getTranslation("Update Profile") }}
                     </v-btn>
                   </v-col>
                 </v-row>
@@ -106,8 +131,8 @@
                     class="ma-2 mr-0"
                     @click.stop="showResetEmail()"
                   >
-                    Reset email</v-btn
-                  >
+                    {{ this.$translate.getTranslation("Reset email") }}
+                  </v-btn>
                 </div>
                 <div>
                   <v-btn
@@ -117,8 +142,8 @@
                     class="ma-2 mr-0"
                     @click.stop="showResetPassword()"
                   >
-                    Reset password</v-btn
-                  >
+                    {{ this.$translate.getTranslation("Reset password") }}
+                  </v-btn>
                 </div>
               </div>
             </v-card-text>

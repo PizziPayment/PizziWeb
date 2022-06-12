@@ -21,11 +21,7 @@
         <sales />
       </v-row>
     </v-container>
-     <AppTour
-      :config="configTutorial"
-      @event="tutorialEvent($event)"
-      @close="panels = [0, 1]"
-    />
+    <AppTour :config="configTutorial" @close="panels = [0, 1]" />
   </v-app>
 </template>
 
@@ -36,7 +32,7 @@ import calendar from "@/components/widgets/Calendar/Calendar.vue";
 import cashPayment from "@/components/widgets/CashPayment/CashPayment.vue";
 import SalesRevenueGraph from "@/components/widgets/Charts/SalesRevenueGraph.vue";
 import MostSoldGraph from "@/components/widgets/Charts/MostSoldGraph.vue";
-import AppTour from "@/components/core/AppTour.vue"
+import AppTour from "@/components/core/AppTour.vue";
 
 export default {
   components: {
@@ -45,7 +41,7 @@ export default {
     SalesRevenueGraph,
     calendar,
     sales,
-    AppTour
+    AppTour,
   },
   data: () => ({
     configTutorial: {
@@ -87,8 +83,9 @@ export default {
           text: "Or even check your next appointments",
         },
         {
-          text: "Have a good time with your future essential tool, the PizziDashboard !"
-        }
+          text:
+            "Have a good time with your future essential tool, the PizziDashboard !",
+        },
       ],
     },
   }),

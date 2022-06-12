@@ -67,5 +67,78 @@
     },
     "No items selected": {
         "fr": "Pas d'item sélectionné"
+    },
+    "Edit Profile": {
+        "fr": "Editer le profil"
+    },
+    "Complete your profile": {
+        "fr": "Complète ton profil"
+    },
+    "Company": {
+        "fr": "Compagnie"
+    },
+    "User Name": {
+        "fr": "Nom d'utilisateur"
+    },
+    "Email Address": {
+        "fr": "Adresse e-mail"
+    },
+    "First Name": {
+        "fr": "Prénom"
+    },
+    "Last Name": {
+        "fr": "Nom de famille"
+    },
+    "Address": {
+        "fr": "Adresse"
+    },
+    "City": {
+        "fr": "Ville"
+    },
+    "Country": {
+        "fr": "Pays"
+    },
+    "Postal Code": {
+        "fr": "code postal"
+    },
+    "About My Company": {
+        "fr": "À propos de mon entreprise"
+    },
+    "Update Profile": {
+        "fr": "Mettre à jour le profil"
+    },
+    "Reset email": {
+        "fr": "Réinitialiser l'e-mail"
+    },
+    "Reset password": {
+        "fr": "Réinitialiser le mot de passe"
+    },
+    "Product Return": {
+        "fr": "Retour de produit"
+    },
+    "Enter returned product informations": {
+        "fr": "Saisir les informations sur le produit retourné"
+    },
+    "Reason": {
+        "fr": "Raison"
+    },
+    "Search": {
+        "fr": "Chercher"
+    },
+    "Last Returned Products": {
+        "fr": "Derniers produits retournés"
+    },
+    "Main Color": {
+        "fr": "Couleur Principal"
+    },
+    "Dark Mode": {
+        "fr": "Mode Sombre"
+    },
+    "Drawer Image": {
+        "fr": "Image du tiroir"
+    },
+    "Language": {
+        "fr": "Langue"
     }
+
 }
