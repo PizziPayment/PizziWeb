@@ -1,0 +1,71 @@
+{
+    "": {
+        "fr": ""
+    },
+    "Dashboard": {
+        "fr": "Tableau de bord"
+    },
+    "Generate Receipt": {
+        "fr": "Générer un reçu"
+    },
+    "Product Register": {
+        "fr": "Registre des produits"
+    },
+    "Last Sales": {
+        "fr": "Dernières ventes"
+    },
+    "Profile": {
+        "fr": "Profil"
+    },
+    "Return Product": {
+        "fr": "Produit de retour"
+    },
+    "Sign Out": {
+        "fr": "Déconnexion"
+    },
+    "Income": {
+        "fr": "Revenu"
+    },
+    "Updated 10 min ago": {
+        "fr": "Mise a jour il y a 10 min"
+    },
+    "Last year": {
+        "fr": "L’année dernier"
+    },
+    "This year": {
+        "fr": "Cette années"
+    },
+    "Register cash payment": {
+        "fr": "Enregistrer un paiement en espèces"
+    },
+    "Accept": {
+        "fr": "Valider"
+    },
+    "Close": {
+        "fr": "Fermer"
+    },
+    "Last Cash Payments": {
+        "fr": "Derniers paiements en espèces"
+    },
+    "Best Sellers": {
+        "fr": "Meilleures ventes"
+    },
+    "Add Items to the receipt": {
+        "fr": "Ajouter des articles au reçu"
+    },
+    "Add Item": {
+        "fr": "Ajouter un item"
+    },
+    "Receipt": {
+        "fr": "Reçu"
+    },
+    "Connect User": {
+        "fr": "Connecter l'utilisateur"
+    },
+    "Download": {
+        "fr": "Télécharger"
+    },
+    "No items selected": {
+        "fr": "Pas d'item sélectionné"
+    }
+}

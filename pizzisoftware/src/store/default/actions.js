@@ -20,3 +20,7 @@ export async function userLogout({ commit }) {
   commit("UPDATE_REFRESH_TOKEN", null);
   commit("UPDATE_EXPIRATION_TOKEN", null);
 }
+
+export function setLanguage({ commit}, language ) {
+  commit("UPDATE_LANGUAGE", language);
+}

@@ -1,0 +1,35 @@
+{
+    "You need docs / help / you want contact Deepbloo Team or replay Tutorial ?": {
+        "fr": "Vous avez besoin de documents / d'aide / vous souhaitez contacter l'équipe Deepbloo ou rejouer un Tutoriel ?"
+    },
+    "Select to change the Tenders Display": {
+        "fr": "Sélectionnez pour modifier l'affichage des offres"
+    },
+    "Select to change view, (tender, organization...)": {
+        "fr": "Sélectionnez pour changer de vue, (appel d'offres, organisation...)"
+    },
+    "To change language": {
+        "fr": "Pour changer de langue"
+    },
+    "Each Card corresponds to an Offer. Click on it for more information": {
+        "fr": "Chaque Carte correspond à une Offre. Cliquez dessus pour plus d'informations"
+    },
+    "Create new Tender": {
+        "fr": "Créer un nouvel appel d'offres"
+    },
+    "Find your queries here": {
+        "fr": "Accédez à vos requête ici"
+    },
+    "Create your Automatic Query (enable notify to receive automatic notifications)": {
+        "fr": "Créez votre requête automatique (activez la notification pour recevoir des notifications automatiques)"
+    }, 
+    "Home Page Tutorial": {
+        "fr": "Tutoriel Page D'accueil"
+    },
+    "Learn the basics of this page through this tutorial" : {
+        "fr": "Apprenez les bases de cette page à travers ce tutoriel"
+    },
+    "Replay this tutorial at any time from \"Tutorial\" section": {
+        "fr": "Rejouez ce tutoriel à tout moment depuis la section \"Tutoriel\""
+    }
+}

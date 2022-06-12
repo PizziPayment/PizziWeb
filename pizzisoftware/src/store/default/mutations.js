@@ -13,3 +13,7 @@ export function UPDATE_EXPIRATION_TOKEN (state, expirationToken) {
 export function UPDATE_USER_LOGGED_IN (state, userLoggedStatus) {
     state.userLoggedIn = userLoggedStatus
 }
+
+export function UPDATE_LANGUAGE (state, language) {
+    state.language = language
+}

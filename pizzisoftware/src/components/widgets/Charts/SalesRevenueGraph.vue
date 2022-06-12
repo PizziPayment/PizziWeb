@@ -41,26 +41,26 @@ export default {
     return {
       option: {
         backgroundColor: "rgba(0, 0, 0, 0)",
-        grid : {
-          left: '20%',
+        grid: {
+          left: "20%",
         },
         tooltip: {
           trigger: "axis",
         },
         legend: {
           data: ["This year", "Last year"],
-          bottom:'bottom'
+          bottom: "bottom",
         },
         title: {
-          text: 'Income',
-          subtext: 'Updated 10 min ago',
+          text: this.$translate.getTranslation("Income"),
+          subtext: this.$translate.getTranslation("Updated 10 min ago"),
           padding: [0, 0, 0, 0],
-          textStyle : {
-            fontWeight: 'bold'
+          textStyle: {
+            fontWeight: "bold",
           },
-          subtextStyle : {
-            fontWeight: 'italic'
-          }
+          subtextStyle: {
+            fontWeight: "italic",
+          },
         },
         calculable: true,
         xAxis: [
@@ -92,16 +92,36 @@ export default {
             name: "Last year",
             type: "bar",
             data: [
-              2000.0, 4000.9, 7000.0, 2300.2, 2500.6, 7600.7, 1350.6, 1620.2,
-              3200.6, 2000.0, 600.4, 3000.3,
+              2000.0,
+              4000.9,
+              7000.0,
+              2300.2,
+              2500.6,
+              7600.7,
+              1350.6,
+              1620.2,
+              3200.6,
+              2000.0,
+              600.4,
+              3000.3,
             ],
           },
           {
             name: "This year",
             type: "bar",
             data: [
-              2000.6, 5000.9, 9000.0, 2600.4, 2800.7, 7000.7, 1750.6, 1820.2,
-              4800.7, 180.8, 6000.0, 2000.3,
+              2000.6,
+              5000.9,
+              9000.0,
+              2600.4,
+              2800.7,
+              7000.7,
+              1750.6,
+              1820.2,
+              4800.7,
+              180.8,
+              6000.0,
+              2000.3,
             ],
           },
         ],
