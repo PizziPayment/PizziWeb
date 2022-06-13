@@ -99,14 +99,17 @@
                 {{ $translate.getTranslation("Tutoriel") }}
               </v-list-item-action>
               <v-list-item-content>
-                <v-btn outlined color="primary" @click="setTutorialGiven(false)">
+                <v-btn
+                  outlined
+                  color="primary"
+                  @click="setTutorialGiven(false)"
+                >
                   <v-icon>
                     mdi-help
                   </v-icon>
                 </v-btn>
               </v-list-item-content>
             </v-list-item>
-
           </v-list>
         </v-card-text>
       </v-card>
@@ -127,6 +130,7 @@ export default {
     colors: ["#9C27b0", "#00CAE3", "#4CAF50", "#ff9800", "#E91E63", "#FF5252"],
   }),
   mounted() {
+    this.$vuetify.theme.dark = true;
     this.container = document.getElementsByClassName("customContainer")[0];
   },
   computed: {
@@ -141,7 +145,11 @@ export default {
     },
   },
   methods: {
-    ...mapActions("defaultStore", ["setDarkTheme", "setLanguage", "setTutorialGiven"]),
+    ...mapActions("defaultStore", [
+      "setDarkTheme",
+      "setLanguage",
+      "setTutorialGiven",
+    ]),
 
     switchTheme() {
       this.setDarkTheme(this.darkTheme);
