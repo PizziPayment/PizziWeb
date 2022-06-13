@@ -138,7 +138,4 @@ export default {
 .v-card .v-card--link::before {
   background: none;
 }
-.theme--dark.v-date-picker-table {
-  background-color: #1E1E1E !important
-}
 </style>

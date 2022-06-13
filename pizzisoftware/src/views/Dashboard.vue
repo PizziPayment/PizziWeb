@@ -21,7 +21,7 @@
         <Sales />
       </v-row>
     </v-container>
-    <AppTour :config="configTutorial" @close="panels = [0, 1]" v-if="!getTutorialGiven"/>
+    <AppTour :config="configTutorial" />
   </v-app>
 </template>
 
@@ -46,7 +46,13 @@ export default {
   },
   data: () => ({
     configTutorial: {
+      oneTry: true,
       title: "PizziDashboard",
+      homePage: {
+        title: "PizziDashboard",
+        description: "Learn the basics of this page through this tutorial",
+        annotation: 'Replay this tutorial at any time from "Tutorial" section',
+      },
       fields: [
         {
           text: "Welcome to your PizziDashboard",
@@ -91,9 +97,7 @@ export default {
     },
   }),
   computed: {
-    ...mapGetters('defaultStore', [
-      'getTutorialGiven',
-    ])
+    ...mapGetters("defaultStore", ["getTutorialGiven"]),
   },
 };
 </script>

@@ -73,7 +73,13 @@
               <v-list-item-content>
                 <v-menu bottom right>
                   <template v-slot:activator="{ on, attrs }">
-                    <v-btn outlined color="primary" v-bind="attrs" v-on="on">
+                    <v-btn
+                      small
+                      outlined
+                      color="primary"
+                      v-bind="attrs"
+                      v-on="on"
+                    >
                       {{ language }}
                     </v-btn>
                   </template>
@@ -99,14 +105,8 @@
                 {{ $translate.getTranslation("Tutoriel") }}
               </v-list-item-action>
               <v-list-item-content>
-                <v-btn
-                  outlined
-                  color="primary"
-                  @click="setTutorialGiven(false)"
-                >
-                  <v-icon>
-                    mdi-help
-                  </v-icon>
+                <v-btn outlined small color="primary" @click="resetTutorial()">
+                  RESET
                 </v-btn>
               </v-list-item-content>
             </v-list-item>
@@ -145,11 +145,10 @@ export default {
     },
   },
   methods: {
-    ...mapActions("defaultStore", [
-      "setDarkTheme",
-      "setLanguage",
-      "setTutorialGiven",
-    ]),
+    ...mapActions("defaultStore", ["setDarkTheme", "setLanguage"]),
+    resetTutorial() {
+      localStorage.setItem("tutorials", JSON.stringify([]));
+    },
 
     switchTheme() {
       this.setDarkTheme(this.darkTheme);
