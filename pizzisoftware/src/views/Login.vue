@@ -58,6 +58,24 @@
             </v-container>
           </v-card>
         </v-col>
+      <v-snackbar
+        color="red"
+        v-model="snackbar"
+        :timeout="3000"
+      >
+        {{ textSnackbar }}
+
+        <template v-slot:action="{ attrs }">
+          <v-btn
+            color="white"
+            text
+            v-bind="attrs"
+            @click="snackbar = false"
+          >
+            Close
+          </v-btn>
+        </template>
+      </v-snackbar>
       </v-container>
     </v-content>
   </v-app>
@@ -72,6 +90,8 @@ export default {
   name: "LoginComponent",
 
   data: () => ({
+    textSnackbar: "Login Error, please contact us",
+    snackbar: false,
     email: null,
     password: null,
   }),
@@ -108,12 +128,16 @@ export default {
             Bugsnag.Breadcrumb("User Login", this.email)
             this.$router.push("/dashboard");
           } else {
+            this.textSnackbar = "Ouch, an error happened. Please contact us"
+            this.snackbar = true
             Bugsnag.notify('Error happened during login', this.email)
             console.error("Error login");
-            // to do handle case wrong login
           }
         })
         .catch((error) => {
+          Bugsnag.notify('Error - invalid credentials', this.email)
+          this.textSnackbar = "Error - invalid credentials"
+          this.snackbar = true
           console.error(error);
         });
     },
