@@ -19,10 +19,10 @@
       </template>
       <v-card class="themeStyle">
         <v-card-text>
-          <!-- <p class="font-weight-bold themeStyle">
-            {{ $translate.getTranslation("Main Color") }}
+          <p class="font-weight-bold themeStyle">
+            {{ $translate.getTranslation("Settings") }}
           </p>
-          <v-item-group>
+          <!-- <v-item-group>
             <v-item
               v-for="color in colors"
               :key="color"
@@ -39,8 +39,8 @@
                 />
               </template>
             </v-item>
-          </v-item-group>
-          <v-divider class="my-4 dividerThemeStyle" /> -->
+          </v-item-group> -->
+          <v-divider class="my-4 dividerThemeStyle" />
           <v-list class="themeStyle">
             <v-list-item class="themeStyle">
               <v-list-item-action class="themeStyle">
@@ -61,19 +61,6 @@
               </v-list-item-action>
               <v-list-item-content>
                 <v-switch v-model="drawerImage" color="green"></v-switch>
-              </v-list-item-content>
-            </v-list-item>
-
-            <v-list-item class="themeStyle">
-              <v-list-item-action class="themeStyle">
-                {{ $translate.getTranslation("Tutoriel") }}
-              </v-list-item-action>
-              <v-list-item-content>
-                <v-btn outlined color="primary" @click="setTutorialGiven(false)">
-                  <v-icon>
-                    mdi-help
-                  </v-icon>
-                </v-btn>
               </v-list-item-content>
             </v-list-item>
 
@@ -106,6 +93,20 @@
                 </v-menu>
               </v-list-item-content>
             </v-list-item>
+
+            <v-list-item class="themeStyle">
+              <v-list-item-action class="themeStyle">
+                {{ $translate.getTranslation("Tutoriel") }}
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-btn outlined color="primary" @click="setTutorialGiven(false)">
+                  <v-icon>
+                    mdi-help
+                  </v-icon>
+                </v-btn>
+              </v-list-item-content>
+            </v-list-item>
+
           </v-list>
         </v-card-text>
       </v-card>
