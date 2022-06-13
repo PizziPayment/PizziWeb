@@ -139,6 +139,18 @@
     },
     "Language": {
         "fr": "Langue"
+    },
+    "Login Error, please contact us": {
+        "fr": "Probleme de Login, veuillez nous contacter"
+    },
+    "Error - impossible to sign up, please check your inputs": {
+        "fr": "Erreur impossible de se connecter, vérifiez vos identifiants"
+    },
+    "Ouch, an error happened. Please contact us": {
+        "fr": "Aie, une erreur s'est produite, veuillez nous contacter"
+    },
+    "Error - invalid credentials": {
+        "fr": "Erreur - identifiants invalides"
     }
 
 }
