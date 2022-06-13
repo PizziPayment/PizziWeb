@@ -50,7 +50,7 @@ export default {
       homePage: {
         title: "PizziDashboard",
         description: "Learn the basics of this page through this tutorial",
-        annotation: 'Replay this tutorial at any time from "Tutorial" section',
+        annotation: "Replay this tutorial at any time from settings",
       },
       fields: [
         {
