@@ -19,7 +19,7 @@
       </template>
       <v-card class="themeStyle">
         <v-card-text>
-          <p class="font-weight-bold themeStyle">
+          <!-- <p class="font-weight-bold themeStyle">
             {{ $translate.getTranslation("Main Color") }}
           </p>
           <v-item-group>
@@ -40,7 +40,7 @@
               </template>
             </v-item>
           </v-item-group>
-          <v-divider class="my-4 dividerThemeStyle" />
+          <v-divider class="my-4 dividerThemeStyle" /> -->
           <v-list class="themeStyle">
             <v-list-item class="themeStyle">
               <v-list-item-action class="themeStyle">
@@ -61,6 +61,19 @@
               </v-list-item-action>
               <v-list-item-content>
                 <v-switch v-model="drawerImage" color="green"></v-switch>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item class="themeStyle">
+              <v-list-item-action class="themeStyle">
+                {{ $translate.getTranslation("Tutoriel") }}
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-btn outlined color="primary" @click="setTutorialGiven(false)">
+                  <v-icon>
+                    mdi-help
+                  </v-icon>
+                </v-btn>
               </v-list-item-content>
             </v-list-item>
 
@@ -127,7 +140,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("defaultStore", ["setDarkTheme", "setLanguage"]),
+    ...mapActions("defaultStore", ["setDarkTheme", "setLanguage", "setTutorialGiven"]),
 
     switchTheme() {
       this.setDarkTheme(this.darkTheme);

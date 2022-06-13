@@ -21,7 +21,7 @@
         <Sales />
       </v-row>
     </v-container>
-    <AppTour :config="configTutorial" @close="panels = [0, 1]" />
+    <AppTour :config="configTutorial" @close="panels = [0, 1]" v-if="!getTutorialGiven"/>
   </v-app>
 </template>
 
@@ -33,6 +33,7 @@ import MostSoldGraph from "@/components/widgets/Charts/MostSoldGraph.vue";
 import Sales from "@/components/widgets/Sales.vue";
 import Calendar from "@/components/widgets/Calendar/Calendar.vue";
 import AppTour from "@/components/core/AppTour.vue";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -89,6 +90,11 @@ export default {
       ],
     },
   }),
+  computed: {
+    ...mapGetters('defaultStore', [
+      'getTutorialGiven',
+    ])
+  },
 };
 </script>
 

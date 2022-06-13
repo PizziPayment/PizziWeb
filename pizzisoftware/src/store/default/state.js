@@ -6,5 +6,6 @@ export default function() {
     userLoggedIn: false,
     language: 'fr',
     isDarkTheme: true,
+    tutorialGiven: false,
   };
 }

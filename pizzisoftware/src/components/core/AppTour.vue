@@ -21,7 +21,7 @@
           </div>
           <v-btn
             color="red"
-            @click="tutorialIsOpen = false"
+            @click="closeTutorial"
             icon
             class="tutorial_button-left"
           >
@@ -74,6 +74,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   props: {
     config: {
@@ -103,6 +105,8 @@ export default {
     });
   },
   methods: {
+     ...mapActions("defaultStore", ["setTutorialGiven"]),
+
     makeObserver() {
       if (this.observer) {
         this.observer.disconnect();
@@ -190,11 +194,18 @@ export default {
       );
     },
     changeStep(step) {
+      if (step == this.config.fields.length - 1) {
+        this.setTutorialGiven(true)
+      }
       this.currentId = 0;
       this.currentIndex = step;
       clearTimeout(this.myTimeout);
       this.makeObserver();
     },
+    closeTutorial() {
+      this.tutorialIsOpen = false,
+      this.setTutorialGiven(true)
+    }
   },
   watch: {
     currentIndex() {

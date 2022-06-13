@@ -27,3 +27,7 @@ export function setLanguage({ commit}, language ) {
 export async function setDarkTheme({ commit }, isDarkTheme) {
   commit("UPDATE_DARK_MODE", isDarkTheme);
 }
+
+export function setTutorialGiven({commit}, tutorialGiven) {
+  commit("UPDATE_TUTORIAL_GIVEN", tutorialGiven)
+}

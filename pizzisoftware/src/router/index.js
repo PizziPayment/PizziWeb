@@ -117,6 +117,12 @@ router.beforeEach((to, from, next)=>{
   } else {
     next();
   }
+  if (to.path == '/' && router.app.$store.state.defaultStore.userLoggedIn == 1) {
+    next({
+      path: '/dashboard',
+      replace: true
+    })
+  }
 })
 
 export default router
