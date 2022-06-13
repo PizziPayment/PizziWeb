@@ -15,34 +15,48 @@
             add
           </v-btn>
         </v-card-title>
-        <v-data-table
-          class="itemsTable"
-          :headers="headers"
-          :items="itemsData"
-          multisort
-          pagination.sync="pagination"
-          item-key="id"
-          :items-per-page="10"
-          :loading="itemsData.length > 0 ? false : true"
-          loading-text="Loading... Please wait"
-          :search="search"
-          :footer-props="{
-            showFirstLastPage: true,
-            firstIcon: 'mdi-arrow-collapse-left',
-            lastIcon: 'mdi-arrow-collapse-right',
-            prevIcon: 'mdi-minus',
-            nextIcon: 'mdi-plus',
-          }"
-        >
-          <template v-slot:item.actions="{ item }">
-            <v-icon small class="mr-2" color="blue" @click="editItem(item)">
-              mdi-pencil
-            </v-icon>
-            <v-icon small color="red" @click="deleteItem(item)">
-              mdi-delete
-            </v-icon>
-          </template>
-        </v-data-table>
+        <div v-if="itemsData.length > 0">
+          <v-data-table
+            class="itemsTable"
+            :headers="headers"
+            :items="itemsData"
+            multisort
+            pagination.sync="pagination"
+            item-key="id"
+            :items-per-page="10"
+            :loading="itemsData.length > 0 ? false : true"
+            loading-text="Loading... Please wait"
+            :search="search"
+            :footer-props="{
+              showFirstLastPage: true,
+              firstIcon: 'mdi-arrow-collapse-left',
+              lastIcon: 'mdi-arrow-collapse-right',
+              prevIcon: 'mdi-minus',
+              nextIcon: 'mdi-plus',
+            }"
+          >
+            <template v-slot:item.actions="{ item }">
+              <v-icon small class="mr-2" color="blue" @click="editItem(item)">
+                mdi-pencil
+              </v-icon>
+              <v-icon small color="red" @click="deleteItem(item)">
+                mdi-delete
+              </v-icon>
+            </template>
+          </v-data-table>
+        </div>
+        <div v-else>
+          <v-card class="mx-auto" width="500">
+            <div>
+              No items, please add an item to generate receipt
+            </div>
+            <div class="ma-3 py-3">
+              <v-btn @click.stop="openAddProduct()" class="pa-3 mx-3" color="primary">
+                add
+              </v-btn>
+            </div>
+          </v-card>
+        </div>
       </v-card>
 
       <AddProductDialog ref="AddProductRef" @addItem="loadItems()" />
@@ -66,6 +80,7 @@ export default {
   },
 
   data: () => ({
+    loading: false,
     search: "",
     headers: [
       {
@@ -120,6 +135,7 @@ export default {
     },
 
     async loadItems() {
+      this.loading = true
       const bearerAuth = {
         Authorization: "Bearer " + this.getAccessToken,
       };
@@ -130,9 +146,11 @@ export default {
         .then((response) => {
           if (response.data.items) {
             this.itemsData = response.data.items;
+            this.loading = false
           }
         })
         .catch((error) => {
+          this.loading = false
           console.error(error);
           Bugsnag.notify(error)
         });
