@@ -150,6 +150,24 @@
             </v-card-actions>
           </v-card>
         </v-col>
+        <v-snackbar
+          color="red"
+          v-model="snackbar"
+          :timeout="3000"
+        >
+          {{ $translate.getTranslation(textSnackbar) }}
+
+          <template v-slot:action="{ attrs }">
+            <v-btn
+              color="white"
+              text
+              v-bind="attrs"
+              @click="snackbar = false"
+            >
+              Close
+            </v-btn>
+          </template>
+        </v-snackbar>
       </v-container>
     </v-content>
   </v-app>
@@ -161,6 +179,8 @@ import Bugsnag from '@bugsnag/js';
 
 export default {
   data: () => ({
+    textSnackbar: "Login Error, please contact us",
+    snackbar: false,
     step: 1,
     shopName: '',
     address: '',
@@ -220,7 +240,9 @@ export default {
             this.$router.push({ path: "/login" });
           })
           .catch((error) => {
-            this.$router.push("/");
+            this.textSnackbar = "Error - impossible to sign up, please check your inputs"
+            this.snackbar = true
+            this.step = 1
             Bugsnag.notify(error)
             console.error(error);
           });
