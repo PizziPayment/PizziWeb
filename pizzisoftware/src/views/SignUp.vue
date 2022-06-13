@@ -155,7 +155,7 @@
           v-model="snackbar"
           :timeout="3000"
         >
-          {{ textSnackbar }}
+          {{ $translate.getTranslation(textSnackbar) }}
 
           <template v-slot:action="{ attrs }">
             <v-btn
