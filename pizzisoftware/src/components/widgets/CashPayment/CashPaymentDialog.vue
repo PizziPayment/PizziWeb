@@ -1,14 +1,14 @@
 <template>
   <v-dialog v-model="show" persistent max-width="30%">
-    <v-card>
+    <v-card class="themeStyleCard">
       <v-card-text>
-        <v-card-title class="d-flex justify-center">
-          Register cash payment
+        <v-card-title class="d-flex justify-center themeStyleCard">
+          {{ $translate.getTranslation("Register cash payment") }}
         </v-card-title>
         <v-text-field
           v-model="amount"
           :rules="[rules.number]"
-          class="pa-6"
+          class="pa-6 themeStyleCard"
           append-icon="mdi-currency-eur"
           clear-icon="mdi-close-circle"
           clearable
@@ -16,10 +16,14 @@
         </v-text-field>
         <v-row class="pa-6">
           <v-col>
-            <v-btn color="green lighten-1" @click.stop="accept"> Accept </v-btn>
+            <v-btn color="green lighten-1" @click.stop="accept">
+              {{ $translate.getTranslation("Accept") }}
+            </v-btn>
           </v-col>
           <v-col>
-            <v-btn color="red lighten-1" @click.stop="quit"> Close </v-btn>
+            <v-btn color="red lighten-1" @click.stop="quit">
+              {{ $translate.getTranslation("Close") }}
+            </v-btn>
           </v-col>
         </v-row>
       </v-card-text>

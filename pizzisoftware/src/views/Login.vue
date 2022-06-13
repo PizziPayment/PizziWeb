@@ -30,10 +30,8 @@
                     required
                     type="text"
                     v-model="email"
-                    dark
                   ></v-text-field>
                   <v-text-field
-                    dark
                     name="password"
                     label="mot de passe"
                     id="password"
@@ -51,6 +49,7 @@
                     color="primary"
                     >connexion</v-btn
                   >
+
                   <v-col>
                     <router-link to="/signup">Créez votre compte</router-link>
                   </v-col>
@@ -66,6 +65,7 @@
 
 <script>
 import axios from "axios";
+import Bugsnag from '@bugsnag/js'
 import { mapActions } from "vuex";
 
 export default {
@@ -91,11 +91,11 @@ export default {
         Authorization:
           "Basic " +
           Buffer.from(
-            process.env.VUE_APP_CLIENT_ID + ':' + process.env.VUE_APP_SECRET
+            process.env.VUE_APP_CLIENT_ID + ":" + process.env.VUE_APP_SECRET
           ).toString("base64"),
       };
       axios
-        .post(process.env.VUE_APP_AUTHORIZATION_URL +"/shop/login", body, {
+        .post(process.env.VUE_APP_AUTHORIZATION_URL + "/shop/login", body, {
           headers: basicAuth,
         })
         .then((response) => {
@@ -105,8 +105,10 @@ export default {
             expirationToken: response.data.access_token_expires_at,
           });
           if (success) {
+            Bugsnag.Breadcrumb("User Login", this.email)
             this.$router.push("/dashboard");
           } else {
+            Bugsnag.notify('Error happened during login', this.email)
             console.error("Error login");
             // to do handle case wrong login
           }

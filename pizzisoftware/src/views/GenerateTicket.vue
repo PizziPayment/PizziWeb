@@ -1,21 +1,23 @@
 <template>
   <v-app>
-    <v-container fluid class="background">
+    <v-container fluid class="background containerThemeStyle">
       <v-row justify="center" class="mt-12">
         <v-col cols="12" md="8">
-          <material-card>
+          <material-card class="themeStyleCard">
             <template v-slot:heading>
-              <div class="display-2 font-weight-light">Generate Receipt</div>
+              <div class="display-2 font-weight-light">
+                {{ $translate.getTranslation("Generate Receipt") }}
+              </div>
 
               <div class="subtitle-1 font-weight-light">
-                Add Items to the receipt
+                {{ $translate.getTranslation("Add Items to the receipt") }}
               </div>
             </template>
             <v-form>
-              <v-container class="py-0">
+              <v-container class="py-0 themeStyleCard">
                 <v-row dense>
                   <v-col v-for="(item, i) in products" :key="i" cols="6">
-                    <v-card :color="randomColor()" dark>
+                    <v-card color="grey" dark>
                       <div class="d-flex flex-no-wrap justify-space-between">
                         <div>
                           <v-card-title
@@ -35,7 +37,7 @@
                               small
                               @click="addToItems(item)"
                             >
-                              Add Item
+                              {{ $translate.getTranslation("Add Item") }}
                             </v-btn>
                           </v-card-actions>
                         </div>
@@ -54,14 +56,22 @@
             avatar="https://img.freepik.com/vecteurs-libre/illustration-vectorielle-outils-coiffeur-ciseaux-rasoir-poteau-ruban-echantillon-texte_74855-10555.jpg?size=338&ext=jpg&ga=GA1.2.1637736129.1624752000"
           >
             <v-card-text class="text-center">
-              <h6 class="display-1 mb-1 grey--text">Receipt</h6>
+              <h6 class="display-1 mb-1 grey--text">
+                {{ $translate.getTranslation("Receipt") }}
+              </h6>
 
               <h4 class="display-2 font-weight-light mb-3">
                 Faudra Tiff Hair
               </h4>
 
-              <v-btn @click.stop="openQrCodeDialog" color="primary" rounded class="ma-2 mr-0">
-                Connect User
+              <v-btn
+                @click.stop="openQrCodeDialog"
+                color="primary"
+                rounded
+                class="ma-2 mr-0"
+                v-if="transactionCreated"
+              >
+                {{ $translate.getTranslation("Connect User") }}
               </v-btn>
 
               <div v-if="items && items.length > 0">
@@ -69,6 +79,7 @@
                   class="mx-auto ma-2"
                   max-width="500"
                   max-height="500"
+                  containerThemeStyle
                   style="overflow: auto;"
                 >
                   <v-list two-line>
@@ -128,29 +139,35 @@
                   class="mr-0"
                   @click="generateReceipt()"
                 >
-                  Download
+                  {{ $translate.getTranslation("Download") }}
                 </v-btn>
               </div>
               <div v-else>
                 <v-btn disabled color="primary" rounded class="mr-0">
-                  no items selected
+                  {{ $translate.getTranslation("No items selected") }}
                 </v-btn>
               </div>
             </v-card-text>
           </material-card>
         </v-col>
       </v-row>
-      <DisplayQRCodeDialog ref="QRCodeDialog" />
+      <DisplayQRCodeDialog
+        ref="QRCodeDialog"
+        v-if="transactionCreated"
+        :id="transactionId"
+        :token="transactionToken"
+      />
     </v-container>
   </v-app>
 </template>
 
 <script>
 import materialCard from "@/components/MaterialCard.vue";
-import DisplayQRCodeDialog from '@/components/widgets/QRCode/DisplayQRCodeDialog.vue'
+import DisplayQRCodeDialog from "@/components/widgets/QRCode/DisplayQRCodeDialog.vue";
 import labelmake from "labelmake";
 import moment from "moment";
 import axios from "axios";
+import Bugsnag from "@bugsnag/js";
 import { mapGetters } from "vuex";
 
 export default {
@@ -166,10 +183,13 @@ export default {
     discount: [0, 5, 10, 20, 30, 40, 50, 60, 70],
     items: [],
     products: [],
+    transactionId: "",
+    transactionToken: "",
+    transactionCreated: false,
   }),
 
   mounted() {
-    this.loadShopItems()
+    this.loadShopItems();
   },
 
   methods: {
@@ -193,11 +213,54 @@ export default {
         })
         .then((response) => {
           if (response.data.items) {
-            this.products = response.data.items
+            this.products = response.data.items;
           }
         })
         .catch((error) => {
+          Bugsnag.notify(error);
           console.error(error);
+        });
+    },
+
+    setTransactionItemObject() {
+      const items = this.getProducts();
+      const transactionItemArray = [];
+      for (let i = 0; i < items.length; i++) {
+        let transactionObj = {};
+        transactionObj.shop_item_id = items[i].id;
+        transactionObj.discount = items[i].reduction;
+        transactionObj.eco_tax = items[i].ecoTax;
+        transactionObj.quantity = items[i].quantity;
+        transactionObj.warranty = items[i].warranty;
+        transactionItemArray.push(transactionObj);
+      }
+      return transactionItemArray;
+    },
+
+    async createTransaction() {
+      const total_price = this.calculatePrice();
+      const items = this.setTransactionItemObject();
+      const bearerAuth = {
+        Authorization: "Bearer " + this.getAccessToken,
+      };
+      const body = {
+        tva_percentage: 20,
+        total_price: total_price,
+        payment_method: "card",
+        items: items,
+      };
+      axios
+        .post(
+          process.env.VUE_APP_RESOURCE_URL + "/shops/me/transactions",
+          body,
+          {
+            headers: bearerAuth,
+          }
+        )
+        .then((response) => {
+          this.transactionId = response.data.id;
+          this.transactionToken = response.data.token;
+          this.transactionCreated = true;
         });
     },
 
@@ -225,15 +288,18 @@ export default {
       setTimeout(() => URL.revokeObjectURL(link.href), 7000);
     },
 
-    randomColor() {
-      return '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
-    },
+    // randomColor() {
+    //   return (
+    //     "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0")
+    //   );
+    // },
 
     openQrCodeDialog() {
-      this.$refs.QRCodeDialog.show()
+      this.$refs.QRCodeDialog.show();
     },
 
     async generateReceipt() {
+      this.createTransaction();
       const template = {
         basePdf: { width: 210, height: 297 },
         schemas: [
@@ -366,7 +432,7 @@ export default {
           address: "32 rue de la boetie, 33000 Bordeaux",
           products: this.getSelectedProducts(),
           divider2: "------------------------------------------------",
-          date: moment().format('LLL'),
+          date: moment().format("LLL"),
         },
       ];
       const pdf = await labelmake({ template, inputs });
@@ -375,111 +441,92 @@ export default {
         this.saveBlob(blob, "pizziReceiptArtHair.pdf");
       }
 
-      let finalOjb = this.getReceiptObject()
-      console.log("final json obj is:", finalOjb)
+      let finalOjb = this.getReceiptObject();
+      console.log("final json obj is:", finalOjb);
     },
 
-    getSelectedProducts () {
-      let result = "\n"
+    getSelectedProducts() {
+      let result = "\n";
       for (let i = 0; i < this.items.length; i++) {
         if (this.items[i] && this.items[i].name.length > 0) {
-          result += this.items[i].name
-          result += '   '
-          result += this.items[i].price
-          result += ' $ '
-          result += '\n\n'
+          result += this.items[i].name;
+          result += "   ";
+          result += this.items[i].price;
+          result += " $ ";
+          result += "\n\n";
         }
       }
-      return result
+      return result;
     },
 
     getProducts() {
-    let products = []
+      let products = [];
       for (let i = 0; i < this.items.length; i++) {
-        let productObj = {}
+        let productObj = {};
         if (this.items[i] && this.items[i].name.length > 0) {
-          productObj.productName = this.items[i].name
-          productObj.quantity = 1
-          productObj.priceUnit = this.items[i].price
-          productObj.warranty = moment().format('LLL').toString()
-          productObj.ecoTax = 0
-          productObj.reduction = 0
+          productObj.id = this.items[i].id;
+          productObj.productName = this.items[i].name;
+          productObj.quantity = 1;
+          productObj.priceUnit = this.items[i].price;
+          productObj.warranty = moment()
+            .format("LLL")
+            .toString();
+          productObj.ecoTax = 0;
+          productObj.reduction = 0;
         }
-        products.push(productObj)
+        products.push(productObj);
       }
-      return products
+      return products;
     },
 
     getSocials() {
-      let socials = {}
-      socials.website = 'https://www.faudratiffhair.com'
-      socials.instagram = 'faudratiffhair'
-      socials.linkedin = 'faudratiffhair'
-      socials.snapchat = 'faudratiffhair'
-      socials.tiktok = 'faudratiffhair'
-      socials.facebook = 'faudratiffhair'
-      socials.twitter = 'faudratiffhair'
-      return socials
+      let socials = {};
+      socials.website = "https://www.faudratiffhair.com";
+      socials.instagram = "faudratiffhair";
+      socials.linkedin = "faudratiffhair";
+      socials.snapchat = "faudratiffhair";
+      socials.tiktok = "faudratiffhair";
+      socials.facebook = "faudratiffhair";
+      socials.twitter = "faudratiffhair";
+      return socials;
     },
 
     getVendor() {
-      let vendor = {}
+      let vendor = {};
       // set header
-      vendor.logo = ''
-      vendor.name = 'Faudra Tiff Hair'
-      vendor.siret = '4379217493821'
-      vendor.shopNumber = '562-234-43234'
+      vendor.logo = "";
+      vendor.name = "Faudra Tiff Hair";
+      vendor.siret = "4379217493821";
+      vendor.shopNumber = "562-234-43234";
       // set address
-      vendor.address = {}
-      vendor.address.street = '19 rue jean soula'
-      vendor.address.city = 'Bordeaux'
-      vendor.address.postalCode = '33000'
-      return vendor
+      vendor.address = {};
+      vendor.address.street = "19 rue jean soula";
+      vendor.address.city = "Bordeaux";
+      vendor.address.postalCode = "33000";
+      return vendor;
     },
 
     getReceiptObject() {
-      let newReceipt = {}
+      let newReceipt = {};
 
-      newReceipt.vendor = this.getVendor()
-      newReceipt.socials = this.getSocials()
-      newReceipt.products = this.getProducts()
+      newReceipt.vendor = this.getVendor();
+      newReceipt.socials = this.getSocials();
+      newReceipt.products = this.getProducts();
 
       // Receipt total
-      newReceipt.creationDate = moment().format('LLL').toString()
-      newReceipt.paymentType = 'card'
-      newReceipt.TvaPercentage = 0
-      newReceipt.discount = this.appliedDiscount
-      newReceipt.TotalHt =  this.calculatePrice()
-      newReceipt.TotalTtc =  this.calculatePrice()
+      newReceipt.creationDate = moment()
+        .format("LLL")
+        .toString();
+      newReceipt.paymentType = "card";
+      newReceipt.TvaPercentage = 0;
+      newReceipt.discount = this.appliedDiscount;
+      newReceipt.TotalHt = this.calculatePrice();
+      newReceipt.TotalTtc = this.calculatePrice();
 
       // Receipt Message
-      newReceipt.message = 'Merci pour votre confiance et à bientôt'
-      return JSON.stringify(newReceipt)
+      newReceipt.message = "Merci pour votre confiance et à bientôt";
+      return JSON.stringify(newReceipt);
     },
-
-    // generateReceipt() {
-    //   const doc = new jsPDF();
-
-    //   doc.addImage(
-    //     "https://img.freepik.com/vecteurs-libre/illustration-vectorielle-outils-coiffeur-ciseaux-rasoir-poteau-ruban-echantillon-texte_74855-10555.jpg?size=338&ext=jpg&ga=GA1.2.1637736129.1624752000",
-    //     5,
-    //     10
-    //   );
-    //   doc.text("Pizzi Receipt 01", 85, 20);
-    //   doc.text("Faudra Tiff Hair", 85, 25);
-
-    //   // add items to pdf
-    //   let xPosition = 100;
-    //   for (let i = 0; i < this.items.length; i++) {
-    //     if (this.items[i] && this.items[i].title.length > 0) {
-    //       doc.text(this.items[i].title, 10, xPosition);
-    //       doc.text(this.items[i].price + " $", 10, xPosition + 10);
-    //       xPosition += 20;
-    //     }
-    //   }
-    //   doc.text("Total: " + this.calculatePrice() + " $", 10, xPosition + 10);
-    //   doc.save("pizziReceiptArtHair.pdf");
-    // },
   },
 };
 </script>

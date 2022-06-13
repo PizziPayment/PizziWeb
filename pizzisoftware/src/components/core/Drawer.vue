@@ -12,8 +12,8 @@
         gradient="to top, rgba(0, 0, 0, .75), rgba(0, 0, 0, .90)"
       ></v-img>
     </template>
-    <v-list nav dense>
-      <v-list-item id="shopCard">
+    <v-list nav dense id="drawer-header">
+      <v-list-item>
         <v-list-item-content>
           <v-list-item-title>
             <p class="headline font-weight-bold mt-4">
@@ -37,19 +37,23 @@
           :key="i"
           routeur
           :to="link.to"
-          :id="link && link.id ? link.id : i"
+          :id="link.id"
         >
           <v-list-item-icon>
             <v-icon v-text="link.icon"></v-icon>
           </v-list-item-icon>
           <v-list-item-content style="text-align: left">
-            <v-list-item-title v-text="link.text"></v-list-item-title>
+            <v-list-item-title
+              v-text="$translate.getTranslation(link.text)"
+            ></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
-      <v-btn @click.stop="processSignOut()" class="ma-3" icon color="red">
-        <v-icon>mdi-exit-to-app</v-icon>
-        Sign Out
+      <v-btn @click.stop="processSignOut()" class="mt-16" text color="red">
+        <div class="d-flex justify-center align-center" style="height: 100%">
+          <v-icon>mdi-exit-to-app</v-icon>
+          {{ $translate.getTranslation("Sign Out") }}
+        </div>
       </v-btn>
     </v-list>
   </v-navigation-drawer>
@@ -68,24 +72,41 @@ export default {
       drawer: false,
       links: [
         {
-          id: "DashboardLink",
           icon: "mdi-view-dashboard",
           text: "Dashboard",
           to: "/dashboard",
+          id: "drawer-dashboard",
         },
         {
-          id: "GenerateReceiptLink",
           icon: "mdi-text",
           text: "Generate Receipt",
           to: "/GenerateTicket",
+          id: "drawer-generate",
         },
         {
           icon: "mdi-notebook-multiple",
           text: "Product Register",
           to: "/RegisterProduct",
+          id: "drawer-register",
         },
-        { icon: "mdi-cash", text: "Last Sales", to: "/ReceiptList" },
-        { icon: "mdi-account", text: "Profile", to: "/profile" },
+        {
+          icon: "mdi-cash",
+          text: "Last Sales",
+          to: "/ReceiptList",
+          id: "drawer-last-sales",
+        },
+        {
+          icon: "mdi-account",
+          text: "Profile",
+          to: "/profile",
+          id: "drawer-profile",
+        },
+        {
+          icon: "mdi-undo",
+          text: "Return Product",
+          to: "/ProductReturn",
+          id: "drawer-return",
+        },
       ],
       model: 0,
     };

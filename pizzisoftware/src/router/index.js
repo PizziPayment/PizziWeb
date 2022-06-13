@@ -81,6 +81,14 @@ const routes = [
       //   // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "about" */ '../views/ReceiptList.vue')
       },
+      {
+        path: '/ProductReturn',
+        name: 'ProductReturn',
+      //   // route level code-splitting
+      //   // this generates a separate chunk (about.[hash].js) for this route
+      //   // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "about" */ '../views/ProductReturn.vue')
+      },
       // {
       //   path: '/settings',
       //   name: 'Settings',
@@ -101,13 +109,19 @@ const router = new VueRouter({
 
 
 router.beforeEach((to, from, next)=>{
-  if (to.path !== '/login' && router.app.$store.state.defaultStore.userLoggedIn !== 1){
+  if (to.path !== '/signup' && to.path !== '/login' && router.app.$store.state.defaultStore.userLoggedIn !== 1){
     next({
       path: '/login',
       replace: true
     })
   } else {
     next();
+  }
+  if (to.path == '/' && router.app.$store.state.defaultStore.userLoggedIn == 1) {
+    next({
+      path: '/dashboard',
+      replace: true
+    })
   }
 })
 

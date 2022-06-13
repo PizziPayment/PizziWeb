@@ -3,6 +3,9 @@ export default function() {
     accessToken: null,
     refreshToken: null,
     expirationToken: null,
-    userLoggedIn: false
+    userLoggedIn: false,
+    language: 'fr',
+    isDarkTheme: true,
+    tutorialGiven: false,
   };
 }

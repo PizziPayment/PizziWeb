@@ -1,92 +1,111 @@
 <template>
   <v-app>
-    <v-container fluid class="background">
-      <v-row class="my-6">
+    <v-container fluid class="background containerThemeStyle">
+      <v-row class="my-6" id="graph-div">
         <v-col class="mx-6">
-          <sales-revenue-graph></sales-revenue-graph>
+          <SalesRevenueGraph />
         </v-col>
         <v-col class="mx-6">
-          <most-sold-graph></most-sold-graph>
+          <MostSoldGraph />
         </v-col>
       </v-row>
       <v-row class="my-6">
-        <v-col class="mx-6">
-          <cashPayment />
+        <v-col class="mx-6" id="cash-payment">
+          <CashPayment />
         </v-col>
-        <v-col class="mx-6">
-          <productReturn />
+        <v-col class="mx-6" id="calendar">
+          <Calendar />
         </v-col>
       </v-row>
       <v-row class="ma-6">
-        <sales />
+        <Sales />
       </v-row>
     </v-container>
-
-    <Tutorial
-      :config="configTutorial"
-      @event="tutorialEvent($event)"
-      @close="panels = [0, 1]"
-    />
+    <AppTour :config="configTutorial" />
   </v-app>
 </template>
 
 <script>
 // to remove when widget manager finished
-import sales from "@/components/widgets/Sales.vue";
-import productReturn from "@/components/widgets/ProductReturn.vue";
-import cashPayment from "@/components/widgets/CashPayment/CashPayment.vue";
+import CashPayment from "@/components/widgets/CashPayment/CashPayment.vue";
 import SalesRevenueGraph from "@/components/widgets/Charts/SalesRevenueGraph.vue";
 import MostSoldGraph from "@/components/widgets/Charts/MostSoldGraph.vue";
-import Tutorial from "@/components/core/Tutorial.vue";
+import Sales from "@/components/widgets/Sales.vue";
+import Calendar from "@/components/widgets/Calendar/Calendar.vue";
+import AppTour from "@/components/core/AppTour.vue";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
-    productReturn,
-    cashPayment,
+    CashPayment,
     MostSoldGraph,
     SalesRevenueGraph,
-    sales,
-    Tutorial,
+    Calendar,
+    Sales,
+    AppTour,
   },
-  data() {
-    return {
-      dialog: false,
-      configTutorial: {
-        title: "Tender Card Tutorial",
-        fields: [
-          {
-            id: "shopCard",
-            text: "Your shop information",
-            borderRadius: "15px",
-          },
-          {
-            id: "DashboardLink",
-            text: "Link to Dashboard",
-          },
-          {
-            id: "GenerateReceiptLink",
-            text: "Link to Blabla",
-          },
-          {
-            id: ["DashboardLink", "GenerateReceiptLink"],
-            text: "tu peux faire aussi du multi id ",
-          },
-        ],
+  data: () => ({
+    configTutorial: {
+      oneTry: true,
+      title: "PizziDashboard",
+      homePage: {
+        title: "PizziDashboard",
+        description: "Learn the basics of this page through this tutorial",
+        annotation: 'Replay this tutorial at any time from "Tutorial" section',
       },
-    };
-  },
-  methods: {
-    addWidget() {
-      this.dialog = true;
+      fields: [
+        {
+          text: "Welcome to your PizziDashboard",
+        },
+        {
+          id: "drawer-header",
+          text: "From here you can monitor your whole business",
+        },
+        {
+          id: "drawer-generate",
+          text: "You can generate a receipt...",
+        },
+        {
+          id: "drawer-register",
+          text: "You can register your products and modify them...",
+        },
+        {
+          id: "drawer-last-sales",
+          text: "View your last sales...",
+        },
+        {
+          id: "drawer-return",
+          text: "Or even accept a product return",
+        },
+        {
+          id: ["most-sold-graph", "sales-revenue-graph"],
+          text: "From the main page you can monitor some of your activities...",
+        },
+        {
+          id: "cash-payment",
+          text: "Accept a cash payment...",
+        },
+        {
+          id: "calendar",
+          text: "Or even check your next appointments",
+        },
+        {
+          text:
+            "Have a good time with your future essential tool, the PizziDashboard !",
+        },
+      ],
     },
-    tutorialEvent(event) {
-      console.debug(event);
-    },
+  }),
+  computed: {
+    ...mapGetters("defaultStore", ["getTutorialGiven"]),
   },
 };
 </script>
 
-<style>
+<style lang="scss">
+.containerThemeStyle {
+  background: var(--pizzi-bg2) !important;
+}
 .background {
   height: 100%;
 }
