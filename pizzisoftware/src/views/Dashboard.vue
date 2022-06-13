@@ -33,7 +33,6 @@ import MostSoldGraph from "@/components/widgets/Charts/MostSoldGraph.vue";
 import Sales from "@/components/widgets/Sales.vue";
 import Calendar from "@/components/widgets/Calendar/Calendar.vue";
 import AppTour from "@/components/core/AppTour.vue";
-import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -96,9 +95,6 @@ export default {
       ],
     },
   }),
-  computed: {
-    ...mapGetters("defaultStore", ["getTutorialGiven"]),
-  },
 };
 </script>
 

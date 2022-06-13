@@ -13,7 +13,3 @@ export function getExpirationToken (state) {
 export function getUserLoggedIn (state) {
     return state.userLoggedIn
 }
-
-export function getTutorialGiven (state) {
-    return state.tutorialGiven
-}
