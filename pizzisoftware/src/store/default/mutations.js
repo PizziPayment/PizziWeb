@@ -20,7 +20,3 @@ export function UPDATE_LANGUAGE (state, language) {
 export function UPDATE_DARK_MODE (state, isDarkTheme) {
     state.isDarkTheme = isDarkTheme
 }
-
-export function UPDATE_TUTORIAL_GIVEN (state, tutorialGiven) {
-    state.tutorialGiven = tutorialGiven
-}

@@ -6,7 +6,7 @@
   >
     <span :style="dynamicStyle()" class="tutorial_spotlight is-visible"> </span>
     <div
-      v-if="currentIndex >= 0 && config.fields[currentIndex]"
+      v-if="config.fields[currentIndex]"
       class="tutorial_cell d-flex justify-center align-center"
     >
       <div
@@ -16,7 +16,7 @@
         <div style="height: fit-content">
           <div class="tutorial_header">
             <div class="tutorial_header_title">
-              {{ $translate.getTranslation(config.title || "Tutorial") }}
+              {{ config.title || "Tutorial" }}
             </div>
           </div>
           <v-btn
@@ -34,11 +34,7 @@
         >
           <div class="d-flex justify-center flex-column tutorial_body">
             <div id="tutorial_text">
-              <span>
-                {{
-                  $translate.getTranslation(config.fields[currentIndex].text)
-                }}
-              </span>
+              <span> {{ config.fields[currentIndex].text }} </span>
             </div>
             <div class="bullets d-inline-flex justify-center align-center">
               <v-btn
@@ -46,11 +42,9 @@
                 @click="changeStep(currentIndex - 1)"
                 icon
                 x-small
-                id="chevron"
+                color="black"
               >
-                <v-icon size="25px">
-                  mdi-chevron-left
-                </v-icon>
+                <v-icon size="25px"> mdi-chevron-left</v-icon>
               </v-btn>
               <span
                 :style="index === currentIndex ? 'background: #06f;' : ''"
@@ -63,61 +57,9 @@
                 @click="changeStep(currentIndex + 1)"
                 icon
                 x-small
-                id="chevron"
+                color="black"
               >
                 <v-icon size="25px"> mdi-chevron-right</v-icon>
-              </v-btn>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      v-else-if="currentIndex === -1 && config.homePage"
-      class="tutorial_cell d-flex justify-center align-center"
-    >
-      <div
-        id="tutorialCardId"
-        class="d-flex justify-center items-center flex-column modal_element"
-      >
-        <div style="height: fit-content">
-          <div class="tutorial_header">
-            <div class="tutorial_header_title">
-              {{
-                $translate.getTranslation(
-                  config.homePage.title || config.title || "Tutorial"
-                )
-              }}
-            </div>
-          </div>
-          <v-btn
-            color="red"
-            @click="tutorialIsOpen = false"
-            icon
-            class="tutorial_button-left"
-          >
-            <v-icon> mdi-close </v-icon>
-          </v-btn>
-        </div>
-        <div style="height: fit-content">
-          <div class="d-flex justify-center flex-column tutorial_body">
-            <div id="tutorial_text">
-              <span style="font-size: 1.3em; color: black">
-                {{ $translate.getTranslation(config.homePage.description) }}
-              </span>
-            </div>
-            <div
-              class="d-flex flex-column justify-center align-center"
-              style="width: 100%"
-            >
-              <em
-                v-if="config.homePage.annotation"
-                style="color: grey; padding-bottom: 4px "
-              >
-                {{ $translate.getTranslation(config.homePage.annotation) }}
-              </em>
-              <v-btn @click="startTutorial()" color="primary" block>
-                OK
               </v-btn>
             </div>
           </div>
@@ -139,7 +81,7 @@ export default {
     return {
       myTimeout: undefined,
       currentId: 0,
-      tutorialIsOpen: false,
+      tutorialIsOpen: true,
       element: undefined,
       elementStyle: undefined,
       scrollY: 0,
@@ -149,19 +91,7 @@ export default {
     };
   },
   mounted() {
-    if (this.config && this.config.oneTry === true) {
-      const storage = JSON.parse(localStorage.getItem("tutorials"));
-      if (storage && storage.indexOf(this.config.title) !== -1) {
-        return;
-      }
-    }
-
-    this.tutorialIsOpen = true;
-    if (this.config && this.config.homePage) {
-      this.currentIndex = -1;
-    } else {
-      this.makeObserver();
-    }
+    this.makeObserver();
 
     document.addEventListener("scroll", function() {
       this.scrollY = window.scrollY;
@@ -169,22 +99,6 @@ export default {
     });
   },
   methods: {
-    startTutorial() {
-      this.currentIndex = 0;
-      this.makeObserver();
-      this.$emit("start");
-    },
-    isInViewport(el) {
-      const rect = el.getBoundingClientRect();
-      return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <=
-          (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <=
-          (window.innerWidth || document.documentElement.clientWidth)
-      );
-    },
     makeObserver() {
       if (this.observer) {
         this.observer.disconnect();
@@ -205,17 +119,17 @@ export default {
         }
         const element = document.getElementById(id);
         if (element) {
-          if (this.config.fields[this.currentIndex].scrollToPage) {
+          if (!this.config.fields[this.currentIndex].scrollToPage) {
+            element.scrollIntoView({
+              behavior: "smooth",
+              inline: "nearest",
+            });
+          } else {
             window.scrollTo(
               0,
               window.innerHeight *
                 this.config.fields[this.currentIndex].scrollToPage
             );
-          } else if (!this.isInViewport(element)) {
-            element.scrollIntoView({
-              behavior: "smooth",
-              inline: "nearest",
-            });
           }
           this.element = element;
           this.elementStyle = element.getBoundingClientRect();
@@ -224,20 +138,21 @@ export default {
         this.observer = new MutationObserver(() => {
           const element = document.getElementById(id);
           if (element) {
-            if (this.config.fields[this.currentIndex].scrollToPage) {
+            if (!this.config.fields[this.currentIndex].scrollToPage) {
+              element.scrollIntoView({
+                behavior: "smooth",
+                inline: "nearest",
+              });
+            } else {
               window.scrollTo(
                 0,
                 window.innerHeight *
                   this.config.fields[this.currentIndex].scrollToPage
               );
-            } else if (!this.isInViewport(element)) {
-              element.scrollIntoView({
-                behavior: "smooth",
-                inline: "nearest",
-              });
             }
             this.element = element;
             this.elementStyle = element.getBoundingClientRect();
+            return;
           }
         });
 
@@ -279,24 +194,12 @@ export default {
   },
   watch: {
     currentIndex() {
-      this.$emit("event", {
-        index: this.currentIndex,
-        data: this.config.fields[this.currentIndex],
-      });
+      this.$emit("event", this.currentIndex);
     },
     tutorialIsOpen() {
       if (this.tutorialIsOpen) {
         this.$emit("open");
       } else {
-        if (this.config.oneTry) {
-          let array = JSON.parse(localStorage.getItem("tutorials"));
-          if (!array || !array.length || !Array.isArray(array)) {
-            array = new Array(this.config.title);
-          } else if (array.indexOf(this.config.title) === -1) {
-            array.push(this.config.title);
-          }
-          localStorage.setItem("tutorials", JSON.stringify(array));
-        }
         clearTimeout(this.myTimeout);
         this.$emit("close");
       }
@@ -306,9 +209,6 @@ export default {
 </script>
 
 <style scoped>
-#chevron .v-icon {
-  color: #000 !important;
-}
 .bullets span {
   border-radius: 50%;
   display: inline-block;
@@ -356,7 +256,7 @@ export default {
   padding: 0 90px;
   overflow: hidden;
   color: #000;
-  font-size: 2em;
+  font-size: 16px;
   line-height: 46px;
   text-align: center;
   text-overflow: ellipsis;
