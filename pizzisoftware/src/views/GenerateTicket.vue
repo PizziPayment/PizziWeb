@@ -74,6 +74,8 @@
                 {{ $translate.getTranslation("Connect User") }}
               </v-btn>
 
+              <v-btn class="ma-2" color="primary" @click="openCalculator()">open calculator</v-btn>
+
               <div v-if="items && items.length > 0">
                 <v-card
                   class="mx-auto ma-2"
@@ -157,6 +159,7 @@
         :id="transactionId"
         :token="transactionToken"
       />
+      <CalculatorDialog ref="CalculatorDialog" />
     </v-container>
   </v-app>
 </template>
@@ -164,6 +167,7 @@
 <script>
 import materialCard from "@/components/MaterialCard.vue";
 import DisplayQRCodeDialog from "@/components/widgets/QRCode/DisplayQRCodeDialog.vue";
+import CalculatorDialog from '@/components/widgets/Calculator/Calculator.vue'
 import labelmake from "labelmake";
 import moment from "moment";
 import axios from "axios";
@@ -171,7 +175,7 @@ import Bugsnag from "@bugsnag/js";
 import { mapGetters } from "vuex";
 
 export default {
-  components: { materialCard, DisplayQRCodeDialog },
+  components: { CalculatorDialog, materialCard, DisplayQRCodeDialog },
 
   computed: {
     ...mapGetters("defaultStore", ["getAccessToken"]),
@@ -443,6 +447,10 @@ export default {
 
       let finalOjb = this.getReceiptObject();
       console.log("final json obj is:", finalOjb);
+    },
+
+    openCalculator() {
+      this.$refs.CalculatorDialog.show()
     },
 
     getSelectedProducts() {
