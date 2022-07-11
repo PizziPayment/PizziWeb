@@ -34,6 +34,10 @@ import Sales from "@/components/widgets/Sales.vue";
 import Calendar from "@/components/widgets/Calendar/Calendar.vue";
 import AppTour from "@/components/core/AppTour.vue";
 
+import { mapGetters, mapActions } from "vuex";
+import axios from "axios";
+
+
 export default {
   components: {
     CashPayment,
@@ -95,6 +99,29 @@ export default {
       ],
     },
   }),
+  mounted() {
+    this.loadShopInfos()
+  },
+  computed: {
+    ...mapGetters('defaultStore', [
+      'getAccessToken',
+    ])
+  },
+  methods: {
+    ...mapActions("defaultStore", ["setShopInfos"]),
+    loadShopInfos() {
+      const bearerAuth = {
+        Authorization: "Bearer " + this.getAccessToken,
+      };
+      axios
+        .get(process.env.VUE_APP_RESOURCE_URL + "/shops", {
+          headers: bearerAuth,
+        })
+        .then((response) => {
+          this.setShopInfos(response.data)
+        })
+    }
+  }
 };
 </script>
 

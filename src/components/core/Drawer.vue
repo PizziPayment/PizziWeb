@@ -17,13 +17,13 @@
         <v-list-item-content>
           <v-list-item-title>
             <p class="headline font-weight-bold mt-4">
-              Faudra Tiff Hair
+              {{getShopInfos.name}}
             </p>
             <p class="overline font-weight-thin mb-n4">
-              109 Rue Jean Soula
+              {{getShopInfos.address}}
             </p>
             <p class="overline font-weight-thin">
-              33000 Bordeaux, France
+              {{getShopInfos.zipcode}} {{getShopInfos.city}}
             </p>
           </v-list-item-title>
         </v-list-item-content>
@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "CoreDrawer",
@@ -120,6 +120,7 @@ export default {
         this.$emit("input", value);
       },
     },
+    ...mapGetters("defaultStore", ["getShopInfos"])
   },
   methods: {
     ...mapActions("defaultStore", ["userLogout"]),
