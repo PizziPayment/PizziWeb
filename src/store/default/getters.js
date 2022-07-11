@@ -13,3 +13,7 @@ export function getExpirationToken (state) {
 export function getUserLoggedIn (state) {
     return state.userLoggedIn
 }
+
+export function getShopInfos (state) {
+    return state.shopInfos
+}
