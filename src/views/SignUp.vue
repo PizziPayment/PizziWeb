@@ -39,7 +39,9 @@
               </v-window-item>
 
               <v-window-item :value="2">
-                <v-card-text>
+                <v-card-text
+                  class="d-flex flex-column justify-center align-center"
+                >
                   <v-text-field
                     label="Mot de passe"
                     type="password"
@@ -62,6 +64,49 @@
                     required
                     outlined
                   ></v-text-field>
+                  <div
+                    style="
+                      min-width: 200px;
+                      width: 60%;
+                      display: grid;
+                      grid-template-columns: repeat(2, 1fr);
+                    "
+                  >
+                    <v-tooltip
+                      :left="index % 2 === 0"
+                      :right="index % 2 !== 0"
+                      v-for="(rule, index) in rulesConfig"
+                      :key="index"
+                      style="width: fit-content"
+                    >
+                      <template v-slot:activator="{ on }">
+                        <div class="d-inline-flex flex-row align-center">
+                          <v-icon> mdi-circle-medium </v-icon>
+                          <span
+                            v-on="on"
+                            :style="
+                              'color: ' +
+                              (rule.rule && rule.rule(password)
+                                ? 'green'
+                                : 'red')
+                            "
+                          >
+                            {{ $translate.getTranslation(rule.label) }}
+                          </span>
+                        </div>
+                      </template>
+                      <template
+                        v-if="
+                          rule.tooltip && typeof rule.tooltip === 'function'
+                        "
+                      >
+                        {{ rule.tooltip(password) }}
+                      </template>
+                      <template v-else>
+                        {{ $translate.getTranslation(rule.tooltip) }}
+                      </template>
+                    </v-tooltip>
+                  </div>
                 </v-card-text>
               </v-window-item>
 
@@ -139,6 +184,32 @@
               </v-window-item>
 
               <v-window-item :value="4">
+                <div
+                  class="d-flex flex-column align-center"
+                  style="min-width: 200px; width: 100%; margin-bottom: 20px"
+                >
+                  <div
+                    class="d-flex flex-row justify-start align-center"
+                    v-for="(config, index) in resumeConfig"
+                    :key="index"
+                    style="width: 50%; gap: 10px; margin-top: 10px"
+                  >
+                    <span style="font-weight: bold">
+                      {{ $translate.getTranslation(config.label) + ": " }}
+                    </span>
+                    <div
+                      class="resumeField d-inline-flex justify-center align-center"
+                    >
+                      {{ getResumeData(config.dataName) }}
+                      <v-icon @click="step = config.step" small>
+                        mdi-pen
+                      </v-icon>
+                    </div>
+                  </div>
+                </div>
+              </v-window-item>
+
+              <v-window-item :value="5">
                 <div class="pa-4 text-center">
                   <v-img
                     class="mb-4"
@@ -168,12 +239,16 @@
               </v-btn>
               <v-spacer></v-spacer>
               <v-btn
-                :disabled="step === 4"
+                :disabled="step === 5"
                 color="primary"
                 depressed
                 @click="goToNextSlide()"
               >
-                Suivant
+                {{
+                  step !== 4
+                    ? $translate.getTranslation("Suivant")
+                    : $translate.getTranslation("Create account")
+                }}
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -214,6 +289,82 @@ export default {
   },
 
   data: () => ({
+    rulesConfig: [
+      {
+        rule: (toCheck) => {
+          return toCheck && toCheck.length >= 12;
+        },
+        label: "at least 12 characters",
+        tooltip: (string) => {
+          return "current length " + (string ? string.length : 0);
+        },
+      },
+      {
+        rule: (toCheck) => {
+          return toCheck && /[a-z]/.test(toCheck);
+        },
+        label: "at least a lower case",
+        tooltip: "at least a lower case letter",
+      },
+      {
+        rule: (toCheck) => {
+          return toCheck && /[0-9]/.test(toCheck);
+        },
+        label: "at least a number",
+        tooltip: "at least a number",
+      },
+      {
+        rule: (toCheck) => {
+          return toCheck && /[A-Z]/.test(toCheck);
+        },
+        label: "at least a upper case",
+        tooltip: "at least a upper case letter",
+      },
+      {
+        rule: (toCheck) => {
+          return toCheck && /[^\w]/.test(toCheck);
+        },
+        label: "at least a symbol",
+        tooltip: "at least a symbol",
+      },
+    ],
+    resumeConfig: [
+      {
+        label: "email",
+        dataName: "email",
+        step: 1,
+      },
+      {
+        label: "shopName",
+        dataName: "shopName",
+        step: 3,
+      },
+      {
+        label: "address",
+        dataName: "address",
+        step: 3,
+      },
+      {
+        label: "city",
+        dataName: "city",
+        step: 3,
+      },
+      {
+        label: "zipCode",
+        dataName: "zipCode",
+        step: 3,
+      },
+      {
+        label: "phoneNumber",
+        dataName: "phoneNumber",
+        step: 3,
+      },
+      {
+        label: "siret",
+        dataName: "siret",
+        step: 3,
+      },
+    ],
     textSnackbar: "Login Error, please contact us",
     snackbar: false,
     step: 1,
@@ -237,6 +388,8 @@ export default {
           return "Créez votre mot de passe";
         case 3:
           return "Informations sur votre commerce";
+        case 4:
+          return "Resume";
         default:
           return "Compte créé";
       }
@@ -305,6 +458,9 @@ export default {
     },
   },
   methods: {
+    getResumeData(dataName) {
+      return this[dataName];
+    },
     processSignUp() {
       if (
         this.password &&
@@ -378,15 +534,15 @@ export default {
       this.$v.$touch();
       if (this.step === 1 && this.emailErrors.length === 0) {
         this.step += 1;
-      }
-      if (
+      } else if (
         this.step === 2 &&
         this.passwordErrors.length === 0 &&
         this.confirmPasswordErrors.length === 0
       ) {
         this.step += 1;
-      }
-      if (this.step === 3 && this.isShopDescriptionValid()) {
+      } else if (this.step === 3 && this.isShopDescriptionValid()) {
+        this.step += 1;
+      } else if (this.step === 4) {
         this.step += 1;
       }
     },
@@ -401,5 +557,13 @@ export default {
 
 .v-text-field {
   width: 400px;
+}
+</style>
+
+<style scoped>
+.resumeField {
+  padding-inline: 10px;
+  background: rgba(169, 166, 166, 0.182);
+  border-radius: 20px;
 }
 </style>
