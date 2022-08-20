@@ -16,7 +16,7 @@
     },
     "signUpEmailInf": {
         "fr": "Cette adresse e-mail sera utilisée pour vous connecter à votre compte Pizzi.",
-        "en": "This email address will be used to log in to your Pizzi account."
+        "en": "This email address will be used to log into your Pizzi account."
     },
     "password": {
         "fr": "Mot de passe"
