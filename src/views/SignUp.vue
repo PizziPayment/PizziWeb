@@ -185,14 +185,18 @@
 
               <v-window-item :value="4">
                 <div
-                  class="d-flex flex-column align-center"
-                  style="min-width: 200px; width: 100%; margin-bottom: 20px"
+                  class="d-flex flex-column align-start justify-center"
+                  style="
+                    min-width: 200px;
+                    width: fit-content;
+                    margin-bottom: 20px;
+                  "
                 >
                   <div
                     class="d-flex flex-row justify-start align-center"
                     v-for="(config, index) in resumeConfig"
                     :key="index"
-                    style="width: 50%; gap: 10px; margin-top: 10px"
+                    style="width: fit-content; gap: 10px; margin-top: 10px"
                   >
                     <span style="font-weight: bold">
                       {{ $translate.getTranslation(config.label) + ": " }}
