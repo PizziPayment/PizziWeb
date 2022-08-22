@@ -20,6 +20,9 @@
                 clear-icon="mdi-close-circle"
                 clearable
                 width="300"
+                :type="passwordIsVisible ? 'text' : 'password'"
+                :append-icon="passwordIsVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                @click:append="passwordIsVisible = !passwordIsVisible"
               >
               </v-text-field>
             </div>
@@ -31,6 +34,9 @@
                 clear-icon="mdi-close-circle"
                 clearable
                 width="300"
+                :type="passwordIsVisible ? 'text' : 'password'"
+                :append-icon="passwordIsVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                @click:append="passwordIsVisible = !passwordIsVisible"
               >
               </v-text-field>
             </div>
@@ -48,7 +54,7 @@
 
 <script>
 import axios from "axios";
-import Bugsnag from '@bugsnag/js'
+import Bugsnag from "@bugsnag/js";
 import { mapGetters } from "vuex";
 
 export default {
@@ -57,12 +63,11 @@ export default {
       oldPassword: null,
       newPassword: null,
       dialog: false,
+      passwordIsVisible: false,
     };
   },
   computed: {
-    ...mapGetters('defaultStore', [
-      'getAccessToken',
-    ])
+    ...mapGetters("defaultStore", ["getAccessToken"]),
   },
   methods: {
     show() {
@@ -77,27 +82,22 @@ export default {
         };
 
         const bearerAuth = {
-          Authorization:
-            "Bearer " + this.getAccessToken,
+          Authorization: "Bearer " + this.getAccessToken,
         };
         axios
-          .put(
-            process.env.VUE_APP_RESOURCE_URL + "/shops/me/password",
-            body,
-            {
-              headers: bearerAuth,
-            }
-          )
+          .put(process.env.VUE_APP_RESOURCE_URL + "/shops/me/password", body, {
+            headers: bearerAuth,
+          })
           .then((response) => {
             console.log(
               "🚀 ~ file: ResetPassword.vue ~ line 92 ~ .then ~ response",
               response
             );
-           // if success - dialog false
+            // if success - dialog false
           })
           .catch((error) => {
             alert(error);
-            Bugsnag.notify(error)
+            Bugsnag.notify(error);
             console.error(error);
           });
       }
