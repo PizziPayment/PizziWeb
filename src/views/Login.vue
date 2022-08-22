@@ -38,8 +38,10 @@
                     clearable
                     :rules="[(v) => !!v || 'Champ obligatoire']"
                     required
-                    type="password"
                     v-model="password"
+                    :type="passwordIsVisible ? 'text' : 'password'"
+                    :append-icon="passwordIsVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                    @click:append="passwordIsVisible = !passwordIsVisible"
                   ></v-text-field>
                   <v-btn
                     @click="processSignIn()"
@@ -58,24 +60,15 @@
             </v-container>
           </v-card>
         </v-col>
-      <v-snackbar
-        color="red"
-        v-model="snackbar"
-        :timeout="3000"
-      >
-        {{ $translate.getTranslation(textSnackbar) }}
+        <v-snackbar color="red" v-model="snackbar" :timeout="3000">
+          {{ $translate.getTranslation(textSnackbar) }}
 
-        <template v-slot:action="{ attrs }">
-          <v-btn
-            color="white"
-            text
-            v-bind="attrs"
-            @click="snackbar = false"
-          >
-            Close
-          </v-btn>
-        </template>
-      </v-snackbar>
+          <template v-slot:action="{ attrs }">
+            <v-btn color="white" text v-bind="attrs" @click="snackbar = false">
+              Close
+            </v-btn>
+          </template>
+        </v-snackbar>
       </v-container>
     </v-content>
   </v-app>
@@ -83,7 +76,7 @@
 
 <script>
 import axios from "axios";
-import Bugsnag from '@bugsnag/js'
+import Bugsnag from "@bugsnag/js";
 import { mapActions } from "vuex";
 
 export default {
@@ -94,6 +87,7 @@ export default {
     snackbar: false,
     email: null,
     password: null,
+    passwordIsVisible: false,
   }),
 
   computed: {},
@@ -103,7 +97,7 @@ export default {
 
     async processSignIn() {
       const body = {
-        grant_type: 'password',
+        grant_type: "password",
         username: this.email,
         password: this.password,
       };
@@ -126,19 +120,19 @@ export default {
             expirationToken: response.data.access_token_expires_at,
           });
           if (success) {
-            Bugsnag.Breadcrumb("User Login", this.email)
+            Bugsnag.Breadcrumb("User Login", this.email);
             this.$router.push("/dashboard");
           } else {
-            this.textSnackbar = "Ouch, an error happened. Please contact us"
-            this.snackbar = true
-            Bugsnag.notify('Error happened during login', this.email)
+            this.textSnackbar = "Ouch, an error happened. Please contact us";
+            this.snackbar = true;
+            Bugsnag.notify("Error happened during login", this.email);
             console.error("Error login");
           }
         })
         .catch((error) => {
-          Bugsnag.notify('Error - invalid credentials', this.email)
-          this.textSnackbar = "Error - invalid credentials"
-          this.snackbar = true
+          Bugsnag.notify("Error - invalid credentials", this.email);
+          this.textSnackbar = "Error - invalid credentials";
+          this.snackbar = true;
           console.error(error);
         });
     },
