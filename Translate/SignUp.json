@@ -1,0 +1,97 @@
+{
+    "Registration": {
+        "fr": "Inscription"
+    },
+    "Create your password": {
+        "fr": "Créez votre mot de passe"
+    },
+    "Information about your business": {
+        "fr": "Informations sur votre commerce"
+    },
+    "Summary": {
+        "fr": "Résumé"
+    },
+    "Account created": {
+        "fr": "Compte créé"
+    },
+    "signUpEmailInf": {
+        "fr": "Cette adresse e-mail sera utilisée pour vous connecter à votre compte Pizzi.",
+        "en": "This email address will be used to log into your Pizzi account."
+    },
+    "password": {
+        "fr": "Mot de passe"
+    },
+    "Password Confirmation": {
+        "fr": "Confirmation du mot de passe"
+    },
+    "Name of your business": {
+        "fr": "Nom de votre commerce"
+    },
+    "Address": {
+        "fr": "Adresse"
+    },
+    "City": {
+        "fr": "Ville"
+    },
+    "Zip Code": {
+        "fr": "Code Postal"
+    },
+    "Phone number": {
+        "fr": "Numéro de téléphone"
+    },
+    "Welcome to Pizza": {
+        "fr": "Bienvenue sur Pizzi"
+    },
+    "Thank you for creating your account": {
+        "fr": "Merci d'avoir créé votre compte"
+    },
+    "log in": {
+        "fr": "connectez-vous"
+    },
+    "Previous": {
+        "fr": "Précédent"
+    },
+    "Next": {
+        "fr": "Suivant"
+    },
+    "Create account": {
+        "fr": "Créer un compte"
+    },
+    "at least 12 characters": {
+        "fr": "au moins 12 caractères"
+    },
+    "at least a lower case": {
+        "fr": "au moins une minuscule"
+    },
+    "at least a upper case": {
+        "fr": "au moins une majuscule"
+    },
+    "at least a number": {
+        "fr": "au moins un nombre"
+    },
+    "at least a symbol": {
+        "fr": "au moins un symbole"
+    },
+    "Shop name": {
+        "fr": "Nom du Magasin"
+    },
+    "Login Error, please contact us": {
+        "fr": "Erreur de connexion, veuillez nous contacter"
+    },
+    "Invalid email address": {
+        "fr": "Adresse email invalide"
+    },
+    "Required": {
+        "fr": "Requis"
+    },
+    "errorMessage": {
+        "fr": "Doit contenir 12 charactères ou plus, une majuscule, une minuscule, un chiffre, et un charactère spécial",
+        "en": "Must contain 12 or more characters, uppercase, lowercase, number, and special character"
+    },
+    "Passwords must be identical": {
+        "fr": "Les mots de passe doivent être identiques"
+    },
+    "Error - unable to create an account, please contact us": {
+        "fr": "Error - impossible de créer un compte, veuillez nous contacter"
+    }
+}

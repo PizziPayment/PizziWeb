@@ -7,7 +7,9 @@
             <v-card-title
               class="title font-weight-regular justify-space-between"
             >
-              <span>{{ currentTitle }}</span>
+              <span>
+                {{ $translate.getTranslation(currentTitle) }}
+              </span>
               <v-avatar
                 color="primary lighten-2"
                 class="subheading white--text"
@@ -32,8 +34,7 @@
                     outlined
                   ></v-text-field>
                   <span class="caption grey--text text--darken-1">
-                    Cette adresse e-mail sera utilisée pour vous connecter à
-                    votre compte Pizzi.
+                    {{ $translate.getTranslation("signUpEmailInf") }}
                   </span>
                 </v-card-text>
               </v-window-item>
@@ -43,7 +44,7 @@
                   class="d-flex flex-column justify-center align-center"
                 >
                   <v-text-field
-                    label="Mot de passe"
+                    :label="$translate.getTranslation('password')"
                     type="password"
                     clearable
                     v-model="password"
@@ -54,7 +55,7 @@
                     outlined
                   ></v-text-field>
                   <v-text-field
-                    label="Confirmation du mot de passe"
+                    :label="$translate.getTranslation('Password Confirmation')"
                     type="password"
                     clearable
                     v-model="confirmPassword"
@@ -113,7 +114,7 @@
               <v-window-item :value="3">
                 <v-card-text>
                   <v-text-field
-                    label="Nom de votre commerce"
+                    :label="$translate.getTranslation('Name of your business')"
                     type="text"
                     clearable
                     v-model="shopName"
@@ -124,7 +125,7 @@
                     outlined
                   ></v-text-field>
                   <v-text-field
-                    label="Adresse"
+                    :label="$translate.getTranslation('Address')"
                     type="text"
                     clearable
                     v-model="address"
@@ -135,7 +136,7 @@
                     outlined
                   ></v-text-field>
                   <v-text-field
-                    label="Ville"
+                    :label="$translate.getTranslation('City')"
                     type="text"
                     clearable
                     v-model="city"
@@ -146,7 +147,7 @@
                     outlined
                   ></v-text-field>
                   <v-text-field
-                    label="Code Postal"
+                    :label="$translate.getTranslation('Zip Code')"
                     type="text"
                     clearable
                     v-model="zipCode"
@@ -158,7 +159,7 @@
                   ></v-text-field>
 
                   <v-text-field
-                    label="Numéro de téléphone"
+                    :label="$translate.getTranslation('Phone number')"
                     type="text"
                     clearable
                     v-model="phoneNumber"
@@ -170,7 +171,7 @@
                   ></v-text-field>
 
                   <v-text-field
-                    label="Siret"
+                    :label="$translate.getTranslation('Siret')"
                     type="text"
                     clearable
                     v-model="siret"
@@ -222,15 +223,19 @@
                     src="../assets/pizzi.png"
                   ></v-img>
                   <h3 class="title font-weight-light mb-2">
-                    Bienvenue sur Pizzi
+                    {{ $translate.getTranslation("Welcome to Pizza") }}
                   </h3>
-                  <span class="caption grey--text"
-                    >Merci d'avoir créé votre compte</span
-                  >
+                  <span class="caption grey--text">
+                    {{
+                      $translate.getTranslation(
+                        "Thank you for creating your account"
+                      )
+                    }}
+                  </span>
                   <v-spacer></v-spacer>
-                  <v-btn @click="processSignUp()" color="success"
-                    >connectez-vous</v-btn
-                  >
+                  <v-btn @click="processSignUp()" color="success">
+                    {{ $translate.getTranslation("log in") }}
+                  </v-btn>
                 </div>
               </v-window-item>
             </v-window>
@@ -239,7 +244,7 @@
 
             <v-card-actions>
               <v-btn :disabled="step === 1" text @click="step--">
-                Précédent
+                {{ $translate.getTranslation("Previous") }}
               </v-btn>
               <v-spacer></v-spacer>
               <v-btn
@@ -250,7 +255,7 @@
               >
                 {{
                   step !== 4
-                    ? $translate.getTranslation("Suivant")
+                    ? $translate.getTranslation("Next")
                     : $translate.getTranslation("Create account")
                 }}
               </v-btn>
@@ -308,7 +313,7 @@ export default {
           return toCheck && /[a-z]/.test(toCheck);
         },
         label: "at least a lower case",
-        tooltip: "at least a lower case letter",
+        tooltip: "at least a lower case",
       },
       {
         rule: (toCheck) => {
@@ -322,7 +327,7 @@ export default {
           return toCheck && /[A-Z]/.test(toCheck);
         },
         label: "at least a upper case",
-        tooltip: "at least a upper case letter",
+        tooltip: "at least a upper case",
       },
       {
         rule: (toCheck) => {
@@ -339,7 +344,7 @@ export default {
         step: 1,
       },
       {
-        label: "shopName",
+        label: "Shop name",
         dataName: "shopName",
         step: 3,
       },
@@ -354,12 +359,12 @@ export default {
         step: 3,
       },
       {
-        label: "zipCode",
+        label: "zip Code",
         dataName: "zipCode",
         step: 3,
       },
       {
-        label: "phoneNumber",
+        label: "phone Number",
         dataName: "phoneNumber",
         step: 3,
       },
@@ -387,77 +392,87 @@ export default {
     currentTitle() {
       switch (this.step) {
         case 1:
-          return "Inscription";
+          return "Registration";
         case 2:
-          return "Créez votre mot de passe";
+          return "Create your password";
         case 3:
-          return "Informations sur votre commerce";
+          return "Information about your business";
         case 4:
-          return "Resume";
+          return "Summary";
         default:
-          return "Compte créé";
+          return "Account created";
       }
     },
 
     emailErrors() {
       const errors = [];
       if (!this.$v.email.$dirty) return errors;
-      !this.$v.email.email && errors.push("Adresse email invalide");
-      !this.$v.email.required && errors.push("Requis");
+      !this.$v.email.email &&
+        errors.push(this.$translate.getTranslation("Invalid email address"));
+      !this.$v.email.required &&
+        errors.push(this.$translate.getTranslation("Required"));
       return errors;
     },
     passwordErrors() {
       const errors = [];
       if (!this.$v.password.$dirty) return errors;
-      !this.$v.password.required && errors.push("Requis");
+      !this.$v.password.required &&
+        errors.push(this.$translate.getTranslation("Required"));
       if (!this.checkRegexPassword(this.password))
-        errors.push(
-          "Doit contenir 12 charactères ou plus, une majuscule, une minuscule, un chiffre, et un charactère spécial."
-        );
+        errors.push(this.$translate.getTranslation("errorMessage"));
       return errors;
     },
     confirmPasswordErrors() {
       const errors = [];
       if (!this.$v.confirmPassword.$dirty) return errors;
-      !this.$v.confirmPassword.required && errors.push("Requis");
+      !this.$v.confirmPassword.required &&
+        errors.push(this.$translate.getTranslation("Required"));
       if (this.confirmPassword !== this.password)
-        errors.push("Les mots de passe doivent être identiques");
+        errors.push(
+          this.$translate.getTranslation("Passwords must be identical")
+        );
       return errors;
     },
     shopNameErrors() {
       const errors = [];
       if (!this.$v.shopName.$dirty) return errors;
-      !this.$v.shopName.required && errors.push("Requis");
+      !this.$v.shopName.required &&
+        errors.push(this.$translate.getTranslation("Required"));
       return errors;
     },
     addressErrors() {
       const errors = [];
       if (!this.$v.address.$dirty) return errors;
-      !this.$v.address.required && errors.push("Requis");
+      !this.$v.address.required &&
+        errors.push(this.$translate.getTranslation("Required"));
       return errors;
     },
     cityErrors() {
       const errors = [];
       if (!this.$v.city.$dirty) return errors;
-      !this.$v.city.required && errors.push("Requis");
+      !this.$v.city.required &&
+        errors.push(this.$translate.getTranslation("Required"));
       return errors;
     },
     zipCodeErrors() {
       const errors = [];
       if (!this.$v.zipCode.$dirty) return errors;
-      !this.$v.zipCode.required && errors.push("Requis");
+      !this.$v.zipCode.required &&
+        errors.push(this.$translate.getTranslation("Required"));
       return errors;
     },
     phoneNumberErrors() {
       const errors = [];
       if (!this.$v.phoneNumber.$dirty) return errors;
-      !this.$v.phoneNumber.required && errors.push("Requis");
+      !this.$v.phoneNumber.required &&
+        errors.push(this.$translate.getTranslation("Required"));
       return errors;
     },
     siretErrors() {
       const errors = [];
       if (!this.$v.siret.$dirty) return errors;
-      !this.$v.siret.required && errors.push("Requis");
+      !this.$v.siret.required &&
+        errors.push(this.$translate.getTranslation("Required"));
       return errors;
     },
   },
@@ -501,8 +516,9 @@ export default {
             this.$router.push({ path: "/login" });
           })
           .catch((error) => {
-            this.textSnackbar =
-              "Error - impossible de créer un compte, veuillez nous contacter";
+            this.textSnackbar = this.$translate.getTranslation(
+              "Error - unable to create an account, please contact us"
+            );
             this.snackbar = true;
             this.step = 1;
             Bugsnag.notify(error);
