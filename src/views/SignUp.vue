@@ -45,7 +45,9 @@
                 >
                   <v-text-field
                     :label="$translate.getTranslation('password')"
-                    type="password"
+                    :type="passwordIsVisible ? 'text' : 'password'"
+                    :append-icon="passwordIsVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                    @click:append="passwordIsVisible = !passwordIsVisible"
                     clearable
                     v-model="password"
                     :error-messages="passwordErrors"
@@ -56,7 +58,9 @@
                   ></v-text-field>
                   <v-text-field
                     :label="$translate.getTranslation('Password Confirmation')"
-                    type="password"
+                    :type="passwordIsVisible ? 'text' : 'password'"
+                    :append-icon="passwordIsVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                    @click:append="passwordIsVisible = !passwordIsVisible"
                     clearable
                     v-model="confirmPassword"
                     :error-messages="confirmPasswordErrors"
@@ -387,6 +391,7 @@ export default {
     password: null,
     confirmPassword: null,
     dialog: false,
+    passwordIsVisible: false,
   }),
   computed: {
     currentTitle() {
