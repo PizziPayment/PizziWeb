@@ -134,15 +134,15 @@
                         <v-icon>mdi-web</v-icon>
                         <span> {{ getShopInfos.website }} </span>
                       </v-btn>
-                      <v-btn x-small icon color="primary">
+                      <v-btn v-if="shopFacebook" x-small icon color="primary">
                         <v-icon>mdi-facebook</v-icon>
                         <span> {{ getShopInfos.facebook }} </span>
                       </v-btn>
-                      <v-btn x-small icon color="primary">
+                      <v-btn v-if="shopTwitter" x-small icon color="primary">
                         <v-icon>mdi-twitter</v-icon>
                         <span> {{ getShopInfos.twitter }} </span>
                       </v-btn>
-                      <v-btn x-small icon color="primary">
+                      <v-btn v-if="shopInstagram" x-small icon color="primary">
                         <v-icon>mdi-instagram</v-icon>
                         <span> {{ getShopInfos.instagram }} </span>
                       </v-btn>
