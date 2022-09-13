@@ -80,6 +80,42 @@
     "Company": {
         "fr": "Compagnie"
     },
+    "Name": {
+        "fr": "Nom"
+    },
+    "Price": {
+        "fr": "Prix"
+    },
+    "Taxes": {
+        "fr": "Taxes"
+    },
+    "Display Logo": {
+        "fr": "Afficher le logo"
+    },
+    "Display shop name": {
+        "fr": "Afficher le nom du commerce"
+    },
+    "Display shop address": {
+        "fr": "Afficher l'adresse du commerce"
+    },
+    "Display shop website": {
+        "fr": "Afficher le site web du commerce"
+    },
+    "Display shop Facebook": {
+        "fr": "Afficher la page Facebook"
+    },
+    "Display shop Instagram": {
+        "fr": "Afficher la page Instagram"
+    },
+    "Display shop Twitter": {
+        "fr": "Afficher la page Twitter"
+    },
+    "Save": {
+        "fr": "Enregistrer"
+    },
+    "Select the informations that will appear on the receipt": {
+        "fr": "Sélectionnez les informations que vous souhaitez voir sur le reçu"
+    },
     "User Name": {
         "fr": "Nom d'utilisateur"
     },

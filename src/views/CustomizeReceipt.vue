@@ -105,9 +105,9 @@
                         <template v-slot:default>
                           <thead>
                             <tr>
-                              <th class="text-left">Name</th>
-                              <th class="text-left">Price</th>
-                              <th class="text-left">Taxes</th>
+                              <th class="text-left"> {{ $translate.getTranslation("Name") }} </th>
+                              <th class="text-left"> {{ $translate.getTranslation("Price") }}</th>
+                              <th class="text-left"> {{ $translate.getTranslation("Taxes") }}</th>
                             </tr>
                           </thead>
                           <tbody>
