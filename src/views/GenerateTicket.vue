@@ -249,7 +249,7 @@ export default {
       };
       const body = {
         tva_percentage: 20,
-        total_price: total_price,
+        total_price: parseInt(total_price),
         payment_method: "card",
         items: items,
       };
