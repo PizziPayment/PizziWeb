@@ -497,7 +497,7 @@ export default {
           place: {
             address: this.address,
             city: this.city,
-            zipcode: this.zipCode,
+            zipcode: parseInt(this.zipCode),
           },
           password: this.password,
           email: this.email,
