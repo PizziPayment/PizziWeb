@@ -134,6 +134,14 @@ export default {
         });
     },
 
+    convertPriceInCents() {
+      if (this.itemsData) {
+        this.itemsData.forEach(item => {
+          item.price = (item.price / 100)
+        })
+      }
+    },
+
     async loadItems() {
       this.loading = true
       const bearerAuth = {
@@ -146,6 +154,9 @@ export default {
         .then((response) => {
           if (response.data.items) {
             this.itemsData = response.data.items;
+            // Price is in cents
+            this.convertPriceInCents()
+            console.log("te", this.itemsData)
             this.loading = false
           }
         })
