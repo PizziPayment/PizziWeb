@@ -219,6 +219,6 @@
         "fr": "Nom requis"
     },
     "Name must be less than 10 characters": {
-        "fr": "Le nom dois faire moins de 10 characters"
+        "fr": "Le nom doit faire moins de 10 caractères"
     }
 }
