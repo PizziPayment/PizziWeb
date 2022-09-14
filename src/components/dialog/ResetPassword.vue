@@ -11,40 +11,80 @@
           Reset Password 🔐
         </v-card-title>
         <v-card-text>
-          <div>
-            <div>
+          <div style="width: 100%">
+            <div style="width: 100%">
               <v-text-field
-                class="pa-3"
-                label="Old Password"
+                :label="$translate.getTranslation('Old Password')"
+                :type="passwordIsVisible ? 'text' : 'password'"
+                :append-icon="passwordIsVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                @click:append="passwordIsVisible = !passwordIsVisible"
+                clearable
                 v-model="oldPassword"
-                clear-icon="mdi-close-circle"
-                clearable
+                required
                 width="300"
-                :type="passwordIsVisible ? 'text' : 'password'"
-                :append-icon="passwordIsVisible ? 'mdi-eye' : 'mdi-eye-off'"
-                @click:append="passwordIsVisible = !passwordIsVisible"
-              >
-              </v-text-field>
+                outlined
+              ></v-text-field>
             </div>
-            <div>
-              <v-text-field
-                class="pa-3"
-                label="New Password"
-                v-model="newPassword"
-                clear-icon="mdi-close-circle"
-                clearable
-                width="300"
-                :type="passwordIsVisible ? 'text' : 'password'"
-                :append-icon="passwordIsVisible ? 'mdi-eye' : 'mdi-eye-off'"
-                @click:append="passwordIsVisible = !passwordIsVisible"
+            <v-text-field
+              :label="$translate.getTranslation('New Password')"
+              :type="passwordIsVisible ? 'text' : 'password'"
+              :append-icon="passwordIsVisible ? 'mdi-eye' : 'mdi-eye-off'"
+              @click:append="passwordIsVisible = !passwordIsVisible"
+              clearable
+              width="300"
+              v-model="newPassword"
+              required
+              outlined
+            ></v-text-field>
+            <div
+              style="
+                width: 100%;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+              "
+            >
+              <v-tooltip
+                :left="index % 2 === 0"
+                :right="index % 2 !== 0"
+                v-for="(rule, index) in rulesConfig"
+                :key="index"
+                style="width: fit-content"
               >
-              </v-text-field>
+                <template v-slot:activator="{ on }">
+                  <div class="d-inline-flex flex-row align-center">
+                    <v-icon> mdi-circle-medium </v-icon>
+                    <span
+                      v-on="on"
+                      :style="
+                        'color: ' +
+                        (rule.rule && rule.rule(newPassword) ? 'green' : 'red')
+                      "
+                    >
+                      {{ $translate.getTranslation(rule.label) }}
+                    </span>
+                  </div>
+                </template>
+                <template
+                  v-if="rule.tooltip && typeof rule.tooltip === 'function'"
+                >
+                  {{ rule.tooltip(newPassword) }}
+                </template>
+                <template v-else>
+                  {{ $translate.getTranslation(rule.tooltip) }}
+                </template>
+              </v-tooltip>
             </div>
           </div>
         </v-card-text>
         <v-row class="pa-2">
           <v-col>
-            <v-btn color="primary" @click.stop="processReset()"> Reset </v-btn>
+            <v-btn
+              :disabled="!checkRegexPassword(this.newPassword)"
+              color="primary"
+              @click.stop="processReset()"
+            >
+              Reset
+            </v-btn>
           </v-col>
         </v-row>
       </v-card-text>
@@ -64,12 +104,60 @@ export default {
       newPassword: null,
       dialog: false,
       passwordIsVisible: false,
+      rulesConfig: [
+        {
+          rule: (toCheck) => {
+            return toCheck && toCheck.length >= 12;
+          },
+          label: "at least 12 characters",
+          tooltip: (string) => {
+            return "current length " + (string ? string.length : 0);
+          },
+        },
+        {
+          rule: (toCheck) => {
+            return toCheck && /[a-z]/.test(toCheck);
+          },
+          label: "at least a lower case",
+          tooltip: "at least a lower case",
+        },
+        {
+          rule: (toCheck) => {
+            return toCheck && /[0-9]/.test(toCheck);
+          },
+          label: "at least a number",
+          tooltip: "at least a number",
+        },
+        {
+          rule: (toCheck) => {
+            return toCheck && /[A-Z]/.test(toCheck);
+          },
+          label: "at least a upper case",
+          tooltip: "at least a upper case",
+        },
+        {
+          rule: (toCheck) => {
+            return toCheck && /[^\w]/.test(toCheck);
+          },
+          label: "at least a symbol",
+          tooltip: "at least a symbol",
+        },
+      ],
     };
   },
   computed: {
     ...mapGetters("defaultStore", ["getAccessToken"]),
   },
   methods: {
+    checkRegexPassword(password) {
+      const regexExpr =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*_?&])[A-Za-z\d \t@$!%_*?&]{12,}$/;
+      if (regexExpr.test(password)) {
+        return true;
+      }
+      return false;
+    },
+
     show() {
       this.dialog = true;
     },
@@ -100,6 +188,14 @@ export default {
             Bugsnag.notify(error);
             console.error(error);
           });
+      }
+    },
+  },
+  watch: {
+    dialog() {
+      if (!this.dialog) {
+        this.newPassword = "";
+        this.oldPassword = "";
       }
     },
   },

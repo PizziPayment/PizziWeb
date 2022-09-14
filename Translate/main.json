@@ -220,5 +220,11 @@
     },
     "Name must be less than 10 characters": {
         "fr": "Le nom doit faire moins de 10 caractères"
+    },
+    "Old Password": {
+        "fr": "Ancien mot de passe"
+    },
+    "New Password": {
+        "fr": "Nouveau mot de passe"
     }
 }
