@@ -62,18 +62,8 @@
 
               <h4 class="display-2 font-weight-light mb-3">Faudra Tiff Hair</h4>
 
-              <v-btn
-                @click.stop="openQrCodeDialog"
-                color="primary"
-                rounded
-                class="ma-2 mr-0"
-                v-if="transactionCreated"
-              >
-                {{ $translate.getTranslation("Connect User") }}
-              </v-btn>
-
               <v-btn class="ma-2" color="primary" @click="openCalculator()">
-                {{ $translate.getTranslation("Open Calculator") }}
+                {{ $translate.getTranslation("Open calculator") }}
               </v-btn>
 
               <div v-if="items && items.length > 0">
@@ -139,9 +129,21 @@
                   color="primary"
                   rounded
                   class="mr-0"
-                  @click="generateReceipt()"
+                  @click="createTransaction()"
                 >
-                  {{ $translate.getTranslation("Download") }}
+                  {{ $translate.getTranslation("Confirm and link user") }}
+                </v-btn>
+
+                <v-spacer></v-spacer>
+
+                <v-btn
+                  color="grey darken-2"
+                  rounded
+                  icon
+                  class="ma-4 mr-0"
+                  @click="createTransaction()"
+                >
+                  {{ $translate.getTranslation("Save pdf receipt") }}
                 </v-btn>
               </div>
               <div v-else>
@@ -153,12 +155,7 @@
           </material-card>
         </v-col>
       </v-row>
-      <DisplayQRCodeDialog
-        ref="QRCodeDialog"
-        v-if="transactionCreated"
-        :id="transactionId"
-        :token="transactionToken"
-      />
+      <DisplayQRCodeDialog ref="QRCodeDialog" />
       <CalculatorDialog ref="CalculatorDialog" />
     </v-container>
   </v-app>
@@ -207,6 +204,14 @@ export default {
       this.items.splice(index, 1);
     },
 
+    convertPriceInCents() {
+      if (this.products) {
+        this.products.forEach((item) => {
+          item.price = item.price / 100;
+        });
+      }
+    },
+
     loadShopItems() {
       const bearerAuth = {
         Authorization: "Bearer " + this.getAccessToken,
@@ -218,6 +223,7 @@ export default {
         .then((response) => {
           if (response.data.items) {
             this.products = response.data.items;
+            this.convertPriceInCents();
           }
         })
         .catch((error) => {
@@ -249,10 +255,11 @@ export default {
       };
       const body = {
         tva_percentage: 20,
-        total_price: total_price,
+        total_price: parseFloat(total_price) * 100,
         payment_method: "card",
         items: items,
       };
+      console.log("test", body);
       axios
         .post(
           process.env.VUE_APP_RESOURCE_URL + "/shops/me/transactions",
@@ -265,6 +272,9 @@ export default {
           this.transactionId = response.data.id;
           this.transactionToken = response.data.token;
           this.transactionCreated = true;
+          if (response.data.id && response.data.token) {
+            this.openQrCodeDialog(response.data.id, response.data.token);
+          }
         });
     },
 
@@ -272,7 +282,7 @@ export default {
       let result = 0;
       if (this.items && this.items.length) {
         for (const item of this.items) {
-          result += parseInt(item.price);
+          result += item.price;
         }
       }
       result = result * (1 - this.appliedDiscount / 100);
@@ -298,8 +308,8 @@ export default {
     //   );
     // },
 
-    openQrCodeDialog() {
-      this.$refs.QRCodeDialog.show();
+    openQrCodeDialog(id, token) {
+      this.$refs.QRCodeDialog.show(id, token);
     },
 
     async generateReceipt() {

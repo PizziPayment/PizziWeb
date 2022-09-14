@@ -12,7 +12,7 @@
             clearable
           ></v-text-field>
           <v-btn @click.stop="openAddProduct()" class="mx-3" color="primary">
-            add
+            {{ $translate.getTranslation("add") }}
           </v-btn>
         </v-card-title>
         <div v-if="itemsData.length > 0">
@@ -46,7 +46,7 @@
           </v-data-table>
         </div>
         <div v-else>
-          <v-card class="mx-auto" width="500">
+          <div class="mx-auto" width="500">
             <div>
               {{
                 $translate.getTranslation(
@@ -60,10 +60,10 @@
                 class="pa-3 mx-3"
                 color="primary"
               >
-                add
+                {{ $translate.getTranslation("add") }}
               </v-btn>
             </div>
-          </v-card>
+          </div>
         </div>
       </v-card>
 
@@ -142,6 +142,14 @@ export default {
         });
     },
 
+    convertPriceInCents() {
+      if (this.itemsData) {
+        this.itemsData.forEach((item) => {
+          item.price = item.price / 100;
+        });
+      }
+    },
+
     async loadItems() {
       this.loading = true;
       const bearerAuth = {
@@ -154,6 +162,9 @@ export default {
         .then((response) => {
           if (response.data.items) {
             this.itemsData = response.data.items;
+            // Price is in cents
+            this.convertPriceInCents();
+            console.log("te", this.itemsData);
             this.loading = false;
           }
         })
