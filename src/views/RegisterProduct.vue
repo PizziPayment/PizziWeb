@@ -12,7 +12,7 @@
             clearable
           ></v-text-field>
           <v-btn @click.stop="openAddProduct()" class="mx-3" color="primary">
-            add
+            {{ $translate.getTranslation("add") }}
           </v-btn>
         </v-card-title>
         <div v-if="itemsData.length > 0">
@@ -46,16 +46,24 @@
           </v-data-table>
         </div>
         <div v-else>
-          <v-card class="mx-auto" width="500">
+          <div class="mx-auto" width="500">
             <div>
-              No items, please add an item to generate receipt
+              {{
+                $translate.getTranslation(
+                  "No items, please add an item to generate receipt"
+                )
+              }}
             </div>
             <div class="ma-3 py-3">
-              <v-btn @click.stop="openAddProduct()" class="pa-3 mx-3" color="primary">
-                add
+              <v-btn
+                @click.stop="openAddProduct()"
+                class="pa-3 mx-3"
+                color="primary"
+              >
+                {{ $translate.getTranslation("add") }}
               </v-btn>
             </div>
-          </v-card>
+          </div>
         </div>
       </v-card>
 
@@ -69,7 +77,7 @@
 import AddProductDialog from "@/components/widgets/AddProductDialog.vue";
 import EditProductDialog from "@/components/widgets/EditProductDialog.vue";
 import axios from "axios";
-import Bugsnag from '@bugsnag/js'
+import Bugsnag from "@bugsnag/js";
 import { mapGetters } from "vuex";
 
 export default {
@@ -130,20 +138,20 @@ export default {
         })
         .catch((error) => {
           console.error(error);
-          Bugsnag.notify(error)
+          Bugsnag.notify(error);
         });
     },
 
     convertPriceInCents() {
       if (this.itemsData) {
-        this.itemsData.forEach(item => {
-          item.price = (item.price / 100)
-        })
+        this.itemsData.forEach((item) => {
+          item.price = item.price / 100;
+        });
       }
     },
 
     async loadItems() {
-      this.loading = true
+      this.loading = true;
       const bearerAuth = {
         Authorization: "Bearer " + this.getAccessToken,
       };
@@ -155,15 +163,15 @@ export default {
           if (response.data.items) {
             this.itemsData = response.data.items;
             // Price is in cents
-            this.convertPriceInCents()
-            console.log("te", this.itemsData)
-            this.loading = false
+            this.convertPriceInCents();
+            console.log("te", this.itemsData);
+            this.loading = false;
           }
         })
         .catch((error) => {
-          this.loading = false
+          this.loading = false;
           console.error(error);
-          Bugsnag.notify(error)
+          Bugsnag.notify(error);
         });
     },
   },

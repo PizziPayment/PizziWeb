@@ -63,11 +63,11 @@
           class="mr-4"
           @click="validate"
         >
-          Validate
+          {{ this.$translate.getTranslation("Validate") }}
         </v-btn>
 
         <v-btn color="error" class="mr-4" @click="reset">
-          Reset
+          {{ this.$translate.getTranslation("Reset") }}
         </v-btn>
       </div>
     </v-form>
@@ -79,7 +79,7 @@
         <v-text-field
           v-model="search"
           append-icon="mdi-magnify"
-          :label="this.$translate.getTranslation('Search')"
+          :label="$translate.getTranslation('Search')"
           single-line
           hide-details
         ></v-text-field>
@@ -106,8 +106,12 @@ export default {
       pizziId: null,
       returnedReason: null,
       nameRules: [
-        (v) => !!v || "Name is required",
-        (v) => (v && v.length <= 10) || "Name must be less than 10 characters",
+        (v) => !!v || this.$translate.getTranslation("Name is required"),
+        (v) =>
+          (v && v.length <= 10) ||
+          this.$translate.getTranslation(
+            "Name must be less than 10 characters"
+          ),
       ],
       search: "",
       headers: [
