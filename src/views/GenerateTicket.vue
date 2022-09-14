@@ -206,6 +206,14 @@ export default {
       this.items.splice(index, 1);
     },
 
+    convertPriceInCents() {
+      if (this.products) {
+        this.products.forEach(item => {
+          item.price = (item.price / 100)
+        })
+      }
+    },
+
     loadShopItems() {
       const bearerAuth = {
         Authorization: "Bearer " + this.getAccessToken,
@@ -217,6 +225,7 @@ export default {
         .then((response) => {
           if (response.data.items) {
             this.products = response.data.items;
+            this.convertPriceInCents()
           }
         })
         .catch((error) => {
@@ -275,7 +284,7 @@ export default {
       let result = 0;
       if (this.items && this.items.length) {
         for (const item of this.items) {
-          result += parseInt(item.price);
+          result += item.price;
         }
       }
       result = result * (1 - this.appliedDiscount / 100);
