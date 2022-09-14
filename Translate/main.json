@@ -151,6 +151,12 @@
     },
     "Error - invalid credentials": {
         "fr": "Erreur - identifiants invalides"
+    }, 
+    "Open Calculator": {
+        "fr": "Ouvrir la calculatrice"
+    },
+    "No items, please add an item to generate receipt": {
+        "fr": "pas d'items, ajouter un item pour générer une ticket"
     }
 
 }

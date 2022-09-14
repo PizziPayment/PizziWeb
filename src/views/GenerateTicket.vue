@@ -60,9 +60,7 @@
                 {{ $translate.getTranslation("Receipt") }}
               </h6>
 
-              <h4 class="display-2 font-weight-light mb-3">
-                Faudra Tiff Hair
-              </h4>
+              <h4 class="display-2 font-weight-light mb-3">Faudra Tiff Hair</h4>
 
               <v-btn
                 @click.stop="openQrCodeDialog"
@@ -74,7 +72,9 @@
                 {{ $translate.getTranslation("Connect User") }}
               </v-btn>
 
-              <v-btn class="ma-2" color="primary" @click="openCalculator()">open calculator</v-btn>
+              <v-btn class="ma-2" color="primary" @click="openCalculator()">
+                {{ $translate.getTranslation("Open Calculator") }}
+              </v-btn>
 
               <div v-if="items && items.length > 0">
                 <v-card
@@ -82,7 +82,7 @@
                   max-width="500"
                   max-height="500"
                   containerThemeStyle
-                  style="overflow: auto;"
+                  style="overflow: auto"
                 >
                   <v-list two-line>
                     <v-list-item-group
@@ -167,7 +167,7 @@
 <script>
 import materialCard from "@/components/MaterialCard.vue";
 import DisplayQRCodeDialog from "@/components/widgets/QRCode/DisplayQRCodeDialog.vue";
-import CalculatorDialog from '@/components/widgets/Calculator/Calculator.vue'
+import CalculatorDialog from "@/components/widgets/Calculator/Calculator.vue";
 import labelmake from "labelmake";
 import moment from "moment";
 import axios from "axios";
@@ -450,7 +450,7 @@ export default {
     },
 
     openCalculator() {
-      this.$refs.CalculatorDialog.show()
+      this.$refs.CalculatorDialog.show();
     },
 
     getSelectedProducts() {
@@ -476,9 +476,7 @@ export default {
           productObj.productName = this.items[i].name;
           productObj.quantity = 1;
           productObj.priceUnit = this.items[i].price;
-          productObj.warranty = moment()
-            .format("LLL")
-            .toString();
+          productObj.warranty = moment().format("LLL").toString();
           productObj.ecoTax = 0;
           productObj.reduction = 0;
         }
@@ -522,9 +520,7 @@ export default {
       newReceipt.products = this.getProducts();
 
       // Receipt total
-      newReceipt.creationDate = moment()
-        .format("LLL")
-        .toString();
+      newReceipt.creationDate = moment().format("LLL").toString();
       newReceipt.paymentType = "card";
       newReceipt.TvaPercentage = 0;
       newReceipt.discount = this.appliedDiscount;

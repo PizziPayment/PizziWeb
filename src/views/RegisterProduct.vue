@@ -48,10 +48,18 @@
         <div v-else>
           <v-card class="mx-auto" width="500">
             <div>
-              No items, please add an item to generate receipt
+              {{
+                $translate.getTranslation(
+                  "No items, please add an item to generate receipt"
+                )
+              }}
             </div>
             <div class="ma-3 py-3">
-              <v-btn @click.stop="openAddProduct()" class="pa-3 mx-3" color="primary">
+              <v-btn
+                @click.stop="openAddProduct()"
+                class="pa-3 mx-3"
+                color="primary"
+              >
                 add
               </v-btn>
             </div>
@@ -69,7 +77,7 @@
 import AddProductDialog from "@/components/widgets/AddProductDialog.vue";
 import EditProductDialog from "@/components/widgets/EditProductDialog.vue";
 import axios from "axios";
-import Bugsnag from '@bugsnag/js'
+import Bugsnag from "@bugsnag/js";
 import { mapGetters } from "vuex";
 
 export default {
@@ -130,12 +138,12 @@ export default {
         })
         .catch((error) => {
           console.error(error);
-          Bugsnag.notify(error)
+          Bugsnag.notify(error);
         });
     },
 
     async loadItems() {
-      this.loading = true
+      this.loading = true;
       const bearerAuth = {
         Authorization: "Bearer " + this.getAccessToken,
       };
@@ -146,13 +154,13 @@ export default {
         .then((response) => {
           if (response.data.items) {
             this.itemsData = response.data.items;
-            this.loading = false
+            this.loading = false;
           }
         })
         .catch((error) => {
-          this.loading = false
+          this.loading = false;
           console.error(error);
-          Bugsnag.notify(error)
+          Bugsnag.notify(error);
         });
     },
   },
