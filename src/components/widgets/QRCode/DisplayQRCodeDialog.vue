@@ -8,7 +8,7 @@
 
         <v-card-text class="mt-6">
           <v-container>
-            <qrcode-vue :value="value" :size="size" level="H" />
+            <qrcode-vue :value="getValueQRCode()" :size="size" level="H" />
           </v-container>
         </v-card-text>
 
@@ -31,31 +31,28 @@ export default {
     QrcodeVue,
   },
 
-  props : {
-    id: {
-      type: Number,
-      required: true
-    },
-    token: {
-      type: String,
-      required: true
-    }
-  },
   data() {
     return {
+      id_transac: null,
+      token_transac: null,
       snackbar: false,
       dialog: false,
-      value: JSON.stringify({
-        id: this.id,
-        token: this.token,
-      }),
       size: 400,
     };
   },
 
   methods: {
-    show() {
+    show(id, token) {
+      this.id_transac = id
+      this.token_transac = token
       this.dialog = true;
+    },
+
+    getValueQRCode() {
+      return JSON.stringify({
+        id: this.id_transac,
+        token: this.token_transac,
+      })
     },
 
     closeDialog() {

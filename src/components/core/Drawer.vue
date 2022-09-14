@@ -84,6 +84,12 @@ export default {
           id: "drawer-generate",
         },
         {
+          icon: "mdi-pencil",
+          text: "Customize Receipt",
+          to: "/CustomizeReceipt",
+          id: "drawer-generate",
+        },
+        {
           icon: "mdi-notebook-multiple",
           text: "Product Register",
           to: "/RegisterProduct",
