@@ -206,9 +206,9 @@ export default {
 
     convertPriceInCents() {
       if (this.products) {
-        this.products.forEach((item) => {
-          item.price = item.price / 100;
-        });
+        this.products.forEach(item => {
+          item.price = (item.price / 100)
+        })
       }
     },
 
@@ -223,7 +223,7 @@ export default {
         .then((response) => {
           if (response.data.items) {
             this.products = response.data.items;
-            this.convertPriceInCents();
+            this.convertPriceInCents()
           }
         })
         .catch((error) => {
