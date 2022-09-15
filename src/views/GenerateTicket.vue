@@ -60,11 +60,11 @@
                 {{ $translate.getTranslation("Receipt") }}
               </h6>
 
-              <h4 class="display-2 font-weight-light mb-3">
-                Faudra Tiff Hair
-              </h4>
+              <h4 class="display-2 font-weight-light mb-3">Faudra Tiff Hair</h4>
 
-              <v-btn class="ma-2" color="primary" @click="openCalculator()">open calculator</v-btn>
+              <v-btn class="ma-2" color="primary" @click="openCalculator()">
+                {{ $translate.getTranslation("Open calculator") }}
+              </v-btn>
 
               <div v-if="items && items.length > 0">
                 <v-card
@@ -72,7 +72,7 @@
                   max-width="500"
                   max-height="500"
                   containerThemeStyle
-                  style="overflow: auto;"
+                  style="overflow: auto"
                 >
                   <div class="d-flex justify-end">
                     <v-btn icon @click="clearAllItems()">
@@ -146,6 +146,17 @@
                 ></v-select>
 
                 <v-btn
+                  color="grey"
+                  rounded
+                  class="ma-3"
+                  @click="openCashPayment()"
+                >
+                  {{ $translate.getTranslation("Cash payment") }}
+                </v-btn>
+
+                <v-spacer></v-spacer>
+
+                <v-btn
                   color="primary"
                   rounded
                   class="mr-0"
@@ -161,7 +172,7 @@
                   rounded
                   icon
                   class="ma-4 mr-0"
-                  @click="createTransaction()"
+                  @click="createTransaction('card')"
                 >
                   {{ $translate.getTranslation("Save pdf receipt") }}
                 </v-btn>
@@ -175,10 +186,9 @@
           </material-card>
         </v-col>
       </v-row>
-      <DisplayQRCodeDialog
-        ref="QRCodeDialog"
-      />
+      <DisplayQRCodeDialog ref="QRCodeDialog" />
       <CalculatorDialog ref="CalculatorDialog" />
+      <CashReturn :totalAmount="calculatePrice()" @cashAccepted="createTransaction('cash')" ref="CashReturn" />
     </v-container>
   </v-app>
 </template>
@@ -186,7 +196,8 @@
 <script>
 import materialCard from "@/components/MaterialCard.vue";
 import DisplayQRCodeDialog from "@/components/widgets/QRCode/DisplayQRCodeDialog.vue";
-import CalculatorDialog from '@/components/widgets/Calculator/Calculator.vue'
+import CalculatorDialog from "@/components/widgets/Calculator/Calculator.vue";
+import CashReturn from '@/components/dialog/CashReturn.vue'
 import labelmake from "labelmake";
 import moment from "moment";
 import axios from "axios";
@@ -194,7 +205,7 @@ import Bugsnag from "@bugsnag/js";
 import { mapGetters } from "vuex";
 
 export default {
-  components: { CalculatorDialog, materialCard, DisplayQRCodeDialog },
+  components: { CalculatorDialog, materialCard, DisplayQRCodeDialog, CashReturn },
 
   computed: {
     ...mapGetters("defaultStore", ["getAccessToken"]),
@@ -301,7 +312,7 @@ export default {
       return transactionItemArray;
     },
 
-    async createTransaction() {
+    async createTransaction(method) {
       const total_price = this.calculatePrice();
       const items = this.setTransactionItemObject();
       const bearerAuth = {
@@ -309,11 +320,11 @@ export default {
       };
       const body = {
         tva_percentage: 20,
-        total_price: (parseFloat(total_price) * 100),
-        payment_method: "card",
+        total_price: parseFloat(total_price) * 100,
+        payment_method: method,
         items: items,
       };
-      console.log("test", body)
+      console.log("test", body);
       axios
         .post(
           process.env.VUE_APP_RESOURCE_URL + "/shops/me/transactions",
@@ -327,9 +338,13 @@ export default {
           this.transactionToken = response.data.token;
           this.transactionCreated = true;
           if (response.data.id && response.data.token) {
-            this.openQrCodeDialog(response.data.id, response.data.token)
+            this.openQrCodeDialog(response.data.id, response.data.token);
           }
         });
+    },
+
+    openCashPayment() {
+      this.$refs.CashReturn.show()
     },
 
     calculatePrice() {
@@ -340,7 +355,7 @@ export default {
         }
       }
       result = result * (1 - this.appliedDiscount / 100);
-      return result.toFixed(2);
+      return parseFloat(result.toFixed(2));
     },
 
     saveBlob(blob, filename) {
@@ -514,7 +529,7 @@ export default {
     },
 
     openCalculator() {
-      this.$refs.CalculatorDialog.show()
+      this.$refs.CalculatorDialog.show();
     },
 
     getSelectedProducts() {
@@ -540,9 +555,7 @@ export default {
           productObj.productName = this.items[i].name;
           productObj.quantity = 1;
           productObj.priceUnit = this.items[i].price;
-          productObj.warranty = moment()
-            .format("LLL")
-            .toString();
+          productObj.warranty = moment().format("LLL").toString();
           productObj.ecoTax = 0;
           productObj.reduction = 0;
         }
@@ -586,9 +599,7 @@ export default {
       newReceipt.products = this.getProducts();
 
       // Receipt total
-      newReceipt.creationDate = moment()
-        .format("LLL")
-        .toString();
+      newReceipt.creationDate = moment().format("LLL").toString();
       newReceipt.paymentType = "card";
       newReceipt.TvaPercentage = 0;
       newReceipt.discount = this.appliedDiscount;

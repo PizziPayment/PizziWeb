@@ -190,6 +190,41 @@
     },
     "Error - invalid credentials": {
         "fr": "Erreur - identifiants invalides"
+    }, 
+    "Open Calculator": {
+        "fr": "Ouvrir la calculatrice"
+    },
+    "No items, please add an item to generate receipt": {
+        "fr": "Aucun item, veuillez ajouter un item pour générer un ticket"
+    },
+    "add": {
+        "fr": "ajouter"
+    },
+    "Add product": {
+        "fr": "Ajouter un produit"
+    },
+    "Product name": {
+        "fr": "Nom du produit"
+    },
+    "Item saved": {
+        "fr": "Produit sauvegardé"
+    },
+    "Validate": {
+        "fr": "Valider"
+    },
+    "Reset": {
+        "fr": "Réinitialiser"
+    },
+    "Name is required": {
+        "fr": "Nom requis"
+    },
+    "Name must be less than 10 characters": {
+        "fr": "Le nom doit faire moins de 10 caractères"
+    },
+    "Old Password": {
+        "fr": "Ancien mot de passe"
+    },
+    "New Password": {
+        "fr": "Nouveau mot de passe"
     }
-
 }
