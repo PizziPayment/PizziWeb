@@ -8,7 +8,7 @@
     <v-card>
       <v-card-text>
         <v-card-title class="d-flex justify-center">
-          Reset Password 🔐
+          {{ $translate.getTranslation("Reset Password") }} 🔐
         </v-card-title>
         <v-card-text>
           <div style="width: 100%">

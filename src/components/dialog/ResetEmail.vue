@@ -8,7 +8,7 @@
     <v-card>
       <v-card-text>
         <v-card-title class="d-flex justify-center">
-          Reset Email ✉️
+          {{ $translate.getTranslation("Reset Email") }} ✉️
         </v-card-title>
         <v-card-text>
           <div>

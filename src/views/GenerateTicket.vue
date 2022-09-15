@@ -126,6 +126,17 @@
                 ></v-select>
 
                 <v-btn
+                  color="grey"
+                  rounded
+                  class="ma-3"
+                  @click="openCashPayment()"
+                >
+                  {{ $translate.getTranslation("Cash payment") }}
+                </v-btn>
+
+                <v-spacer></v-spacer>
+
+                <v-btn
                   color="primary"
                   rounded
                   class="mr-0"
@@ -141,7 +152,7 @@
                   rounded
                   icon
                   class="ma-4 mr-0"
-                  @click="createTransaction()"
+                  @click="createTransaction('card')"
                 >
                   {{ $translate.getTranslation("Save pdf receipt") }}
                 </v-btn>
@@ -157,6 +168,7 @@
       </v-row>
       <DisplayQRCodeDialog ref="QRCodeDialog" />
       <CalculatorDialog ref="CalculatorDialog" />
+      <CashReturn :totalAmount="calculatePrice()" @cashAccepted="createTransaction('cash')" ref="CashReturn" />
     </v-container>
   </v-app>
 </template>
@@ -165,6 +177,7 @@
 import materialCard from "@/components/MaterialCard.vue";
 import DisplayQRCodeDialog from "@/components/widgets/QRCode/DisplayQRCodeDialog.vue";
 import CalculatorDialog from "@/components/widgets/Calculator/Calculator.vue";
+import CashReturn from '@/components/dialog/CashReturn.vue'
 import labelmake from "labelmake";
 import moment from "moment";
 import axios from "axios";
@@ -172,7 +185,7 @@ import Bugsnag from "@bugsnag/js";
 import { mapGetters } from "vuex";
 
 export default {
-  components: { CalculatorDialog, materialCard, DisplayQRCodeDialog },
+  components: { CalculatorDialog, materialCard, DisplayQRCodeDialog, CashReturn },
 
   computed: {
     ...mapGetters("defaultStore", ["getAccessToken"]),
@@ -247,7 +260,7 @@ export default {
       return transactionItemArray;
     },
 
-    async createTransaction() {
+    async createTransaction(method) {
       const total_price = this.calculatePrice();
       const items = this.setTransactionItemObject();
       const bearerAuth = {
@@ -256,7 +269,7 @@ export default {
       const body = {
         tva_percentage: 20,
         total_price: parseFloat(total_price) * 100,
-        payment_method: "card",
+        payment_method: method,
         items: items,
       };
       console.log("test", body);
@@ -278,6 +291,10 @@ export default {
         });
     },
 
+    openCashPayment() {
+      this.$refs.CashReturn.show()
+    },
+
     calculatePrice() {
       let result = 0;
       if (this.items && this.items.length) {
@@ -286,7 +303,7 @@ export default {
         }
       }
       result = result * (1 - this.appliedDiscount / 100);
-      return result.toFixed(2);
+      return parseFloat(result.toFixed(2));
     },
 
     saveBlob(blob, filename) {
