@@ -74,27 +74,47 @@
                   containerThemeStyle
                   style="overflow: auto;"
                 >
+                  <div class="d-flex justify-end">
+                    <v-btn icon @click="clearAllItems()">
+                      <v-icon> mdi-trash-can </v-icon>
+                    </v-btn>
+                  </div>
                   <v-list two-line>
                     <v-list-item-group
                       v-model="selected"
                       active-class="blue--text"
                       multiple
                     >
-                      <template v-for="(item, index) in items">
-                        <v-list-item :key="item.name">
+                      <template v-for="(item, key, index) in items2">
+                        <v-list-item :key="index + item">
                           <template>
+                            <v-list-item-avatar style="font-size: 18px;">
+                                {{item.value}}x
+                            </v-list-item-avatar>
                             <v-list-item-content>
                               <v-list-item-title
                                 class="text-center"
-                                v-text="item.name"
+                                v-text="item.item_objects[0].name"
                               >
                               </v-list-item-title>
                               <v-list-item-title
-                                v-text="item.price + ' $'"
+                                v-text="item.item_objects[0].price + ' $'"
                               ></v-list-item-title>
                             </v-list-item-content>
                             <v-list-item-action>
-                              <v-btn icon x-small @click="deleteItem(index)">
+                              <v-row class="pr-1">
+                                <v-col class="px-1 mx-0">
+                                  <v-btn icon x-small @click="addToItems(item.item_objects[0])">
+                                    <v-icon> mdi-plus </v-icon>
+                                  </v-btn>
+                                </v-col>
+                                <v-col class="px-1 mx-0">
+                                  <v-btn icon x-small @click="removeThisItem(item.item_objects[0])">
+                                    <v-icon> mdi-minus </v-icon>
+                                  </v-btn>
+                                </v-col>
+                              </v-row>
+                              <v-btn class="mr-2" icon x-small @click="deleteItem(item.item_objects[0])">
                                 <v-icon color="red lighten-1"
                                   >mdi-trash-can</v-icon
                                 >
@@ -184,6 +204,7 @@ export default {
     appliedDiscount: 0,
     selected: [2],
     discount: [0, 5, 10, 20, 30, 40, 50, 60, 70],
+    items2: {},
     items: [],
     products: [],
     transactionId: "",
@@ -196,14 +217,45 @@ export default {
   },
 
   methods: {
+    removeThisItem(item) {
+      if (this.items2[item.name]) {
+        this.items2[item.name].value -= 1
+        this.items2[item.name].item_objects.pop()
+        for (let i = 0; i < this.items.length; i++) {
+          if (this.items[i].name == item.name) {
+            this.items.splice(i, 1)
+            return
+          }
+        }
+      }
+    },
     addToItems(item) {
-      if (item) {
-        this.items.push(item);
+      console.log(item)
+      if (!this.items2[item.name]) {
+        this.items2[item.name] = {item_objects: [], value : 0}
+      }
+      this.items2[item.name].value += 1
+      this.items2[item.name].item_objects.push(item)
+      this.items.push(item);
+    },
+
+    deleteItem(item) {
+      delete this.items2[item.name]
+      for (let i = this.items.length - 1; i >= 0; i--) {
+        if (this.items[i].name == item.name) {
+          if (i == 0) {
+            this.items.pop()
+          }
+          this.items.splice(i, 1)
+        }
       }
     },
 
-    deleteItem(index) {
-      this.items.splice(index, 1);
+    clearAllItems() {
+      for (const key in this.items2) {
+        delete this.items2[key]
+      }
+      this.items.splice(0, this.items.length)
     },
 
     convertPriceInCents() {

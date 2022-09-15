@@ -15,7 +15,7 @@
         </v-card-title>
         <v-data-table
           :headers="headers"
-          :items="desserts"
+          :items="receipts"
           :search="search"
         ></v-data-table>
       </v-card>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import moment from "moment";
+// import moment from "moment";
 import axios from "axios";
 import Bugsnag from "@bugsnag/js";
 import { mapGetters } from "vuex";
@@ -37,74 +37,14 @@ export default {
     receipts: [],
     headers: [
       {
-        text: "Product",
+        text: "ID",
         align: "start",
         filterable: true,
-        value: "name",
+        value: "receipt_id",
       },
-      { text: "Price", value: "calories" },
+      //a prendre en compte en centime
+      { text: "Price", value: "total_ttc" },
       { text: "Date", value: "date" },
-      { text: "Vendor", value: "vendor" },
-      { text: "Terminal", value: "terminal" },
-    ],
-    desserts: [
-      {
-        name: "Coupe Homme",
-        calories: 159,
-        date: moment().format("LLL"),
-        terminal: 1,
-        protein: 4.0,
-        vendor: "Sam",
-      },
-      {
-        name: "Coupe Homme",
-        calories: 262,
-        date: moment().format("LLL"),
-        fat: 16.0,
-        terminal: 1,
-        carbs: 23,
-        protein: 6.0,
-        vendor: "Sam",
-      },
-      {
-        name: "Shampoo",
-        calories: 305,
-        date: moment().format("LLL"),
-        fat: 3.7,
-        terminal: 1,
-        carbs: 67,
-        protein: 4.3,
-        vendor: "Tom",
-      },
-      {
-        name: "Coupe Femme",
-        calories: 356,
-        fat: 16.0,
-        terminal: 1,
-        date: moment().format("LLL"),
-        carbs: 49,
-        protein: 3.9,
-        vendor: "John",
-      },
-      {
-        name: "Coupe Enfant",
-        calories: 375,
-        date: moment().format("LLL"),
-        fat: 0.0,
-        carbs: 94,
-        terminal: 1,
-        protein: 0.0,
-        vendor: "Tommy",
-      },
-      {
-        name: "Shampoo",
-        calories: 392,
-        terminal: 1,
-        date: moment().format("LLL"),
-        fat: 0.2,
-        carbs: 98,
-        vendor: "Sam",
-      },
     ],
   }),
 
@@ -119,13 +59,14 @@ export default {
   methods: {
     getReceipts() {
       axios
-        .get(process.env.VUE_APP_RESOURCE_URL + "/receipts", {
+        .get(process.env.VUE_APP_RESOURCE_URL + "/shops/me/receipts",{
           headers: {
-            Authorization: "Bearer eeb4d6b4665685a42e70c3c1639729c33fe54a71",
+            Authorization: "Bearer " + this.getAccessToken,
           },
         })
         .then((response) => {
-          console.log("res", response);
+          console.log(response)
+          this.receipts = response.data
         })
         .catch((error) => {
           Bugsnag.notify(error);
