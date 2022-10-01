@@ -44,10 +44,15 @@
     </v-text-field> -->
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-text-field
-        v-model="pizziId"
-        :counter="10"
+        v-model="receiptId"
         :rules="nameRules"
-        label="Pizzi ID"
+        label="Receipt ID"
+        required
+      ></v-text-field>
+      <v-text-field
+        v-model="itemId"
+        :rules="nameRules"
+        label="Item ID"
         required
       ></v-text-field>
 
@@ -61,7 +66,7 @@
           :disabled="!valid"
           color="success"
           class="mr-4"
-          @click="validate"
+          @click="saveProductReturn"
         >
           {{ this.$translate.getTranslation("Validate") }}
         </v-btn>
@@ -95,23 +100,26 @@
 
 <script>
 import materialCard from "@/components/MaterialCard.vue";
-import moment from "moment";
+import axios from "axios";
+import { mapGetters } from "vuex";
+import Bugsnag from "@bugsnag/js";
 
 export default {
   props: ["value"],
   components: { materialCard },
+
+  computed: {
+    ...mapGetters("defaultStore", ["getAccessToken"]),
+  },
   data() {
     return {
       valid: null,
-      pizziId: null,
+      receiptId: null,
+      quantity: 0,
+      itemId: null,
       returnedReason: null,
       nameRules: [
-        (v) => !!v || this.$translate.getTranslation("Name is required"),
-        (v) =>
-          (v && v.length <= 10) ||
-          this.$translate.getTranslation(
-            "Name must be less than 10 characters"
-          ),
+        (v) => !!v || this.$translate.getTranslation("Required")
       ],
       search: "",
       headers: [
@@ -128,15 +136,33 @@ export default {
     };
   },
   methods: {
-    validate() {
+    saveProductReturn() {
       this.$refs.form.validate();
-      this.returnedProducts.push({
-        name: this.pizziId,
-        reason: this.returnedReason,
-        date: moment().format("LLL"),
-      });
+      const bearerAuth = {
+        Authorization: "Bearer " + this.getAccessToken,
+      };
+      const body = {
+        receipt_item_id: this.receipt_item_id,
+        quantity: this.quantity
+      };
+      axios
+        .post(
+          process.env.VUE_APP_RESOURCE_URL + "/shops/me/receipts/" + this.receiptId + "/product_return_certificates",
+          body,
+          {
+            headers: bearerAuth,
+          }
+        )
+        .then((response) => {
+          console.log("res", response)
+        })
+        .catch((error) => {
+          Bugsnag.notify(error)
+          console.error(error)
+        });
       this.$refs.form.reset();
     },
+
     reset() {
       this.$refs.form.reset();
     },
