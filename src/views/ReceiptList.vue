@@ -17,9 +17,11 @@
           :headers="headers"
           :items="receipts"
           :search="search"
+          @click:row="openReceipt"
         ></v-data-table>
       </v-card>
     </v-container>
+    <ReceiptView ref="receiptView"/>
   </v-app>
 </template>
 
@@ -28,9 +30,10 @@
 import axios from "axios";
 import Bugsnag from "@bugsnag/js";
 import { mapGetters } from "vuex";
+import ReceiptView from "@/components/dialog/ReceiptView.vue";
 
 export default {
-  components: {},
+  components: { ReceiptView },
 
   data: () => ({
     search: "",
@@ -73,6 +76,11 @@ export default {
           console.error(error);
         });
     },
+
+    openReceipt(row) {
+      console.log(row)
+      this.$refs.receiptView.show(row.receipt_id)
+    }
   },
 };
 </script>
