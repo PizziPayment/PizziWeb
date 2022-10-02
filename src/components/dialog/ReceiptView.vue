@@ -11,7 +11,7 @@
         indeterminate
       ></v-progress-circular>
     </v-card>
-    <v-card v-else max-width="500" class="mx-auto">
+    <v-card v-else max-width="500" class="mx-auto" elevation="8">
       <v-row class="d-flex justify-center pa-4">
         <v-avatar size="100">
           <img
@@ -21,53 +21,55 @@
         </v-avatar>
       </v-row>
       <v-row dense class="flex-column my-4 ml-3">
-        <v-row dense> #01489017 </v-row>
-        <v-row dense> 552 178 639 00132 </v-row>
-        <v-row dense> 27 rue du temps passé </v-row>
+        <v-row dense> ID # {{ receiptId }} </v-row>
+        <v-row dense> {{ getShopInfos.name }} </v-row>
+        <v-row dense> {{ getShopInfos.address }} </v-row>
+        <v-row dense> {{ getShopInfos.city }} </v-row>
+        <v-row dense> {{ getShopInfos.zipcode }} </v-row>
       </v-row>
       <v-divider></v-divider>
       <v-row dense class="flex-column">
         <v-row dense class="pt-4">
           <v-col class="d-flex justify-start ml-4"> Payment </v-col>
-          <v-col class="d-flex justify-end mr-4"> Status </v-col>
+          <v-col class="d-flex justify-end mr-4"> Confirmed </v-col>
         </v-row>
         <v-row dense class="pb-2">
-          <v-col class="d-flex justify-start ml-4"> Means </v-col>
-          <v-col class="d-flex justify-end mr-4"> Card </v-col>
+          <v-col class="d-flex justify-start ml-4"> Method </v-col>
+          <v-col class="d-flex justify-end mr-4"> {{ receipt.payment_type }} </v-col>
         </v-row>
         <v-row dense>
           <v-col class="d-flex justify-start ml-4"> Date </v-col>
-          <v-col class="d-flex justify-end mr-4"> 16:30 13/01/2022 </v-col>
+          <v-col class="d-flex justify-end mr-4"> {{ moment(receipt.creation_date).format('LLL') }} </v-col>
         </v-row>
       </v-row>
       <v-divider></v-divider>
-      <v-row dense v-for="(detail, idx) in transaction" :key="idx" class="my-2">
+      <v-row dense v-for="(product, idx) in receipt.products" :key="idx" class="my-2">
         <v-col class="d-flex justify-start ml-4">
-          <div>1 x {{ detail.product }}</div>
+          <div>{{ product.quantity }} x {{ product.product_name }}</div>
         </v-col>
         <v-col class="d-flex justify-end mr-4">
-          <div>{{ detail.price }}€</div>
+          <div>{{ product.price_unit }}€</div>
         </v-col>
       </v-row>
       <v-divider></v-divider>
       <v-row dense class="flex-column pl-2">
-        <v-row dense class="pt-4">
-          <v-col class="font-weight-bold d-flex justify-start ml-4">
-            Total
-          </v-col>
-          <v-col class="d-flex justify-end mr-4"> 47€ </v-col>
-        </v-row>
-        <v-row dense class="pb-2">
+        <v-row dense class="pt-4 pb-2">
           <v-col class="font-weight-bold d-flex justify-start ml-4">
             TVA
           </v-col>
-          <v-col class="d-flex justify-end mr-4"> 0€ </v-col>
+          <v-col class="d-flex justify-end mr-4"> {{ receipt.tva_percentage }} %</v-col>
         </v-row>
-        <v-row dense>
+        <v-row dense class="pt-2">
           <v-col class="font-weight-bold d-flex justify-start ml-4">
-            Eco-Part
+            Total HT
           </v-col>
-          <v-col class="d-flex justify-end mr-4"> 0€ </v-col>
+          <v-col class="d-flex justify-end mr-4"> {{ receipt.total_ht }} € </v-col>
+        </v-row>
+        <v-row dense class="pt-1">
+          <v-col class="font-weight-bold d-flex justify-start ml-4">
+            Total TTC
+          </v-col>
+          <v-col class="d-flex justify-end mr-4"> {{ receipt.total_ttc }} € </v-col>
         </v-row>
       </v-row>
     </v-card>
@@ -78,22 +80,19 @@
 import axios from "axios";
 import Bugsnag from "@bugsnag/js";
 import { mapGetters } from "vuex";
+import moment from "moment";
 
 export default {
   props: ["value"],
   data: () => ({
+    moment,
     loading: false,
     isVisible: false,
     receiptId: null,
     receipt: null,
-    transaction: [
-      { product: "Coupe Homme", price: "18" },
-      { product: "Shampoing", price: "12" },
-      { product: "Taille Barbe", price: "17" },
-    ],
   }),
   computed: {
-    ...mapGetters("defaultStore", ["getAccessToken"]),
+    ...mapGetters("defaultStore", ["getAccessToken", "getShopInfos"]),
   },
   methods: {
     show(receiptId) {
@@ -104,6 +103,7 @@ export default {
       this.isVisible = false;
     },
     getReceipt() {
+      this.receipt = null;
       this.loading = true;
       axios
         .get(
@@ -117,7 +117,9 @@ export default {
           }
         )
         .then((response) => {
-          console.log(response);
+          if (response.data) {
+            this.receipt = response.data
+          }
           this.isVisible = true;
           this.loading = false;
         })
