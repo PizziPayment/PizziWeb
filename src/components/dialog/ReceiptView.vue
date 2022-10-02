@@ -1,7 +1,15 @@
 <template>
   <v-dialog @click:outside="close()" v-model="isVisible" max-width="500">
-    <v-card v-if="loading">
-      {{ 'loading ...' }}
+    <v-card
+      class="d-flex align-center justify-center"
+      v-if="loading"
+      height="20vw"
+    >
+      <v-progress-circular
+        :size="50"
+        color="grey"
+        indeterminate
+      ></v-progress-circular>
     </v-card>
     <v-card v-else max-width="500" class="mx-auto">
       <v-row class="d-flex justify-center pa-4">
@@ -89,29 +97,34 @@ export default {
   },
   methods: {
     show(receiptId) {
-      this.receiptId = receiptId
-      this.getReceipt()
+      this.receiptId = receiptId;
+      this.getReceipt();
     },
     close() {
       this.isVisible = false;
     },
     getReceipt() {
-      this.loading = true
+      this.loading = true;
       axios
-        .get(process.env.VUE_APP_RESOURCE_URL + "/shops/me/receipts/" + this.receiptId, {
-          headers: {
-            Authorization: "Bearer " + this.getAccessToken,
-          },
-        })
+        .get(
+          process.env.VUE_APP_RESOURCE_URL +
+            "/shops/me/receipts/" +
+            this.receiptId,
+          {
+            headers: {
+              Authorization: "Bearer " + this.getAccessToken,
+            },
+          }
+        )
         .then((response) => {
           console.log(response);
           this.isVisible = true;
-          this.loading = true
+          this.loading = false;
         })
         .catch((error) => {
           Bugsnag.notify(error);
           console.error(error);
-          this.loading = false
+          this.loading = false;
         });
     },
   },
