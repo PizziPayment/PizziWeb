@@ -48,6 +48,7 @@ export default {
       //a prendre en compte en centime
       { text: "Price", value: "total_ttc" },
       { text: "Date", value: "date" },
+      { text: "Vendor", value: "vendor" },
     ],
   }),
 
