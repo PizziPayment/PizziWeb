@@ -30,10 +30,10 @@
         "fr": "Mise a jour il y a 10 min"
     },
     "Last year": {
-        "fr": "L’année dernier"
+        "fr": "L’année dernière"
     },
     "This year": {
-        "fr": "Cette années"
+        "fr": "Cette année"
     },
     "Register cash payment": {
         "fr": "Enregistrer un paiement en espèces"
@@ -226,5 +226,14 @@
     },
     "New Password": {
         "fr": "Nouveau mot de passe"
+    },
+    "Products": {
+        "fr": "Produits"
+    },
+    "Services": {
+        "fr": "Services"
+    },
+    "Care": {
+        "fr": "Soins"
     }
 }
