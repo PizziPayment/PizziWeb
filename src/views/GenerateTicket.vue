@@ -160,7 +160,7 @@
                   color="primary"
                   rounded
                   class="mr-0"
-                  @click="createTransaction()"
+                  @click="createTransaction('card')"
                 >
                   {{ $translate.getTranslation("Confirm and link user") }}
                 </v-btn>
