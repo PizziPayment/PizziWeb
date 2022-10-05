@@ -1,5 +1,5 @@
 <template>
-  <v-dialog @click:outside="close()" v-model="isVisible" max-width="500">
+  <v-dialog max-width="40vw" @click:outside="close()" v-model="isVisible">
     <v-card
       class="d-flex align-center justify-center"
       v-if="loading"
@@ -11,7 +11,7 @@
         indeterminate
       ></v-progress-circular>
     </v-card>
-    <v-card v-else max-width="500" class="mx-auto" elevation="8">
+    <v-card v-else class="mx-auto" height="80vh" elevation="8" style="overflow-x: hidden; overflow-y: auto;">
       <v-row class="d-flex justify-center pa-4">
         <v-avatar size="100">
           <img
