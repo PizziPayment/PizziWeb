@@ -354,8 +354,8 @@ export default {
           result += item.price;
         }
       }
-      result = result * (1 - this.appliedDiscount / 100);
-      return parseFloat(result.toFixed(2));
+      result = result * (1 - this.appliedDiscount / 1000);
+      return parseFloat(result.toFixed(3));
     },
 
     saveBlob(blob, filename) {

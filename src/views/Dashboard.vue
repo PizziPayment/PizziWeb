@@ -1,24 +1,26 @@
 <template>
   <v-app>
     <v-container fluid class="background containerThemeStyle">
-      <v-row class="my-6" id="graph-div">
-        <v-col class="mx-6">
+      <v-row class="my-6" id="graph-div" justify="center">
+        <v-col class="mx-6" xs="11" sm="11" md="5">
           <SalesRevenueGraph />
         </v-col>
-        <v-col class="mx-6">
+        <v-col class="mx-6" xs="11" sm="11" md="5">
           <MostSoldGraph />
         </v-col>
       </v-row>
-      <v-row class="my-6">
-        <v-col class="mx-6" id="cash-payment">
+      <v-row class="my-6" justify="center">
+        <v-col class="mx-6" id="cash-payment" xs="11" sm="11" md="5">
           <CashPayment />
         </v-col>
-        <v-col class="mx-6" id="calendar">
+        <v-col class="mx-6" id="calendar" xs="11" sm="11" md="5">
           <Calendar />
         </v-col>
       </v-row>
-      <v-row class="ma-6">
-        <Sales />
+      <v-row class="mx-4"  justify="center">
+        <v-col xs="12" sm="12" md="11">
+          <Sales />
+        </v-col>
       </v-row>
     </v-container>
     <AppTour :config="configTutorial" />

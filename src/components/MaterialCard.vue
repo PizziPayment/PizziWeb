@@ -3,8 +3,9 @@
     <div class="d-flex grow flex-wrap">
       <v-avatar
         v-if="avatar"
-        size="128"
+        :size="avatar_size"
         class="mx-auto v-card--material__avatar elevation-6"
+        :style="avatar_position"
       >
         <v-img :src="avatar" />
       </v-avatar>
@@ -92,6 +93,27 @@ export default {
         "v-card--material--has-heading": this.hasHeading,
       };
     },
+    avatar_size () {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return 64
+        case 'sm': return 64
+        case 'md': return 64
+        case 'lg': return 128
+        case 'xl': return 128
+        default: return  128
+      }
+    },
+    avatar_position() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return "top: -35px;"
+        case 'sm': return "top: -35px;"
+        case 'md': return "top: -35px;"
+        case 'lg': return "top: -64px;"
+        case 'xl': return "top: -64px;"
+        default: return  "top: -64px;"
+      }
+
+    },
     hasHeading() {
       return Boolean(this.$slots.heading || this.title || this.icon);
     },
@@ -107,8 +129,6 @@ export default {
   border: 1px solid white !important
   &__avatar
     position: relative
-    top: -64px
-    margin-bottom: -32px
   &__heading
     position: relative
     top: -40px
