@@ -121,7 +121,7 @@ export default {
           });
           if (success) {
             Bugsnag.Breadcrumb("User Login", this.email);
-            this.$router.push("/dashboard");
+            this.$router.push("/GenerateTicket");
           } else {
             this.textSnackbar = "Ouch, an error happened. Please contact us";
             this.snackbar = true;
