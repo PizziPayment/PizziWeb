@@ -17,13 +17,13 @@
         <v-list-item-content>
           <v-list-item-title>
             <p class="headline font-weight-bold mt-4">
-              {{getShopInfos.name}}
+              {{ getShopInfos.name }}
             </p>
             <p class="overline font-weight-thin mb-n4">
-              {{getShopInfos.address}}
+              {{ getShopInfos.address }}
             </p>
             <p class="overline font-weight-thin">
-              {{getShopInfos.zipcode}} {{getShopInfos.city}}
+              {{ getShopInfos.zipcode }} {{ getShopInfos.city }}
             </p>
           </v-list-item-title>
         </v-list-item-content>
@@ -72,16 +72,16 @@ export default {
       drawer: false,
       links: [
         {
-          icon: "mdi-view-dashboard",
-          text: "Dashboard",
-          to: "/dashboard",
-          id: "drawer-dashboard",
-        },
-        {
           icon: "mdi-text",
           text: "Generate Receipt",
           to: "/GenerateTicket",
           id: "drawer-generate",
+        },
+        {
+          icon: "mdi-view-dashboard",
+          text: "Dashboard",
+          to: "/dashboard",
+          id: "drawer-dashboard",
         },
         {
           icon: "mdi-pencil",
@@ -126,7 +126,7 @@ export default {
         this.$emit("input", value);
       },
     },
-    ...mapGetters("defaultStore", ["getShopInfos"])
+    ...mapGetters("defaultStore", ["getShopInfos"]),
   },
   methods: {
     ...mapActions("defaultStore", ["userLogout"]),

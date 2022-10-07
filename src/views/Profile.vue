@@ -101,7 +101,11 @@
                     </v-col>
                   </v-row>
                   <v-col cols="12" class="text-right">
-                    <v-btn color="success" class="mr-0" @click="updateShopInfos">
+                    <v-btn
+                      color="success"
+                      class="mr-0"
+                      @click="updateShopInfos"
+                    >
                       {{ this.$translate.getTranslation("Update Profile") }}
                     </v-btn>
                   </v-col>
@@ -118,10 +122,10 @@
           >
             <v-card-text class="text-center">
               <h4 class="display-2 font-weight-light mb-3">
-                {{getShopInfos.name}}
+                {{ getShopInfos.name }}
               </h4>
               <p class="font-weight-light">
-                {{getShopInfos.description}}
+                {{ getShopInfos.description }}
               </p>
               <v-divider></v-divider>
               <div>
@@ -173,44 +177,44 @@ export default {
   computed: {
     ...mapGetters("defaultStore", ["getShopInfos", "getAccessToken"]),
     description: {
-      get () {
-        return this.getShopInfos.description
+      get() {
+        return this.getShopInfos.description;
       },
-      set (value) {
-        this.$store.commit('defaultStore/UPDATE_SHOP_DESCRIPTION', value)
-      }
+      set(value) {
+        this.$store.commit("defaultStore/UPDATE_SHOP_DESCRIPTION", value);
+      },
     },
     website: {
-      get () {
-        return this.getShopInfos.website
+      get() {
+        return this.getShopInfos.website;
       },
-      set (value) {
-        this.$store.commit('defaultStore/UPDATE_SHOP_WEBSITE', value)
-      }
+      set(value) {
+        this.$store.commit("defaultStore/UPDATE_SHOP_WEBSITE", value);
+      },
     },
     facebook: {
-      get () {
-        return this.getShopInfos.facebook
+      get() {
+        return this.getShopInfos.facebook;
       },
-      set (value) {
-        this.$store.commit('defaultStore/UPDATE_SHOP_FACEBOOK', value)
-      }
+      set(value) {
+        this.$store.commit("defaultStore/UPDATE_SHOP_FACEBOOK", value);
+      },
     },
     instagram: {
-      get () {
-        return this.getShopInfos.instagram
+      get() {
+        return this.getShopInfos.instagram;
       },
-      set (value) {
-        this.$store.commit('defaultStore/UPDATE_SHOP_INSTAGRAM', value)
-      }
+      set(value) {
+        this.$store.commit("defaultStore/UPDATE_SHOP_INSTAGRAM", value);
+      },
     },
     twitter: {
-      get () {
-        return this.getShopInfos.twitter
+      get() {
+        return this.getShopInfos.twitter;
       },
-      set (value) {
-        this.$store.commit('defaultStore/UPDATE_SHOP_TWITTER', value)
-      }
+      set(value) {
+        this.$store.commit("defaultStore/UPDATE_SHOP_TWITTER", value);
+      },
     },
   },
 
@@ -226,24 +230,21 @@ export default {
         Authorization: "Bearer " + this.getAccessToken,
       };
       const body = {
-        description : this.description,
+        description: this.description,
         website: this.website,
         twitter: this.twitter,
         facebook: this.facebook,
-        instagram: this.instagram
+        instagram: this.instagram,
       };
-      console.log(this.description, bearerAuth)
+      console.log(this.description, bearerAuth);
       axios
-        .patch(process.env.VUE_APP_RESOURCE_URL + "/shops",
-          body, 
-          {
-            headers: bearerAuth,
-          }
-        )
-        .then(() => {
-          this.$router.push('/dashboard')
+        .patch(process.env.VUE_APP_RESOURCE_URL + "/shops", body, {
+          headers: bearerAuth,
         })
-    }
+        .then(() => {
+          this.$router.push("/GenerateTicket");
+        });
+    },
   },
 };
 </script>
