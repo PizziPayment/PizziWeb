@@ -9,6 +9,23 @@
         <v-card-text class="mt-6">
           <v-container>
             <v-row>
+              <v-select
+                  :label="$translate.getTranslation('Categories')"
+                  :items="types"
+                  autocomplete
+                  chips
+                ></v-select>
+                <v-btn class="d-flex align-items justify-center" color="success">{{ $translate.getTranslation('+') }}</v-btn>
+            </v-row>
+            <v-row>
+              <v-text-field
+                v-model="name"
+                :label="$translate.getTranslation('Product name')"
+                filled
+                clearable
+              ></v-text-field>
+            </v-row>
+            <v-row>
               <v-text-field
                 v-model="name"
                 :label="$translate.getTranslation('Product name')"
@@ -60,6 +77,7 @@ export default {
       name: "",
       price: "",
       dialog: false,
+      types: ['services', 'shampoing', 'homme', 'femme', 'enfants']
     };
   },
 
