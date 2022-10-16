@@ -46,13 +46,13 @@
       <v-text-field
         v-model="receiptId"
         :rules="nameRules"
-        label="Receipt ID"
+        label="ID du reçu"
         required
       ></v-text-field>
       <v-text-field
         v-model="itemId"
         :rules="nameRules"
-        label="Item ID"
+        label="ID de l'item"
         required
       ></v-text-field>
 
@@ -115,7 +115,7 @@ export default {
     return {
       valid: null,
       receiptId: null,
-      quantity: 0,
+      quantity: 1,
       itemId: null,
       returnedReason: null,
       nameRules: [
@@ -124,12 +124,12 @@ export default {
       search: "",
       headers: [
         {
-          text: "ProductID",
+          text: "Product item Id",
           align: "start",
           filterable: true,
           value: "name",
         },
-        { text: "Reasons", value: "reason" },
+        { text: "Raison", value: "reason" },
         { text: "Date", value: "date" },
       ],
       returnedProducts: [],
@@ -143,7 +143,8 @@ export default {
       };
       const body = {
         receipt_item_id: this.receipt_item_id,
-        quantity: this.quantity
+        quantity: this.quantity ? this.quantity : 1,
+        reason: this.returnedReason ? this.returnedReason : ''
       };
       axios
         .post(
@@ -155,6 +156,7 @@ export default {
         )
         .then((response) => {
           console.log("res", response)
+          // load product returns
         })
         .catch((error) => {
           Bugsnag.notify(error)
