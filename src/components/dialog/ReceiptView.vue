@@ -48,7 +48,7 @@
           <div>{{ product.quantity }} x {{ product.product_name }}</div>
         </v-col>
         <v-col class="d-flex justify-end mr-4">
-          <div>{{ product.price_unit }}€</div>
+          <div>{{ product.unit_price }}€</div>
         </v-col>
       </v-row>
       <v-divider></v-divider>
