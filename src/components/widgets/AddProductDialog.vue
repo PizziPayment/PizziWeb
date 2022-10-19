@@ -10,10 +10,9 @@
           <v-container>
             <v-row>
               <v-combobox
-                v-model="select"
+                v-model="category"
                 :items="types"
                 :label="$translate.getTranslation('Categories')"
-                multiple
                 chips
               ></v-combobox>
             </v-row>
@@ -66,6 +65,7 @@ export default {
   data() {
     return {
       snackbar: false,
+      category: null,
       name: "",
       price: "",
       dialog: false,
@@ -104,6 +104,7 @@ export default {
           {
             name: this.name,
             price: (parseFloat(this.price) * 100),
+            category: this.category
           },
         ],
       };

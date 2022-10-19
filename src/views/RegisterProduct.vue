@@ -98,6 +98,7 @@ export default {
         value: "id",
       },
       { text: "Item", value: "name" },
+      { text: "Category", value: "category", sortable: true },
       { text: "Price", value: "price", sortable: true },
       { text: "Creation date", value: "created_at" },
       { text: "Actions", value: "actions", sortable: false },
