@@ -13,13 +13,11 @@
       <v-sheet
         v-else
         :class="{
-          'pa-7': !$slots.image,
+          'pa-1': !$slots.image,
         }"
-        :color="color"
         :max-height="icon ? 90 : undefined"
         :width="icon ? 'auto' : '100%'"
-        elevation="6"
-        class="text-start v-card--material__heading mb-n6"
+        class="text-start my-2 pb-6"
         dark
       >
         <slot v-if="$slots.heading" name="heading" />
@@ -127,6 +125,7 @@ export default {
 <style lang="sass">
 .v-card--material
   border: 1px solid white !important
+  border-radius: 10px !important
   &__avatar
     position: relative
   &__heading

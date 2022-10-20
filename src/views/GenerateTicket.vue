@@ -9,7 +9,7 @@
                 {{ $translate.getTranslation("Generate Receipt") }}
               </div>
 
-              <div class="subtitle-1 font-weight-light">
+              <div class="subtitle-1 font-weight-light ml-6">
                 {{ $translate.getTranslation("Add Items to the receipt") }}
               </div>
             </template>
@@ -272,7 +272,7 @@ export default {
     convertPriceInCents() {
       if (this.products) {
         this.products.forEach(item => {
-          item.price = (item.price / 100)
+          item.price = (item.price / 1000)
         })
       }
     },
@@ -320,7 +320,7 @@ export default {
       };
       const body = {
         tva_percentage: 20,
-        total_price: parseFloat(total_price) * 100,
+        total_price: parseInt(total_price) * 1000,
         payment_method: method,
         items: items,
       };

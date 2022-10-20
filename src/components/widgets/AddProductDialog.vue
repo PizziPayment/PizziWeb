@@ -93,7 +93,7 @@ export default {
         items: [
           {
             name: this.name,
-            price: (parseFloat(this.price) * 100),
+            price: (parseInt(this.price) * 1000),
           },
         ],
       };
