@@ -3,7 +3,7 @@
     <cashPaymentDialog v-model="dialog" />
     <v-card class="mx-auto themeStyleCardLocal" height="476px">
       <v-subheader class="themeStyleCardLocal">
-        {{ $translate.getTranslation("Last Cash Payments") }}
+        {{ $translate.getTranslation("Last transactions") }}
       </v-subheader>
       <v-divider inset></v-divider>
       <v-list
