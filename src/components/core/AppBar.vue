@@ -4,10 +4,6 @@
       class="themeStyle"
       @click="showDialog()"
     ></v-app-bar-nav-icon>
-    <v-toolbar-title class="themeStyle">
-      <span class="font-weight-bold">Pizzi</span>
-      <span class="font-weight-light">Dashboard</span>
-    </v-toolbar-title>
     <v-spacer />
     <v-btn class="themeStyle" icon>
       <v-icon>mdi-bell</v-icon>

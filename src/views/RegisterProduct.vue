@@ -78,7 +78,7 @@ import AddProductDialog from "@/components/widgets/AddProductDialog.vue";
 import EditProductDialog from "@/components/widgets/EditProductDialog.vue";
 import axios from "axios";
 import Bugsnag from "@bugsnag/js";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: { AddProductDialog, EditProductDialog },
@@ -98,6 +98,7 @@ export default {
         value: "id",
       },
       { text: "Item", value: "name" },
+      { text: "Category", value: "category", sortable: true },
       { text: "Price", value: "price", sortable: true },
       { text: "Creation date", value: "created_at" },
       { text: "Actions", value: "actions", sortable: false },
@@ -110,6 +111,7 @@ export default {
   },
 
   methods: {
+    ...mapActions("defaultStore", ["setShopCategories"]),
     openAddProduct() {
       if (this.$refs.AddProductRef) {
         this.$refs.AddProductRef.show();
@@ -150,6 +152,18 @@ export default {
       }
     },
 
+    getCategories() {
+      const categories = []
+      if (this.itemsData) {
+        this.itemsData.forEach(item => {
+          if (item.category) {
+            categories.push(item.category)
+          }
+        });
+      }
+      this.setShopCategories(categories)
+    },
+
     async loadItems() {
       this.loading = true;
       const bearerAuth = {
@@ -164,7 +178,7 @@ export default {
             this.itemsData = response.data.items;
             // Price is in cents
             this.convertPriceInCents();
-            console.log("te", this.itemsData);
+            this.getCategories()
             this.loading = false;
           }
         })
