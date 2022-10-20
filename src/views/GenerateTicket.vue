@@ -14,37 +14,65 @@
               </div>
             </template>
             <v-form>
-              <v-container class="py-0 themeStyleCard">
-                <v-row dense>
-                  <v-col v-for="(item, i) in products" :key="i" cols="6">
-                    <v-card color="grey" dark>
-                      <div class="d-flex flex-no-wrap justify-space-between">
-                        <div>
-                          <v-card-title
-                            class="text-h5"
-                            v-text="item.name"
-                          ></v-card-title>
-
-                          <v-card-subtitle
-                            v-text="item.price + ' $'"
-                          ></v-card-subtitle>
-
-                          <v-card-actions>
-                            <v-btn
-                              class="ml-2 mt-5"
-                              outlined
-                              rounded
-                              small
-                              @click="addToItems(item)"
+              <v-container
+                style="height: 70vh; overflow: auto"
+                class="py-0 themeStyleCard"
+              >
+                <v-expansion-panels v-model="panel" multiple>
+                  <v-expansion-panel
+                    v-for="(category, i) in categoriesList"
+                    :key="i"
+                  >
+                    <v-expansion-panel-header>
+                      <h3>{{ category.name.toUpperCase() }}</h3>
+                    </v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                      <v-row dense style="overflow: auto">
+                        <v-col
+                          v-for="(item, i) in category.items"
+                          :key="i"
+                          cols="6"
+                        >
+                          <v-card
+                            @click="addToItems(item)"
+                            color="grey"
+                            dark
+                            style="min-height: 60px"
+                          >
+                            <div
+                              class="d-flex flex-no-wrap justify-space-between align-center"
+                              style="height: 100%"
                             >
-                              {{ $translate.getTranslation("Add Item") }}
-                            </v-btn>
-                          </v-card-actions>
-                        </div>
-                      </div>
-                    </v-card>
-                  </v-col>
-                </v-row>
+                              <div
+                                class="d-flex flex-column justify-center align-start"
+                                style="padding: 10px"
+                              >
+                                <span class="text-h5"> {{ item.name }}</span>
+                                <span>{{ item.price + " €" }}</span>
+                              </div>
+
+                              <div
+                                v-if="item.value"
+                                class="d-inline-flex justify-center align-center"
+                                style="padding-right: 10px"
+                              >
+                                <v-btn icon @click="addToItems(item)">
+                                  <v-icon size="2em"> mdi-plus </v-icon>
+                                </v-btn>
+                                <span style="font-size: 2em">
+                                  {{ item.value }}
+                                </span>
+                                <v-btn icon @click="removeThisItem(item)">
+                                  <v-icon size="2em"> mdi-minus </v-icon>
+                                </v-btn>
+                              </div>
+                            </div>
+                          </v-card>
+                        </v-col>
+                      </v-row>
+                    </v-expansion-panel-content>
+                  </v-expansion-panel>
+                </v-expansion-panels>
               </v-container>
             </v-form>
           </material-card>
@@ -62,35 +90,52 @@
 
               <h4 class="display-2 font-weight-light mb-3">Faudra Tiff Hair</h4>
 
-              <v-btn class="ma-2" color="primary" @click="openCalculator()">
-                {{ $translate.getTranslation("Open calculator") }}
+              <v-btn class="ma-2" color="#58C09D" @click="openCalculator()">
+                <div class="d-inline-flex justify-center align-center">
+                  <v-icon> mdi-calculator</v-icon>
+                  {{ $translate.getTranslation("Open calculator") }}
+                </div>
               </v-btn>
 
               <div v-if="items && items.length > 0">
                 <v-card
-                  class="mx-auto ma-2"
+                  class="mx-auto ma-2 containerThemeStyle"
                   max-width="500"
                   max-height="500"
-                  containerThemeStyle
                   style="overflow: auto"
                 >
                   <div class="d-flex justify-end">
                     <v-btn icon @click="clearAllItems()">
-                      <v-icon> mdi-trash-can </v-icon>
+                      <v-icon color="red"> mdi-trash-can </v-icon>
                     </v-btn>
                   </div>
                   <v-list two-line>
                     <v-list-item-group
                       v-model="selected"
-                      active-class="blue--text"
+                      active-class="green--text"
                       multiple
                     >
                       <template v-for="(item, key, index) in items2">
                         <v-list-item :key="index + item">
                           <template>
-                            <v-list-item-avatar style="font-size: 18px;">
-                                {{item.value}}x
-                            </v-list-item-avatar>
+                            <div
+                              class="d-flex flex-column justify-center align-center"
+                              style=""
+                            >
+                              <v-btn
+                                icon
+                                x-small
+                                @click="addToItems(item.item_objects[0])"
+                              >
+                                <v-icon> mdi-plus </v-icon>
+                              </v-btn>
+                              <span style="font-size: 18px">
+                                {{ item.value }}x
+                              </span>
+                              <v-btn icon x-small @click="removeThisItem(item)">
+                                <v-icon> mdi-minus </v-icon>
+                              </v-btn>
+                            </div>
                             <v-list-item-content>
                               <v-list-item-title
                                 class="text-center"
@@ -98,23 +143,16 @@
                               >
                               </v-list-item-title>
                               <v-list-item-title
-                                v-text="item.item_objects[0].price + ' $'"
+                                v-text="item.item_objects[0].price + ' €'"
                               ></v-list-item-title>
                             </v-list-item-content>
                             <v-list-item-action>
-                              <v-row class="pr-1">
-                                <v-col class="px-1 mx-0">
-                                  <v-btn icon x-small @click="addToItems(item.item_objects[0])">
-                                    <v-icon> mdi-plus </v-icon>
-                                  </v-btn>
-                                </v-col>
-                                <v-col class="px-1 mx-0">
-                                  <v-btn icon x-small @click="removeThisItem(item.item_objects[0])">
-                                    <v-icon> mdi-minus </v-icon>
-                                  </v-btn>
-                                </v-col>
-                              </v-row>
-                              <v-btn class="mr-2" icon x-small @click="deleteItem(item.item_objects[0])">
+                              <v-btn
+                                class="mr-2"
+                                icon
+                                x-small
+                                @click="deleteItem(item)"
+                              >
                                 <v-icon color="red lighten-1"
                                   >mdi-trash-can</v-icon
                                 >
@@ -130,7 +168,7 @@
                       </template>
                       <v-list-item-content>
                         <v-list-item-title
-                          v-text="'Total ' + calculatePrice() + ' $'"
+                          v-text="'Total ' + calculatePrice() + ' €'"
                         ></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item-group>
@@ -157,12 +195,12 @@
                 <v-spacer></v-spacer>
 
                 <v-btn
-                  color="primary"
+                  color="#58C09D"
                   rounded
                   class="mr-0"
                   @click="createTransaction('card')"
                 >
-                  {{ $translate.getTranslation("Confirm and link user") }}
+                  {{ $translate.getTranslation("Confirmer") }}
                 </v-btn>
 
                 <v-spacer></v-spacer>
@@ -178,7 +216,7 @@
                 </v-btn>
               </div>
               <div v-else>
-                <v-btn disabled color="primary" rounded class="mr-0">
+                <v-btn disabled color="#58C09D" rounded class="mr-0">
                   {{ $translate.getTranslation("No items selected") }}
                 </v-btn>
               </div>
@@ -188,7 +226,11 @@
       </v-row>
       <DisplayQRCodeDialog ref="QRCodeDialog" />
       <CalculatorDialog ref="CalculatorDialog" />
-      <CashReturn :totalAmount="calculatePrice()" @cashAccepted="createTransaction('cash')" ref="CashReturn" />
+      <CashReturn
+        :totalAmount="calculatePrice()"
+        @cashAccepted="createTransaction('cash')"
+        ref="CashReturn"
+      />
     </v-container>
   </v-app>
 </template>
@@ -197,7 +239,7 @@
 import materialCard from "@/components/MaterialCard.vue";
 import DisplayQRCodeDialog from "@/components/widgets/QRCode/DisplayQRCodeDialog.vue";
 import CalculatorDialog from "@/components/widgets/Calculator/Calculator.vue";
-import CashReturn from '@/components/dialog/CashReturn.vue'
+import CashReturn from "@/components/dialog/CashReturn.vue";
 import labelmake from "labelmake";
 import moment from "moment";
 import axios from "axios";
@@ -205,13 +247,20 @@ import Bugsnag from "@bugsnag/js";
 import { mapGetters } from "vuex";
 
 export default {
-  components: { CalculatorDialog, materialCard, DisplayQRCodeDialog, CashReturn },
+  components: {
+    CalculatorDialog,
+    materialCard,
+    DisplayQRCodeDialog,
+    CashReturn,
+  },
 
   computed: {
-    ...mapGetters("defaultStore", ["getAccessToken"]),
+    ...mapGetters("defaultStore", ["getAccessToken", "getShopCategories"]),
   },
 
   data: () => ({
+    panel: [],
+    categoriesList: [],
     appliedDiscount: 0,
     selected: [2],
     discount: [0, 5, 10, 20, 30, 40, 50, 60, 70],
@@ -229,44 +278,78 @@ export default {
 
   methods: {
     removeThisItem(item) {
+      item.value -= 1;
       if (this.items2[item.name]) {
-        this.items2[item.name].value -= 1
-        this.items2[item.name].item_objects.pop()
+        this.items2[item.name].value -= 1;
+        this.items2[item.name].item_objects.pop();
         for (let i = 0; i < this.items.length; i++) {
           if (this.items[i].name == item.name) {
-            this.items.splice(i, 1)
-            return
+            this.items.splice(i, 1);
+            return;
           }
         }
       }
     },
     addToItems(item) {
-      console.log(item)
       if (!this.items2[item.name]) {
-        this.items2[item.name] = {item_objects: [], value : 0}
+        this.items2[item.name] = { item_objects: [], value: 0 };
       }
-      this.items2[item.name].value += 1
-      this.items2[item.name].item_objects.push(item)
+      this.items2[item.name].value += 1;
+      item.value = this.items2[item.name].value;
+      this.items2[item.name].item_objects.push(item);
       this.items.push(item);
     },
 
+    getCategories() {
+      const uniqueArray = [...new Set(this.getShopCategories)];
+      return uniqueArray;
+    },
+
+    getCategoryItems(category) {
+      const res = [];
+      this.products.forEach((product) => {
+        if (product.category === category) {
+          res.push(product);
+        }
+      });
+      return res;
+    },
+
+    buildCategories() {
+      const list = [];
+      const categories = this.getCategories();
+
+      if (categories.length) {
+        categories.forEach((category) => {
+          console.log("t", category);
+          list.push({
+            name: category,
+            items: this.getCategoryItems(category),
+          });
+        });
+      }
+      this.categoriesList = list;
+      console.log("te", this.categoriesList);
+    },
+
     deleteItem(item) {
-      delete this.items2[item.name]
+      item.value = 0;
+      delete this.items2[item.name];
       for (let i = this.items.length - 1; i >= 0; i--) {
         if (this.items[i].name == item.name) {
           if (i == 0) {
-            this.items.pop()
+            this.items.pop();
           }
-          this.items.splice(i, 1)
+          this.items.splice(i, 1);
         }
       }
     },
 
     clearAllItems() {
       for (const key in this.items2) {
-        delete this.items2[key]
+        delete this.items2[key];
       }
-      this.items.splice(0, this.items.length)
+      this.items.splice(0, this.items.length);
     },
 
     convertPriceInCents() {
@@ -288,7 +371,8 @@ export default {
         .then((response) => {
           if (response.data.items) {
             this.products = response.data.items;
-            this.convertPriceInCents()
+            // this.convertPriceInCents();
+            this.buildCategories();
           }
         })
         .catch((error) => {
@@ -344,7 +428,7 @@ export default {
     },
 
     openCashPayment() {
-      this.$refs.CashReturn.show()
+      this.$refs.CashReturn.show();
     },
 
     calculatePrice() {

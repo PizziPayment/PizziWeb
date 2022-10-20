@@ -6,6 +6,7 @@ export default function() {
     userLoggedIn: false,
     language: 'fr',
     isDarkTheme: true,
+    categories: [],
     shopInfos : {
       id:'',
       siret:'',

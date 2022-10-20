@@ -48,12 +48,10 @@
                 x-small
                 id="chevron"
               >
-                <v-icon size="25px">
-                  mdi-chevron-left
-                </v-icon>
+                <v-icon size="25px"> mdi-chevron-left </v-icon>
               </v-btn>
               <span
-                :style="index === currentIndex ? 'background: #06f;' : ''"
+                :style="index === currentIndex ? 'background: #58C09D;' : ''"
                 v-for="(item, index) in config.fields"
                 @click="changeStep(index)"
                 :key="index"
@@ -112,13 +110,11 @@
             >
               <em
                 v-if="config.homePage.annotation"
-                style="color: grey; padding-bottom: 4px "
+                style="color: grey; padding-bottom: 4px"
               >
                 {{ $translate.getTranslation(config.homePage.annotation) }}
               </em>
-              <v-btn @click="startTutorial()" color="primary" block>
-                OK
-              </v-btn>
+              <v-btn @click="startTutorial()" color="#58C09D" block> OK </v-btn>
             </div>
           </div>
         </div>
@@ -163,7 +159,7 @@ export default {
       this.makeObserver();
     }
 
-    document.addEventListener("scroll", function() {
+    document.addEventListener("scroll", function () {
       this.scrollY = window.scrollY;
       this.scrollX = window.scrollX;
     });

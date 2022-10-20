@@ -9,6 +9,14 @@
         <v-card-text class="mt-6">
           <v-container>
             <v-row>
+              <v-combobox
+                v-model="category"
+                :items="types"
+                :label="$translate.getTranslation('Categories')"
+                chips
+              ></v-combobox>
+            </v-row>
+            <v-row>
               <v-text-field
                 v-model="name"
                 :label="$translate.getTranslation('Product name')"
@@ -57,9 +65,11 @@ export default {
   data() {
     return {
       snackbar: false,
+      category: null,
       name: "",
       price: "",
       dialog: false,
+      types: ['services', 'shampoing', 'homme', 'femme', 'enfants']
     };
   },
 
@@ -94,6 +104,7 @@ export default {
           {
             name: this.name,
             price: (parseInt(this.price) * 1000),
+            category: this.category
           },
         ],
       };
