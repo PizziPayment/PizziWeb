@@ -14,65 +14,65 @@
               </div>
             </template>
             <v-form>
-              <v-container class="py-0 themeStyleCard">
-                <v-row dense style="overflow: auto">
-                  <v-col v-for="(item, i) in products" :key="i" cols="6">
-                    <v-card
-                      @click="addToItems(item)"
-                      color="grey"
-                      dark
-                      style="min-height: 60px"
-                    >
-                      <div
-                        class="d-flex flex-no-wrap justify-space-between align-center"
-                        style="height: 100%"
-                      >
-                        <div
-                          class="d-flex flex-column justify-center align-start"
-                          style="padding: 10px"
+              <v-container
+                style="height: 70vh; overflow: auto"
+                class="py-0 themeStyleCard"
+              >
+                <v-expansion-panels v-model="panel" multiple>
+                  <v-expansion-panel
+                    v-for="(category, i) in categoriesList"
+                    :key="i"
+                  >
+                    <v-expansion-panel-header>
+                      <h3>{{ category.name.toUpperCase() }}</h3>
+                    </v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                      <v-row dense style="overflow: auto">
+                        <v-col
+                          v-for="(item, i) in category.items"
+                          :key="i"
+                          cols="6"
                         >
-                          <span class="text-h5"> {{ item.name }}</span>
-                          <span>{{ item.price + " $" }}</span>
-                        </div>
-
-                        <div
-                          v-if="item.value"
-                          class="d-inline-flex justify-center align-center"
-                          style="padding-right: 10px"
-                        >
-                          <v-btn icon @click="addToItems(item)">
-                            <v-icon size="2em"> mdi-plus </v-icon>
-                          </v-btn>
-                          <span style="font-size: 2em">
-                            {{ item.value }}
-                          </span>
-                          <v-btn icon @click="removeThisItem(item)">
-                            <v-icon size="2em"> mdi-minus </v-icon>
-                          </v-btn>
-                        </div>
-
-                        <!-- <div
-                          v-if="item.value"
-                          style="font-size: 2em; padding-right: 10px"
-                        >
-                          {{ item.value }}
-                        </div> -->
-
-                        <!-- <v-card-actions>
-                          <v-btn
-                            class="ml-2 mt-5"
-                            outlined
-                            rounded
-                            small
+                          <v-card
                             @click="addToItems(item)"
+                            color="grey"
+                            dark
+                            style="min-height: 60px"
                           >
-                            {{ $translate.getTranslation("Add Item") }}
-                          </v-btn>
-                        </v-card-actions> -->
-                      </div>
-                    </v-card>
-                  </v-col>
-                </v-row>
+                            <div
+                              class="d-flex flex-no-wrap justify-space-between align-center"
+                              style="height: 100%"
+                            >
+                              <div
+                                class="d-flex flex-column justify-center align-start"
+                                style="padding: 10px"
+                              >
+                                <span class="text-h5"> {{ item.name }}</span>
+                                <span>{{ item.price + " €" }}</span>
+                              </div>
+
+                              <div
+                                v-if="item.value"
+                                class="d-inline-flex justify-center align-center"
+                                style="padding-right: 10px"
+                              >
+                                <v-btn icon @click="addToItems(item)">
+                                  <v-icon size="2em"> mdi-plus </v-icon>
+                                </v-btn>
+                                <span style="font-size: 2em">
+                                  {{ item.value }}
+                                </span>
+                                <v-btn icon @click="removeThisItem(item)">
+                                  <v-icon size="2em"> mdi-minus </v-icon>
+                                </v-btn>
+                              </div>
+                            </div>
+                          </v-card>
+                        </v-col>
+                      </v-row>
+                    </v-expansion-panel-content>
+                  </v-expansion-panel>
+                </v-expansion-panels>
               </v-container>
             </v-form>
           </material-card>
@@ -143,7 +143,7 @@
                               >
                               </v-list-item-title>
                               <v-list-item-title
-                                v-text="item.item_objects[0].price + ' $'"
+                                v-text="item.item_objects[0].price + ' €'"
                               ></v-list-item-title>
                             </v-list-item-content>
                             <v-list-item-action>
@@ -168,7 +168,7 @@
                       </template>
                       <v-list-item-content>
                         <v-list-item-title
-                          v-text="'Total ' + calculatePrice() + ' $'"
+                          v-text="'Total ' + calculatePrice() + ' €'"
                         ></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item-group>
@@ -200,7 +200,7 @@
                   class="mr-0"
                   @click="createTransaction('card')"
                 >
-                  {{ $translate.getTranslation("Confirm and link user") }}
+                  {{ $translate.getTranslation("Confirmer") }}
                 </v-btn>
 
                 <v-spacer></v-spacer>
@@ -255,10 +255,12 @@ export default {
   },
 
   computed: {
-    ...mapGetters("defaultStore", ["getAccessToken"]),
+    ...mapGetters("defaultStore", ["getAccessToken", "getShopCategories"]),
   },
 
   data: () => ({
+    panel: [],
+    categoriesList: [],
     appliedDiscount: 0,
     selected: [2],
     discount: [0, 5, 10, 20, 30, 40, 50, 60, 70],
@@ -296,6 +298,38 @@ export default {
       item.value = this.items2[item.name].value;
       this.items2[item.name].item_objects.push(item);
       this.items.push(item);
+    },
+
+    getCategories() {
+      const uniqueArray = [...new Set(this.getShopCategories)];
+      return uniqueArray;
+    },
+
+    getCategoryItems(category) {
+      const res = [];
+      this.products.forEach((product) => {
+        if (product.category === category) {
+          res.push(product);
+        }
+      });
+      return res;
+    },
+
+    buildCategories() {
+      const list = [];
+      const categories = this.getCategories();
+
+      if (categories.length) {
+        categories.forEach((category) => {
+          console.log("t", category);
+          list.push({
+            name: category,
+            items: this.getCategoryItems(category),
+          });
+        });
+      }
+      this.categoriesList = list;
+      console.log("te", this.categoriesList);
     },
 
     deleteItem(item) {
@@ -337,7 +371,8 @@ export default {
         .then((response) => {
           if (response.data.items) {
             this.products = response.data.items;
-            this.convertPriceInCents();
+            // this.convertPriceInCents();
+            this.buildCategories();
           }
         })
         .catch((error) => {

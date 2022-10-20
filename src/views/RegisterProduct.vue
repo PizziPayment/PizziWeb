@@ -178,6 +178,7 @@ export default {
             this.itemsData = response.data.items;
             // Price is in cents
             this.convertPriceInCents();
+            this.getCategories()
             this.loading = false;
           }
         })

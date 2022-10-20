@@ -239,7 +239,13 @@
     "Categories": {
         "fr": "Catégories"
     },
+    "Cash payment": {
+        "fr": "Paiement en espèces"
+    },
     "Last transactions": {
         "fr": "Dernières transactions"
+    },
+    "Save pdf receipt": {
+        "fr": "Enregistrer le reçu au format PDF"
     }
 }
