@@ -17,3 +17,7 @@ export function getUserLoggedIn (state) {
 export function getShopInfos (state) {
     return state.shopInfos
 }
+
+export function getShopCategories (state) {
+    return state.categories
+}
