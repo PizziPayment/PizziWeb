@@ -3,8 +3,9 @@
     <div class="d-flex grow flex-wrap">
       <v-avatar
         v-if="avatar"
-        size="128"
+        :size="avatar_size"
         class="mx-auto v-card--material__avatar elevation-6"
+        :style="avatar_position"
       >
         <v-img :src="avatar" />
       </v-avatar>
@@ -12,13 +13,11 @@
       <v-sheet
         v-else
         :class="{
-          'pa-7': !$slots.image,
+          'pa-1': !$slots.image,
         }"
-        :color="color"
         :max-height="icon ? 90 : undefined"
         :width="icon ? 'auto' : '100%'"
-        elevation="6"
-        class="text-start v-card--material__heading mb-n6"
+        class="text-start my-2 pb-6"
         dark
       >
         <slot v-if="$slots.heading" name="heading" />
@@ -92,6 +91,27 @@ export default {
         "v-card--material--has-heading": this.hasHeading,
       };
     },
+    avatar_size () {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return 64
+        case 'sm': return 64
+        case 'md': return 64
+        case 'lg': return 128
+        case 'xl': return 128
+        default: return  128
+      }
+    },
+    avatar_position() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return "top: -35px;"
+        case 'sm': return "top: -35px;"
+        case 'md': return "top: -35px;"
+        case 'lg': return "top: -64px;"
+        case 'xl': return "top: -64px;"
+        default: return  "top: -64px;"
+      }
+
+    },
     hasHeading() {
       return Boolean(this.$slots.heading || this.title || this.icon);
     },
@@ -105,10 +125,9 @@ export default {
 <style lang="sass">
 .v-card--material
   border: 1px solid white !important
+  border-radius: 10px !important
   &__avatar
     position: relative
-    top: -64px
-    margin-bottom: -32px
   &__heading
     position: relative
     top: -40px

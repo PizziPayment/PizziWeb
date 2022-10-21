@@ -9,7 +9,7 @@
                 {{ $translate.getTranslation("Customize Receipt") }}
               </div>
 
-              <div class="subtitle-1 font-weight-light">
+              <div class="subtitle-1 font-weight-light ml-6">
                 {{
                   $translate.getTranslation(
                     "Select the informations that will appear on the receipt"

@@ -144,10 +144,10 @@ export default {
         });
     },
 
-    convertPriceInCents() {
+    convertPriceInMil() {
       if (this.itemsData) {
         this.itemsData.forEach((item) => {
-          item.price = item.price / 100;
+          item.price = item.price / 1000;
         });
       }
     },
@@ -177,7 +177,7 @@ export default {
           if (response.data.items) {
             this.itemsData = response.data.items;
             // Price is in cents
-            this.convertPriceInCents();
+            this.convertPriceInMil();
             this.getCategories()
             this.loading = false;
           }
