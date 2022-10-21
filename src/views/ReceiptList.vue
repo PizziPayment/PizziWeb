@@ -61,6 +61,14 @@ export default {
   },
 
   methods: {
+    convertPriceInMil() {
+      if (this.receipts) {
+        this.receipts.forEach((item) => {
+          item.total_ttc = item.total_ttc / 1000;
+        });
+      }
+    },
+
     getReceipts() {
       axios
         .get(process.env.VUE_APP_RESOURCE_URL + "/shops/me/receipts",{
@@ -71,6 +79,8 @@ export default {
         .then((response) => {
           console.log(response)
           this.receipts = response.data
+          console.log('t', this.receipts)
+          this.convertPriceInMil()
         })
         .catch((error) => {
           Bugsnag.notify(error);
