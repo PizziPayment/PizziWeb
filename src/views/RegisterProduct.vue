@@ -164,18 +164,6 @@ export default {
       this.setShopCategories(categories)
     },
 
-    getCategories() {
-      const categories = []
-      if (this.itemsData) {
-        this.itemsData.forEach(item => {
-          if (item.category) {
-            categories.push(item.category)
-          }
-        });
-      }
-      this.setShopCategories(categories)
-    },
-
     async loadItems() {
       this.loading = true;
       const bearerAuth = {

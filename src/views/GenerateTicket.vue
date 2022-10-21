@@ -371,7 +371,7 @@ export default {
         .then((response) => {
           if (response.data.items) {
             this.products = response.data.items;
-            // this.convertPriceInCents();
+            this.convertPriceInCents();
             this.buildCategories();
           }
         })
