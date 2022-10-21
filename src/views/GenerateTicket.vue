@@ -84,11 +84,11 @@
             avatar="https://img.freepik.com/vecteurs-libre/illustration-vectorielle-outils-coiffeur-ciseaux-rasoir-poteau-ruban-echantillon-texte_74855-10555.jpg?size=338&ext=jpg&ga=GA1.2.1637736129.1624752000"
           >
             <v-card-text class="text-center">
-              <h6 class="display-1 mb-1 grey--text">
+              <h6 class="display-1 mb-1 grey--text mb-8 mt-n8">
                 {{ $translate.getTranslation("Receipt") }}
               </h6>
 
-              <h4 class="display-2 font-weight-light mb-3">Faudra Tiff Hair</h4>
+              <!-- <h4 class="display-2 font-weight-light mb-3">Coiffure Zimone</h4> -->
 
               <v-btn class="ma-2" color="#58C09D" @click="openCalculator()">
                 <div class="d-inline-flex justify-center align-center">
@@ -650,13 +650,13 @@ export default {
 
     getSocials() {
       let socials = {};
-      socials.website = "https://www.faudratiffhair.com";
-      socials.instagram = "faudratiffhair";
-      socials.linkedin = "faudratiffhair";
-      socials.snapchat = "faudratiffhair";
-      socials.tiktok = "faudratiffhair";
-      socials.facebook = "faudratiffhair";
-      socials.twitter = "faudratiffhair";
+      socials.website = "https://www.coiffurezimone.com";
+      socials.instagram = "coiffurezimone";
+      socials.linkedin = "coiffurezimone";
+      socials.snapchat = "coiffurezimone";
+      socials.tiktok = "coiffurezimone";
+      socials.facebook = "coiffurezimone";
+      socials.twitter = "coiffurezimone";
       return socials;
     },
 
