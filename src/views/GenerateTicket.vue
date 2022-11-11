@@ -298,6 +298,36 @@ export default {
       this.items.push(item);
     },
 
+    getCategories() {
+      const uniqueArray = [...new Set(this.getShopCategories)];
+      return uniqueArray;
+    },
+
+    getCategoryItems(category) {
+      const res = [];
+      this.products.forEach((product) => {
+        if (product.category === category) {
+          res.push(product);
+        }
+      });
+      return res;
+    },
+
+    buildCategories() {
+      const list = [];
+      const categories = this.getCategories();
+
+      if (categories.length) {
+        categories.forEach((category) => {
+          list.push({
+            name: category.toLowerCase(),
+            items: this.getCategoryItems(category),
+          });
+        });
+      }
+      this.categoriesList = list;
+    },
+
     deleteItem(item) {
       item.value = 0;
       delete this.items2[item.name];
