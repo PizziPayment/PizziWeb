@@ -156,10 +156,10 @@
         "fr": "Retour de produit"
     },
     "Enter returned product informations": {
-        "fr": "Saisir les informations sur le produit retourné"
+        "fr": "Saisir les informations pour retourner un produit"
     },
-    "Reason": {
-        "fr": "Raison"
+    "Returned reason": {
+        "fr": "Raison du retour"
     },
     "Search": {
         "fr": "Chercher"

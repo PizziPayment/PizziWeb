@@ -321,15 +321,13 @@ export default {
 
       if (categories.length) {
         categories.forEach((category) => {
-          console.log("t", category);
           list.push({
-            name: category,
+            name: category.toLowerCase(),
             items: this.getCategoryItems(category),
           });
         });
       }
       this.categoriesList = list;
-      console.log("te", this.categoriesList);
     },
 
     deleteItem(item) {
