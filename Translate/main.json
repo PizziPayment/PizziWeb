@@ -247,5 +247,8 @@
     },
     "Save pdf receipt": {
         "fr": "Enregistrer le reçu au format PDF"
+    },
+    "Select item": {
+        "fr": "Choisir un item"
     }
 }

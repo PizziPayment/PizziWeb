@@ -5,7 +5,7 @@
         {{ $translate.getTranslation("Product Return") }}
       </div>
       <div class="subtitle-1 font-weight-light ml-6">
-        {{ $translate.getTranslation("Enter returned product informations") }}
+        {{ $translate.getTranslation("Liste des retours") }}
       </div>
     </template>
     <!-- <div
@@ -89,12 +89,13 @@
         {{ this.$translate.getTranslation("Last Returned Products") }}
         <v-spacer></v-spacer>
         <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          :label="$translate.getTranslation('Search')"
-          single-line
-          hide-details
+        v-model="search"
+        append-icon="mdi-magnify"
+        :label="$translate.getTranslation('Search')"
+        single-line
+        hide-details
         ></v-text-field>
+        <v-btn small class="ma-2" color="success" @click="openSelectDialog()"> {{ this.$translate.getTranslation("Add") }} </v-btn>
       </v-card-title>
       <v-data-table
         :headers="headers"
@@ -103,6 +104,7 @@
       ></v-data-table>
     </v-card>
     <ProductsDialog ref="productDialog" @itemSelected="changeItemSelected($event)"/>
+    <ProductReturnDialog ref="productReturnDialog"/>
   </material-card>
 </template>
 
@@ -112,10 +114,11 @@ import axios from "axios";
 import { mapGetters } from "vuex";
 import Bugsnag from "@bugsnag/js";
 import ProductsDialog from "../components/dialog/ProductsDialog.vue";
+import ProductReturnDialog from "../components/dialog/ProductReturnDialog.vue";
 
 export default {
   props: ["value"],
-  components: { materialCard, ProductsDialog },
+  components: { materialCard, ProductsDialog, ProductReturnDialog },
 
   computed: {
     ...mapGetters("defaultStore", ["getAccessToken"]),
@@ -175,8 +178,8 @@ export default {
       this.$refs.form.reset();
     },
 
-    openItemSelectionDialog() {
-      this.$refs.productDialog.show()
+    openSelectDialog() {
+      this.$refs.productReturnDialog.show()
     },
 
     changeItemSelected(event) {
