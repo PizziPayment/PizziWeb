@@ -11,7 +11,7 @@
             hide-details
             clearable
           ></v-text-field>
-          <v-btn @click.stop="openAddProduct()" class="mx-3" color="primary">
+          <v-btn @click.stop="openAddProduct()" class="mx-3" color="#17C19D">
             {{ $translate.getTranslation("add") }}
           </v-btn>
         </v-card-title>
@@ -58,7 +58,7 @@
               <v-btn
                 @click.stop="openAddProduct()"
                 class="pa-3 mx-3"
-                color="primary"
+                color="#17C19D"
               >
                 {{ $translate.getTranslation("add") }}
               </v-btn>
@@ -78,7 +78,7 @@ import AddProductDialog from "@/components/widgets/AddProductDialog.vue";
 import EditProductDialog from "@/components/widgets/EditProductDialog.vue";
 import axios from "axios";
 import Bugsnag from "@bugsnag/js";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: { AddProductDialog, EditProductDialog },
@@ -98,6 +98,7 @@ export default {
         value: "id",
       },
       { text: "Item", value: "name" },
+      { text: "Category", value: "category", sortable: true },
       { text: "Price", value: "price", sortable: true },
       { text: "Creation date", value: "created_at" },
       { text: "Actions", value: "actions", sortable: false },
@@ -110,6 +111,7 @@ export default {
   },
 
   methods: {
+    ...mapActions("defaultStore", ["setShopCategories"]),
     openAddProduct() {
       if (this.$refs.AddProductRef) {
         this.$refs.AddProductRef.show();
@@ -142,12 +144,24 @@ export default {
         });
     },
 
-    convertPriceInCents() {
+    convertPriceInMil() {
       if (this.itemsData) {
         this.itemsData.forEach((item) => {
-          item.price = item.price / 100;
+          item.price = item.price / 1000;
         });
       }
+    },
+
+    getCategories() {
+      const categories = []
+      if (this.itemsData) {
+        this.itemsData.forEach(item => {
+          if (item.category) {
+            categories.push(item.category)
+          }
+        });
+      }
+      this.setShopCategories(categories)
     },
 
     async loadItems() {
@@ -163,8 +177,8 @@ export default {
           if (response.data.items) {
             this.itemsData = response.data.items;
             // Price is in cents
-            this.convertPriceInCents();
-            console.log("te", this.itemsData);
+            this.convertPriceInMil();
+            this.getCategories()
             this.loading = false;
           }
         })

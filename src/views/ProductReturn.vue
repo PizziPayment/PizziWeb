@@ -4,7 +4,7 @@
       <div class="display-2 font-weight-light">
         {{ $translate.getTranslation("Product Return") }}
       </div>
-      <div class="subtitle-1 font-weight-light">
+      <div class="subtitle-1 font-weight-light ml-6">
         {{ $translate.getTranslation("Enter returned product informations") }}
       </div>
     </template>

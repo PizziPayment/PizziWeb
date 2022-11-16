@@ -2,21 +2,8 @@
   <div>
     <cashPaymentDialog v-model="dialog" />
     <v-card class="mx-auto themeStyleCardLocal" height="476px">
-      <v-btn
-        class="mt-n8"
-        rounded
-        large
-        color="green"
-        @click.stop="acceptCashPayment"
-        id="cash-button"
-      >
-        <v-icon large color="white">mdi-cash-register</v-icon>
-        <span class="white--text pa-12">
-          {{ $translate.getTranslation("Register cash payment") }}
-        </span>
-      </v-btn>
       <v-subheader class="themeStyleCardLocal">
-        {{ $translate.getTranslation("Last Cash Payments") }}
+        {{ $translate.getTranslation("Last transactions") }}
       </v-subheader>
       <v-divider inset></v-divider>
       <v-list

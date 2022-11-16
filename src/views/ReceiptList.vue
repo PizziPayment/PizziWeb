@@ -18,10 +18,16 @@
           :items="receipts"
           :search="search"
           @click:row="openReceipt"
-        ></v-data-table>
+        >
+          <template v-slot:item.date="{ item }">
+            <v-chip dark>
+              {{ moment(item.date).format("LLL") }}
+            </v-chip>
+          </template>
+        </v-data-table>
       </v-card>
     </v-container>
-    <ReceiptView ref="receiptView"/>
+    <ReceiptView ref="receiptView" />
   </v-app>
 </template>
 
@@ -29,6 +35,7 @@
 // import moment from "moment";
 import axios from "axios";
 import Bugsnag from "@bugsnag/js";
+import moment from "moment";
 import { mapGetters } from "vuex";
 import ReceiptView from "@/components/dialog/ReceiptView.vue";
 
@@ -36,6 +43,7 @@ export default {
   components: { ReceiptView },
 
   data: () => ({
+    moment,
     search: "",
     receipts: [],
     headers: [
@@ -61,16 +69,26 @@ export default {
   },
 
   methods: {
+    convertPriceInMil() {
+      if (this.receipts) {
+        this.receipts.forEach((item) => {
+          item.total_ttc = item.total_ttc / 1000;
+        });
+      }
+    },
+
     getReceipts() {
       axios
-        .get(process.env.VUE_APP_RESOURCE_URL + "/shops/me/receipts",{
+        .get(process.env.VUE_APP_RESOURCE_URL + "/shops/me/receipts", {
           headers: {
             Authorization: "Bearer " + this.getAccessToken,
           },
         })
         .then((response) => {
-          console.log(response)
-          this.receipts = response.data
+          console.log(response);
+          this.receipts = response.data;
+          console.log("t", this.receipts);
+          this.convertPriceInMil();
         })
         .catch((error) => {
           Bugsnag.notify(error);
@@ -79,9 +97,9 @@ export default {
     },
 
     openReceipt(row) {
-      console.log(row)
-      this.$refs.receiptView.show(row.receipt_id)
-    }
+      console.log(row);
+      this.$refs.receiptView.show(row.receipt_id);
+    },
   },
 };
 </script>

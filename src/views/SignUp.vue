@@ -253,7 +253,7 @@
               <v-spacer></v-spacer>
               <v-btn
                 :disabled="step === 5"
-                color="primary"
+                color="#17c19d"
                 depressed
                 @click="goToNextSlide()"
               >

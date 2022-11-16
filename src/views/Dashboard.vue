@@ -1,24 +1,26 @@
 <template>
   <v-app>
     <v-container fluid class="background containerThemeStyle">
-      <v-row class="my-6" id="graph-div">
-        <v-col class="mx-6">
+      <v-row class="my-6" id="graph-div" justify="center">
+        <v-col class="mx-6" xs="11" sm="11" md="5">
           <SalesRevenueGraph />
         </v-col>
-        <v-col class="mx-6">
+        <v-col class="mx-6" xs="11" sm="11" md="5">
           <MostSoldGraph />
         </v-col>
       </v-row>
-      <v-row class="my-6">
-        <v-col class="mx-6" id="cash-payment">
+      <v-row class="my-6" justify="center">
+        <v-col class="mx-6" id="cash-payment" xs="11" sm="11" md="5">
           <CashPayment />
         </v-col>
-        <v-col class="mx-6" id="calendar">
+        <v-col class="mx-6" id="calendar" xs="11" sm="11" md="5">
           <Calendar />
         </v-col>
       </v-row>
-      <v-row class="ma-6">
-        <Sales />
+      <v-row class="mx-4"  justify="center">
+        <v-col xs="12" sm="12" md="11">
+          <Sales />
+        </v-col>
       </v-row>
     </v-container>
     <AppTour :config="configTutorial" />
@@ -36,6 +38,7 @@ import AppTour from "@/components/core/AppTour.vue";
 
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
+import Bugsnag from "@bugsnag/js";
 
 
 export default {
@@ -48,6 +51,7 @@ export default {
     AppTour,
   },
   data: () => ({
+    itemsData: [],
     configTutorial: {
       oneTry: true,
       title: "PizziDashboard",
@@ -101,14 +105,16 @@ export default {
   }),
   mounted() {
     this.loadShopInfos()
+    this.loadItems()
   },
   computed: {
     ...mapGetters('defaultStore', [
       'getAccessToken',
+      'getShopCategories'
     ])
   },
   methods: {
-    ...mapActions("defaultStore", ["setShopInfos"]),
+    ...mapActions("defaultStore", ["setShopInfos", "setShopCategories"]),
     loadShopInfos() {
       const bearerAuth = {
         Authorization: "Bearer " + this.getAccessToken,
@@ -120,7 +126,39 @@ export default {
         .then((response) => {
           this.setShopInfos(response.data)
         })
-    }
+    },
+
+    getCategories() {
+      const categories = []
+      if (this.itemsData) {
+        this.itemsData.forEach(item => {
+          if (item.category) {
+            categories.push(item.category)
+          }
+        });
+      }
+      this.setShopCategories(categories)
+    },
+
+    async loadItems() {
+      const bearerAuth = {
+        Authorization: "Bearer " + this.getAccessToken,
+      };
+      axios
+        .get(process.env.VUE_APP_RESOURCE_URL + "/shops/me/items", {
+          headers: bearerAuth,
+        })
+        .then((response) => {
+          if (response.data.items) {
+            this.itemsData = response.data.items;
+            this.getCategories()
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          Bugsnag.notify(error);
+        });
+    },
   }
 };
 </script>

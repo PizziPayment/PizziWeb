@@ -48,7 +48,7 @@
                     :disabled="!email && !password"
                     justify-center
                     small
-                    color="primary"
+                    color="#17c19d"
                     >connexion</v-btn
                   >
 

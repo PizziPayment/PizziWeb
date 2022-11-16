@@ -9,21 +9,12 @@
         <v-card-text class="mt-6">
           <v-container>
             <v-row>
-              <v-select
-                  :label="$translate.getTranslation('Categories')"
-                  :items="types"
-                  autocomplete
-                  chips
-                ></v-select>
-                <v-btn class="d-flex align-items justify-center" color="success">{{ $translate.getTranslation('+') }}</v-btn>
-            </v-row>
-            <v-row>
-              <v-text-field
-                v-model="name"
-                :label="$translate.getTranslation('Product name')"
-                filled
-                clearable
-              ></v-text-field>
+              <v-combobox
+                v-model="category"
+                :items="types"
+                :label="$translate.getTranslation('Categories')"
+                chips
+              ></v-combobox>
             </v-row>
             <v-row>
               <v-text-field
@@ -74,6 +65,7 @@ export default {
   data() {
     return {
       snackbar: false,
+      category: null,
       name: "",
       price: "",
       dialog: false,
@@ -111,7 +103,8 @@ export default {
         items: [
           {
             name: this.name,
-            price: (parseFloat(this.price) * 100),
+            price: (parseInt(this.price) * 1000),
+            category: this.category
           },
         ],
       };
