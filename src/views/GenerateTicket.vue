@@ -322,7 +322,7 @@ export default {
       if (categories.length) {
         categories.forEach((category) => {
           list.push({
-            name: category,
+            name: category.toLowerCase(),
             items: this.getCategoryItems(category),
           });
         });

@@ -1,5 +1,5 @@
 <template>
-  <v-dialog @click:outside="close()" max-width="500" v-model="isVisible">
+  <v-dialog max-width="40vw" @click:outside="close()" v-model="isVisible">
     <v-card
       class="d-flex align-center justify-center"
       v-if="loading"
@@ -11,7 +11,7 @@
         indeterminate
       ></v-progress-circular>
     </v-card>
-    <v-card style="overflow: hidden;" color="grey darken-3" v-else max-width="500" class="mx-auto" elevation="8">
+    <v-card v-else class="mx-auto" height="80vh" elevation="8" style="overflow-x: hidden; overflow-y: auto;">
       <v-row class="d-flex justify-center pa-4">
         <v-avatar size="100">
           <img
@@ -48,7 +48,7 @@
           <div>{{ product.quantity }} x {{ product.product_name }}</div>
         </v-col>
         <v-col class="d-flex justify-end mr-4">
-          <div>{{ product.price_unit }}€</div>
+          <div>{{ product.unit_price }}€</div>
         </v-col>
       </v-row>
       <v-divider></v-divider>
