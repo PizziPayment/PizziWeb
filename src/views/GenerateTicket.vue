@@ -321,7 +321,6 @@ export default {
 
       if (categories.length) {
         categories.forEach((category) => {
-          console.log("t", category);
           list.push({
             name: category,
             items: this.getCategoryItems(category),
@@ -329,7 +328,6 @@ export default {
         });
       }
       this.categoriesList = list;
-      console.log("te", this.categoriesList);
     },
 
     deleteItem(item) {
@@ -408,7 +406,6 @@ export default {
         payment_method: method,
         items: items,
       };
-      console.log("test", body);
       axios
         .post(
           process.env.VUE_APP_RESOURCE_URL + "/shops/me/transactions",
@@ -418,6 +415,7 @@ export default {
           }
         )
         .then((response) => {
+          console.log('res', response)
           this.transactionId = response.data.id;
           this.transactionToken = response.data.token;
           this.transactionCreated = true;

@@ -11,7 +11,7 @@
             hide-details
             clearable
           ></v-text-field>
-          <v-btn @click.stop="openAddProduct()" class="mx-3" color="primary">
+          <v-btn @click.stop="openAddProduct()" class="mx-3" color="#17C19D">
             {{ $translate.getTranslation("add") }}
           </v-btn>
         </v-card-title>
@@ -58,7 +58,7 @@
               <v-btn
                 @click.stop="openAddProduct()"
                 class="pa-3 mx-3"
-                color="primary"
+                color="#17C19D"
               >
                 {{ $translate.getTranslation("add") }}
               </v-btn>
