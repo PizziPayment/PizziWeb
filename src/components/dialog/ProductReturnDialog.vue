@@ -13,7 +13,7 @@
         <div class="ma-4 text-center">
           <v-form ref="form" v-model="valid" lazy-validation>
             <div v-if="!itemSelected">
-              <v-btn class="ma-4" @click="openItemSelectionDialog()" color="primary">{{
+              <v-btn class="ma-4" @click="openItemSelectionDialog()" color="#17C19D">{{
                 this.$translate.getTranslation("Select item")
               }}</v-btn>
             </div>
@@ -73,6 +73,8 @@
 
 <script>
 import { mapGetters } from "vuex";
+import axios from "axios";
+import Bugsnag from "@bugsnag/js";
 import ProductsDialog from "@/components/dialog/ProductsDialog.vue";
 
 export default {
@@ -80,6 +82,7 @@ export default {
     return {
       valid: null,
       dialog: false,
+      receiptId: null,
       basicRule: [(v) => !!v || this.$translate.getTranslation("Required")],
       reasons: [
         "article incorrect",
@@ -115,9 +118,44 @@ export default {
       this.$refs.productsDialog.show();
     },
 
+    reset() {
+      this.receiptId = null
+      this.returnedReason = null
+      this.itemSelected = null
+    },
+
     changeItemSelected(event) {
       this.$refs.productsDialog.close()
       this.itemSelected = event;
+    },
+
+    saveProductReturn() {
+      this.$refs.form.validate();
+      const bearerAuth = {
+        Authorization: "Bearer " + this.getAccessToken,
+      };
+      const body = {
+        receipt_item_id: this.receipt_item_id,
+        quantity: this.quantity ? this.quantity : 1,
+        reason: this.returnedReason ? this.returnedReason : ''
+      };
+      axios
+        .post(
+          process.env.VUE_APP_RESOURCE_URL + "/shops/me/receipts/" + this.receiptId + "/product_return_certificates",
+          body,
+          {
+            headers: bearerAuth,
+          }
+        )
+        .then((response) => {
+          console.log("res", response)
+          // load product returns
+        })
+        .catch((error) => {
+          Bugsnag.notify(error)
+          console.error(error)
+        });
+      this.reset();
     },
   },
 };

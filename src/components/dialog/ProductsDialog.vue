@@ -133,7 +133,6 @@ export default {
         });
       }
       this.categoriesList = list;
-      console.log("te", this.categoriesList);
     },
 
     loadShopItems() {
