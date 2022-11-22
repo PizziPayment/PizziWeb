@@ -56,13 +56,13 @@ export default {
     ]),
   },
   watch: {
-    imageSelected: function (newVal) {
-      if(newVal) {
-        this.createBase64Image(newVal);
-      } else {
-        this.imageBase64String = null;
-      }
-    }
+    // imageSelected: function (newVal) {
+    //   if(newVal) {
+    //     this.createBase64Image(newVal);
+    //   } else {
+    //     this.imageBase64String = null;
+    //   }
+    // }
   },
   methods: {
     show() {
@@ -74,7 +74,7 @@ export default {
     },
 
     async saveImage() {
-      if (this.imageSelected && this.imageBase64String) {
+      if (this.imageSelected) {
         let formData = new FormData();
         formData.append("files", this.imageSelected, 'avatar');
 
