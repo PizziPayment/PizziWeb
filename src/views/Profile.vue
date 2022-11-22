@@ -135,6 +135,17 @@
                     color="grey"
                     rounded
                     class="ma-2 mr-0"
+                    @click.stop="showChangeImageDialog()"
+                  >
+                    {{ this.$translate.getTranslation("Change image") }}
+                  </v-btn>
+                </div>
+                <div>
+                  <v-btn
+                    small
+                    color="grey"
+                    rounded
+                    class="ma-2 mr-0"
                     @click.stop="showResetEmail()"
                   >
                     {{ this.$translate.getTranslation("Reset email") }}
@@ -158,6 +169,7 @@
       </v-row>
       <ResetEmail ref="ResetEmailDialog" />
       <ResetPassword ref="ResetPasswordDialog" />
+      <ChangeImageDialog ref="ChangeImageDialog" />
     </v-container>
   </v-app>
 </template>
@@ -166,11 +178,12 @@
 import materialCard from "@/components/MaterialCard.vue";
 import ResetEmail from "@/components/dialog/ResetEmail.vue";
 import ResetPassword from "@/components/dialog/ResetPassword.vue";
+import ChangeImageDialog from "@/components/dialog/ChangeImageDialog.vue";
 import { mapGetters } from "vuex";
 import axios from "axios";
 
 export default {
-  components: { materialCard, ResetEmail, ResetPassword },
+  components: { materialCard, ResetEmail, ResetPassword, ChangeImageDialog },
   data() {
     return {};
   },
@@ -219,6 +232,9 @@ export default {
   },
 
   methods: {
+    showChangeImageDialog() {
+      this.$refs.ChangeImageDialog.show();
+    },
     showResetEmail() {
       this.$refs.ResetEmailDialog.show();
     },
