@@ -156,10 +156,10 @@
         "fr": "Retour de produit"
     },
     "Enter returned product informations": {
-        "fr": "Saisir les informations sur le produit retourné"
+        "fr": "Saisir les informations pour retourner un produit"
     },
-    "Reason": {
-        "fr": "Raison"
+    "Returned reason": {
+        "fr": "Raison du retour"
     },
     "Search": {
         "fr": "Chercher"
@@ -235,5 +235,17 @@
     },
     "Care": {
         "fr": "Soins"
+    },
+    "Categories": {
+        "fr": "Catégories"
+    },
+    "Cash payment": {
+        "fr": "Paiement en espèces"
+    },
+    "Last transactions": {
+        "fr": "Dernières transactions"
+    },
+    "Save pdf receipt": {
+        "fr": "Enregistrer le reçu au format PDF"
     }
 }

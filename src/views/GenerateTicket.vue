@@ -9,70 +9,70 @@
                 {{ $translate.getTranslation("Generate Receipt") }}
               </div>
 
-              <div class="subtitle-1 font-weight-light">
+              <div class="subtitle-1 font-weight-light ml-6">
                 {{ $translate.getTranslation("Add Items to the receipt") }}
               </div>
             </template>
             <v-form>
-              <v-container class="py-0 themeStyleCard">
-                <v-row dense style="overflow: auto">
-                  <v-col v-for="(item, i) in products" :key="i" cols="6">
-                    <v-card
-                      @click="addToItems(item)"
-                      color="grey"
-                      dark
-                      style="min-height: 60px"
-                    >
-                      <div
-                        class="d-flex flex-no-wrap justify-space-between align-center"
-                        style="height: 100%"
-                      >
-                        <div
-                          class="d-flex flex-column justify-center align-start"
-                          style="padding: 10px"
+              <v-container
+                style="height: 70vh; overflow: auto"
+                class="py-0 themeStyleCard"
+              >
+                <v-expansion-panels v-model="panel" multiple>
+                  <v-expansion-panel
+                    v-for="(category, i) in categoriesList"
+                    :key="i"
+                  >
+                    <v-expansion-panel-header>
+                      <h3>{{ category.name.toUpperCase() }}</h3>
+                    </v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                      <v-row dense style="overflow: auto">
+                        <v-col
+                          v-for="(item, i) in category.items"
+                          :key="i"
+                          cols="6"
                         >
-                          <span class="text-h5"> {{ item.name }}</span>
-                          <span>{{ item.price + " $" }}</span>
-                        </div>
-
-                        <div
-                          v-if="item.value"
-                          class="d-inline-flex justify-center align-center"
-                          style="padding-right: 10px"
-                        >
-                          <v-btn icon @click="addToItems(item)">
-                            <v-icon size="2em"> mdi-plus </v-icon>
-                          </v-btn>
-                          <span style="font-size: 2em">
-                            {{ item.value }}
-                          </span>
-                          <v-btn icon @click="removeThisItem(item)">
-                            <v-icon size="2em"> mdi-minus </v-icon>
-                          </v-btn>
-                        </div>
-
-                        <!-- <div
-                          v-if="item.value"
-                          style="font-size: 2em; padding-right: 10px"
-                        >
-                          {{ item.value }}
-                        </div> -->
-
-                        <!-- <v-card-actions>
-                          <v-btn
-                            class="ml-2 mt-5"
-                            outlined
-                            rounded
-                            small
+                          <v-card
                             @click="addToItems(item)"
+                            color="grey"
+                            dark
+                            style="min-height: 60px"
                           >
-                            {{ $translate.getTranslation("Add Item") }}
-                          </v-btn>
-                        </v-card-actions> -->
-                      </div>
-                    </v-card>
-                  </v-col>
-                </v-row>
+                            <div
+                              class="d-flex flex-no-wrap justify-space-between align-center"
+                              style="height: 100%"
+                            >
+                              <div
+                                class="d-flex flex-column justify-center align-start"
+                                style="padding: 10px"
+                              >
+                                <span class="text-h5"> {{ item.name }}</span>
+                                <span>{{ item.price + " €" }}</span>
+                              </div>
+
+                              <div
+                                v-if="item.value"
+                                class="d-inline-flex justify-center align-center"
+                                style="padding-right: 10px"
+                              >
+                                <v-btn icon @click="addToItems(item)">
+                                  <v-icon size="2em"> mdi-plus </v-icon>
+                                </v-btn>
+                                <span style="font-size: 2em">
+                                  {{ item.value }}
+                                </span>
+                                <v-btn icon @click="removeThisItem(item)">
+                                  <v-icon size="2em"> mdi-minus </v-icon>
+                                </v-btn>
+                              </div>
+                            </div>
+                          </v-card>
+                        </v-col>
+                      </v-row>
+                    </v-expansion-panel-content>
+                  </v-expansion-panel>
+                </v-expansion-panels>
               </v-container>
             </v-form>
           </material-card>
@@ -84,11 +84,11 @@
             avatar="https://img.freepik.com/vecteurs-libre/illustration-vectorielle-outils-coiffeur-ciseaux-rasoir-poteau-ruban-echantillon-texte_74855-10555.jpg?size=338&ext=jpg&ga=GA1.2.1637736129.1624752000"
           >
             <v-card-text class="text-center">
-              <h6 class="display-1 mb-1 grey--text">
+              <h6 class="display-1 mb-1 grey--text mb-8 mt-n8">
                 {{ $translate.getTranslation("Receipt") }}
               </h6>
 
-              <h4 class="display-2 font-weight-light mb-3">Faudra Tiff Hair</h4>
+              <!-- <h4 class="display-2 font-weight-light mb-3">Coiffure Zimone</h4> -->
 
               <v-btn class="ma-2" color="#58C09D" @click="openCalculator()">
                 <div class="d-inline-flex justify-center align-center">
@@ -143,7 +143,7 @@
                               >
                               </v-list-item-title>
                               <v-list-item-title
-                                v-text="item.item_objects[0].price + ' $'"
+                                v-text="item.item_objects[0].price + ' €'"
                               ></v-list-item-title>
                             </v-list-item-content>
                             <v-list-item-action>
@@ -168,7 +168,7 @@
                       </template>
                       <v-list-item-content>
                         <v-list-item-title
-                          v-text="'Total ' + calculatePrice() + ' $'"
+                          v-text="'Total ' + calculatePrice() + ' €'"
                         ></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item-group>
@@ -200,7 +200,7 @@
                   class="mr-0"
                   @click="createTransaction('card')"
                 >
-                  {{ $translate.getTranslation("Confirm and link user") }}
+                  {{ $translate.getTranslation("Confirmer") }}
                 </v-btn>
 
                 <v-spacer></v-spacer>
@@ -255,10 +255,12 @@ export default {
   },
 
   computed: {
-    ...mapGetters("defaultStore", ["getAccessToken"]),
+    ...mapGetters("defaultStore", ["getAccessToken", "getShopCategories"]),
   },
 
   data: () => ({
+    panel: [],
+    categoriesList: [],
     appliedDiscount: 0,
     selected: [2],
     discount: [0, 5, 10, 20, 30, 40, 50, 60, 70],
@@ -298,6 +300,36 @@ export default {
       this.items.push(item);
     },
 
+    getCategories() {
+      const uniqueArray = [...new Set(this.getShopCategories)];
+      return uniqueArray;
+    },
+
+    getCategoryItems(category) {
+      const res = [];
+      this.products.forEach((product) => {
+        if (product.category === category) {
+          res.push(product);
+        }
+      });
+      return res;
+    },
+
+    buildCategories() {
+      const list = [];
+      const categories = this.getCategories();
+
+      if (categories.length) {
+        categories.forEach((category) => {
+          list.push({
+            name: category.toLowerCase(),
+            items: this.getCategoryItems(category),
+          });
+        });
+      }
+      this.categoriesList = list;
+    },
+
     deleteItem(item) {
       item.value = 0;
       delete this.items2[item.name];
@@ -320,9 +352,9 @@ export default {
 
     convertPriceInCents() {
       if (this.products) {
-        this.products.forEach((item) => {
-          item.price = item.price / 100;
-        });
+        this.products.forEach(item => {
+          item.price = (item.price / 1000)
+        })
       }
     },
 
@@ -338,6 +370,7 @@ export default {
           if (response.data.items) {
             this.products = response.data.items;
             this.convertPriceInCents();
+            this.buildCategories();
           }
         })
         .catch((error) => {
@@ -369,11 +402,10 @@ export default {
       };
       const body = {
         tva_percentage: 20,
-        total_price: parseFloat(total_price) * 100,
+        total_price: parseInt(total_price) * 1000,
         payment_method: method,
         items: items,
       };
-      console.log("test", body);
       axios
         .post(
           process.env.VUE_APP_RESOURCE_URL + "/shops/me/transactions",
@@ -383,6 +415,7 @@ export default {
           }
         )
         .then((response) => {
+          console.log('res', response)
           this.transactionId = response.data.id;
           this.transactionToken = response.data.token;
           this.transactionCreated = true;
@@ -403,8 +436,8 @@ export default {
           result += item.price;
         }
       }
-      result = result * (1 - this.appliedDiscount / 100);
-      return parseFloat(result.toFixed(2));
+      result = result * (1 - this.appliedDiscount / 1000);
+      return parseFloat(result.toFixed(3));
     },
 
     saveBlob(blob, filename) {
@@ -615,13 +648,13 @@ export default {
 
     getSocials() {
       let socials = {};
-      socials.website = "https://www.faudratiffhair.com";
-      socials.instagram = "faudratiffhair";
-      socials.linkedin = "faudratiffhair";
-      socials.snapchat = "faudratiffhair";
-      socials.tiktok = "faudratiffhair";
-      socials.facebook = "faudratiffhair";
-      socials.twitter = "faudratiffhair";
+      socials.website = "https://www.coiffurezimone.com";
+      socials.instagram = "coiffurezimone";
+      socials.linkedin = "coiffurezimone";
+      socials.snapchat = "coiffurezimone";
+      socials.tiktok = "coiffurezimone";
+      socials.facebook = "coiffurezimone";
+      socials.twitter = "coiffurezimone";
       return socials;
     },
 

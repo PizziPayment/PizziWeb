@@ -9,7 +9,7 @@
                 {{ $translate.getTranslation("Edit Profile") }}
               </div>
 
-              <div class="subtitle-1 font-weight-light">
+              <div class="subtitle-1 font-weight-light ml-6">
                 {{ $translate.getTranslation("Complete your profile") }}
               </div>
             </template>
@@ -102,7 +102,7 @@
                   </v-row>
                   <v-col cols="12" class="text-right">
                     <v-btn
-                      color="success"
+                      color="#17C19D"
                       class="mr-0"
                       @click="updateShopInfos"
                     >

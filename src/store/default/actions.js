@@ -31,3 +31,7 @@ export async function setDarkTheme({ commit }, isDarkTheme) {
 export function setShopInfos({ commit }, shopInfos) {
   commit("UPDATE_SHOP_INFOS", shopInfos)
 }
+
+export function setShopCategories({ commit }, categories) {
+  commit("UPDATE_SHOP_CATEGORIES", categories)
+}

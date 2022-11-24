@@ -9,9 +9,17 @@
         <v-card-text v-if="oldItem" class="mt-6">
           <v-container>
             <v-row>
+              <v-combobox
+                v-model="oldItem.category"
+                :items="types"
+                :label="$translate.getTranslation('Categories')"
+                chips
+              ></v-combobox>
+            </v-row>
+            <v-row>
               <v-text-field
                 v-model="oldItem.name"
-                label="Name"
+                :label="$translate.getTranslation('Name')"
                 :placeholder="oldItem.name"
                 filled
                 clearable
@@ -20,7 +28,7 @@
             <v-row>
               <v-text-field
                 v-model="oldItem.price"
-                label="Price"
+                :label="$translate.getTranslation('Price')"
                 :placeholder="oldItem.price"
                 filled
                 type="number"
@@ -58,6 +66,7 @@ export default {
     return {
       oldItem: null,
       snackbar: false,
+      types: ['services', 'shampoing', 'homme', 'femme', 'enfants'],
       name: "",
       price: "",
       dialog: false,
@@ -92,7 +101,8 @@ export default {
       };
       const body = {
         name: this.oldItem.name,
-        price: this.oldItem.price,
+        price: parseFloat(this.oldItem.price),
+        category: this.oldItem.category
       };
       axios
         .patch(process.env.VUE_APP_RESOURCE_URL + "/shops/me/items/" + this.oldItem.id , body, {

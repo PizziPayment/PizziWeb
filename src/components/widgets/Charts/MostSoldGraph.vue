@@ -55,7 +55,7 @@ export default {
           bottom: "bottom",
         },
         title: {
-          text: this.$translate.getTranslation("Best Sellers"),
+          text: this.$translate.getTranslation("Catégories les plus vendues"),
           subtext: this.$translate.getTranslation("Updated 10 min ago"),
           padding: [0, 0, 0, 0],
           textStyle: {

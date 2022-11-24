@@ -44,3 +44,7 @@ export function UPDATE_SHOP_FACEBOOK(state, shopFacebook) {
 export function UPDATE_SHOP_TWITTER(state, shopTwitter) {
     state.shopInfos.twitter = shopTwitter
 }
+
+export function UPDATE_SHOP_CATEGORIES(state, categories) {
+    state.categories = categories
+}
