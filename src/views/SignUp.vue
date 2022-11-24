@@ -1,21 +1,19 @@
 <template>
   <v-app>
-    <v-content>
+    <v-content style="max-height: 100vh">
       <v-container class="background" fluid fill-height>
         <v-col align="center">
-          <v-card class="mx-auto" max-width="60%">
+          <v-card
+            class="mx-auto containerThemeStyle"
+            max-height="98vh"
+            style="width: fit-content"
+          >
             <v-card-title
               class="title font-weight-regular justify-space-between"
             >
-              <span>
+              <span class="colorTheme2">
                 {{ $translate.getTranslation(currentTitle) }}
               </span>
-              <v-avatar
-                color="primary lighten-2"
-                class="subheading white--text"
-                size="24"
-                v-text="step"
-              ></v-avatar>
             </v-card-title>
 
             <v-window v-model="step">
@@ -33,7 +31,7 @@
                     required
                     outlined
                   ></v-text-field>
-                  <span class="caption grey--text text--darken-1">
+                  <span class="colorTheme caption">
                     {{ $translate.getTranslation("signUpEmailInf") }}
                   </span>
                 </v-card-text>
@@ -72,7 +70,7 @@
                   <div
                     style="
                       min-width: 200px;
-                      width: 60%;
+                      width: fit-content;
                       display: grid;
                       grid-template-columns: repeat(2, 1fr);
                     "
@@ -88,6 +86,7 @@
                         <div class="d-inline-flex flex-row align-center">
                           <v-icon> mdi-circle-medium </v-icon>
                           <span
+                            style="white-space: nowrap"
                             v-on="on"
                             :style="
                               'color: ' +
@@ -246,14 +245,24 @@
 
             <v-divider></v-divider>
 
-            <v-card-actions>
+            <v-card-actions class="d-inline-space justify-space-between">
               <v-btn :disabled="step === 1" text @click="step--">
                 {{ $translate.getTranslation("Previous") }}
               </v-btn>
-              <v-spacer></v-spacer>
+
+              <div
+                class="bullets"
+                style="width: fit-content; padding-right: 8px"
+              >
+                <span
+                  :style="index === step ? 'background: #58C09D;' : ''"
+                  v-for="index in 4"
+                  :key="index"
+                />
+              </div>
               <v-btn
                 :disabled="step === 5"
-                color="primary"
+                color="#58C09D"
                 depressed
                 @click="goToNextSlide()"
               >
@@ -576,16 +585,31 @@ export default {
 </script>
 
 <style>
-.background {
-  background-color: #030d0fd3;
-}
-
 .v-text-field {
   width: 400px;
 }
 </style>
 
 <style scoped>
+.containerThemeStyle {
+  background: var(--pizzi-bg2) !important;
+}
+.colorTheme {
+  color: var(--pizzi-color) !important;
+}
+.colorTheme2 {
+  color: var(--pizzi-color2) !important;
+}
+.bullets span {
+  border-radius: 50%;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin: 0 3px;
+  background: #d8d8da;
+  transition: background 0.15s ease, border-radius 0.01s ease;
+  cursor: pointer;
+}
 .resumeField {
   padding-inline: 10px;
   background: rgba(169, 166, 166, 0.182);
