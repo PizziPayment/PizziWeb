@@ -5,22 +5,22 @@
     persistent
     width="40%"
   >
-    <v-card>
+    <v-card class="d-flex justify-center align-center">
       <v-card-text>
         <v-card-title class="d-flex justify-center">
           {{ $translate.getTranslation("Retourner un produit") }}
         </v-card-title>
-        <div class="ma-4 text-center">
+        <div class="ma-4 d-flex justify-center align-center">
           <v-form ref="form" v-model="valid" lazy-validation>
             <div v-if="!itemSelected">
-              <v-btn class="ma-4" @click="openItemSelectionDialog()" color="#17C19D">{{
-                this.$translate.getTranslation("Select item")
+              <v-btn :disabled="!receiptId" class="ma-4" @click="openItemSelectionDialog(receiptId)" color="#17C19D">{{
+                this.$translate.getTranslation("Choisir produit")
               }}</v-btn>
             </div>
             <div v-else>
-              <span>
+              <span class="text-h6">
                 {{
-                  itemSelected.name + " - " + `( #${itemSelected.id} )`
+                  itemSelected.product_name + " - " + `( #${itemSelected.id} )`
                 }}</span
               >
               <v-btn class="ma-2" @click="openItemSelectionDialog()">change</v-btn>
@@ -52,7 +52,7 @@
                 {{ this.$translate.getTranslation("Reset") }}
               </v-btn>
               <v-btn
-                :disabled="!valid"
+                :disabled="isSaveEnabled"
                 color="success"
                 class="mr-4"
                 @click="saveProductReturn"
@@ -64,8 +64,8 @@
         </div>
       </v-card-text>
     </v-card>
-    <ProductsDialog
-      ref="productsDialog"
+    <ProductsReceiptDialog
+      ref="productsReceiptDialog"
       @itemSelected="changeItemSelected($event)"
     />
   </v-dialog>
@@ -75,7 +75,7 @@
 import { mapGetters } from "vuex";
 import axios from "axios";
 import Bugsnag from "@bugsnag/js";
-import ProductsDialog from "@/components/dialog/ProductsDialog.vue";
+import ProductsReceiptDialog from "@/components/dialog/ProductsReceiptDialog.vue";
 
 export default {
   data() {
@@ -97,7 +97,7 @@ export default {
     };
   },
 
-  components: { ProductsDialog },
+  components: { ProductsReceiptDialog },
 
   props: {
     totalAmount: Number,
@@ -105,6 +105,13 @@ export default {
 
   computed: {
     ...mapGetters("defaultStore", ["getAccessToken"]),
+
+    isSaveEnabled() {
+      if (this.itemSelected && this.itemSelected.id && this.returnedReason && this.receiptId) {
+        return false
+      }
+      return true
+    },
   },
 
   methods: {
@@ -114,8 +121,8 @@ export default {
     close() {
       this.dialog = false;
     },
-    openItemSelectionDialog() {
-      this.$refs.productsDialog.show();
+    openItemSelectionDialog(receiptId) {
+      this.$refs.productsReceiptDialog.show(receiptId);
     },
 
     reset() {
@@ -125,8 +132,9 @@ export default {
     },
 
     changeItemSelected(event) {
-      this.$refs.productsDialog.close()
+      this.$refs.productsReceiptDialog.close()
       this.itemSelected = event;
+      console.log("t", this.itemSelected)
     },
 
     saveProductReturn() {
@@ -135,8 +143,8 @@ export default {
         Authorization: "Bearer " + this.getAccessToken,
       };
       const body = {
-        receipt_item_id: this.receipt_item_id,
-        quantity: this.quantity ? this.quantity : 1,
+        receipt_item_id: this.itemSelected.id,
+        quantity: 1,
         reason: this.returnedReason ? this.returnedReason : ''
       };
       axios
@@ -149,7 +157,8 @@ export default {
         )
         .then((response) => {
           console.log("res", response)
-          // load product returns
+          this.$emit('pruductReturned')
+          this.close()
         })
         .catch((error) => {
           Bugsnag.notify(error)

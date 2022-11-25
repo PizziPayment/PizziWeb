@@ -14,17 +14,21 @@
           <v-btn @click.stop="openProductReturnDialog()" class="mx-3" color="#17C19D">
             {{ $translate.getTranslation("add") }}
           </v-btn>
+          <v-btn flat icon color="#17C19D" @click.stop="loadProductReturns()">
+            <v-icon>mdi-refresh</v-icon>
+          </v-btn>
         </v-card-title>
         <div v-if="productReturnCertificates.length > 0">
           <v-data-table
             class="itemsTable"
+            @click:row="openReceipt"
             :headers="headers"
             :items="productReturnCertificates"
             multisort
             pagination.sync="pagination"
             item-key="id"
             :items-per-page="10"
-            :loading="productReturnCertificates.length > 0 ? false : true"
+            :loading="loading"
             loading-text="Loading... Please wait"
             :search="search"
             :footer-props="{
@@ -35,6 +39,17 @@
               nextIcon: 'mdi-plus',
             }"
           >
+            <template v-slot:item.return_date="{ item }">
+              <v-chip dark>
+                <!-- {{ item }} -->
+                {{ moment(item.return_date).format("LLL") }}
+              </v-chip>
+            </template>
+            <template v-slot:item.receipt_item="{ item }">
+              <v-chip dark>
+                {{ item.receipt_item.shop_item.name }}
+              </v-chip>
+            </template>
           </v-data-table>
         </div>
         <div v-else>
@@ -50,30 +65,36 @@
         </div>
       </v-card>
 
-      <ProductReturnDialog ref="productReturnDialog" @itemSelected="loadCertificates()"/>
+      <ProductReturnDialog ref="productReturnDialog" @productReturned="loadProductReturns()"/>
+      <ReceiptView ref="receiptView" />
     </v-container>
   </v-app>
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
+import Bugsnag from "@bugsnag/js";
+import moment from "moment";
 import { mapGetters } from "vuex";
-// import Bugsnag from "@bugsnag/js";
 import ProductReturnDialog from "../components/dialog/ProductReturnDialog.vue";
+import ReceiptView from "@/components/dialog/ReceiptView.vue";
 
+moment.locale('fr')
 export default {
   props: ["value"],
-  components: { ProductReturnDialog },
+  components: { ProductReturnDialog, ReceiptView },
 
   computed: {
     ...mapGetters("defaultStore", ["getAccessToken"]),
   },
   data() {
     return {
+      moment,
       valid: null,
       receiptId: null,
       quantity: 1,
       itemId: null,
+      loading: false,
       returnedReason: null,
       nameRules: [
         (v) => !!v || this.$translate.getTranslation("Required")
@@ -84,28 +105,49 @@ export default {
           text: "Id du reçu",
           align: "start",
           filterable: true,
-          value: "name",
+          value: "id",
         },
+        { text: "Item", value: "receipt_item" },
         { text: "Raison", value: "reason" },
-        { text: "Date", value: "date" },
+        { text: "Date", value: "return_date" },
       ],
       returnedProducts: [],
       productReturnCertificates: [],
       itemSelected: null,
     };
   },
+  mounted() {
+    this.loadProductReturns()
+  },
   methods: {
     openProductReturnDialog() {
       this.$refs.productReturnDialog.show()
     },
 
-    // to do - load product return certificates
-    loadCertificates() {
-      console.log('loading')
+    openReceipt(row) {
+      this.$refs.receiptView.show(row.receipt_item.receipt_id);
     },
 
-    reset() {
-      this.$refs.form.reset();
+    loadProductReturns() {
+      this.loading = true;
+      const bearerAuth = {
+        Authorization: "Bearer " + this.getAccessToken,
+      };
+      axios
+        .get(process.env.VUE_APP_RESOURCE_URL + "/shops/me/product_return_certificates", {
+          headers: bearerAuth,
+        })
+        .then((response) => {
+          if (response.data) {
+            this.productReturnCertificates = response.data;
+            this.loading = false;
+          }
+        })
+        .catch((error) => {
+          this.loading = false;
+          console.error(error);
+          Bugsnag.notify(error);
+        });
     },
   },
 };
