@@ -15,7 +15,7 @@
       <v-row class="d-flex justify-center pa-4">
         <v-avatar size="100">
           <img
-            src="https://i.pinimg.com/236x/b4/29/f3/b429f319f9cb5e37affe1f74f5e8311f.jpg"
+            :src="getAvatarUrl"
             alt="Logo"
           />
         </v-avatar>
@@ -92,7 +92,7 @@ export default {
     receipt: null,
   }),
   computed: {
-    ...mapGetters("defaultStore", ["getAccessToken", "getShopInfos"]),
+    ...mapGetters("defaultStore", ["getAccessToken", "getShopInfos", "getAvatarUrl"]),
   },
   methods: {
     show(receiptId) {

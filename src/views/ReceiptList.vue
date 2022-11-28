@@ -85,9 +85,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
           this.receipts = response.data;
-          console.log("t", this.receipts);
           this.convertPriceInMil();
         })
         .catch((error) => {
@@ -97,7 +95,6 @@ export default {
     },
 
     openReceipt(row) {
-      console.log(row);
       this.$refs.receiptView.show(row.receipt_id);
     },
   },

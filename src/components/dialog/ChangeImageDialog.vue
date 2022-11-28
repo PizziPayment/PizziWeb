@@ -41,30 +41,24 @@
 <script>
 import axios from "axios";
 import Bugsnag from "@bugsnag/js";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions} from "vuex";
 
 export default {
   data: () => ({
     loading: false,
     isVisible: false,
     imageSelected: null,
-    imageBase64String: null
   }),
   computed: {
     ...mapGetters("defaultStore", [
       "getAccessToken",
     ]),
   },
-  watch: {
-    // imageSelected: function (newVal) {
-    //   if(newVal) {
-    //     this.createBase64Image(newVal);
-    //   } else {
-    //     this.imageBase64String = null;
-    //   }
-    // }
+  mounted() {
+    this.imageSelected = null
   },
   methods: {
+    ...mapActions("defaultStore", ["setAvatarUrl"]),
     show() {
       this.isVisible = true;
     },
@@ -91,11 +85,10 @@ export default {
             }
           )
           .then((response) => {
-            // emit image changed
-            // loading false
-            console.log("res", response)
+            if (response.data.image_id) {
+              this.setAvatarUrl(process.env.VUE_APP_RESOURCE_URL + "/imgs/" + response.data.image_id)
+            }
             this.close()
-            // if success - dialog false
           })
           .catch((error) => {
             alert('Erreur de chargement');
@@ -103,14 +96,6 @@ export default {
             console.error(error);
           });
       }
-    },
-
-    createBase64Image: function(FileObject) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        this.imageBase64String = event.target.result;
-      }
-      reader.readAsDataURL(FileObject);
     },
   },
 };
