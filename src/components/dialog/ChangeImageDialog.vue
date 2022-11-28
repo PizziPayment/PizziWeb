@@ -76,7 +76,7 @@ export default {
     async saveImage() {
       if (this.imageSelected) {
         let formData = new FormData();
-        formData.append("files", this.imageSelected, 'avatar');
+        formData.append('avatar', this.imageSelected);
 
         const bearerAuth = {
           'content-Type': 'multipart/form-data',
