@@ -116,10 +116,7 @@
         </v-col>
 
         <v-col cols="12" md="4">
-          <material-card
-            class="v-card-profile"
-            avatar="https://img.freepik.com/vecteurs-libre/illustration-vectorielle-outils-coiffeur-ciseaux-rasoir-poteau-ruban-echantillon-texte_74855-10555.jpg?size=338&ext=jpg&ga=GA1.2.1637736129.1624752000"
-          >
+          <material-card class="v-card-profile" :avatar="getAvatarUrl">
             <v-card-text class="text-center">
               <h4 class="display-2 font-weight-light mb-3">
                 {{ getShopInfos.name }}
@@ -129,6 +126,17 @@
               </p>
               <v-divider></v-divider>
               <div>
+                <div>
+                  <v-btn
+                    small
+                    color="grey"
+                    rounded
+                    class="ma-2 mr-0"
+                    @click.stop="showChangeImageDialog()"
+                  >
+                    {{ this.$translate.getTranslation("Change image") }}
+                  </v-btn>
+                </div>
                 <div>
                   <v-btn
                     small
@@ -158,6 +166,7 @@
       </v-row>
       <ResetEmail ref="ResetEmailDialog" />
       <ResetPassword ref="ResetPasswordDialog" />
+      <ChangeImageDialog ref="ChangeImageDialog"/>
     </v-container>
   </v-app>
 </template>
@@ -166,16 +175,24 @@
 import materialCard from "@/components/MaterialCard.vue";
 import ResetEmail from "@/components/dialog/ResetEmail.vue";
 import ResetPassword from "@/components/dialog/ResetPassword.vue";
+import ChangeImageDialog from "@/components/dialog/ChangeImageDialog.vue";
 import { mapGetters } from "vuex";
+import Bugsnag from "@bugsnag/js";
 import axios from "axios";
 
 export default {
-  components: { materialCard, ResetEmail, ResetPassword },
+  components: { materialCard, ResetEmail, ResetPassword, ChangeImageDialog },
   data() {
-    return {};
+    return {
+      avatarImage: null,
+    };
   },
   computed: {
-    ...mapGetters("defaultStore", ["getShopInfos", "getAccessToken"]),
+    ...mapGetters("defaultStore", [
+      "getShopInfos",
+      "getAccessToken",
+      "getAvatarUrl",
+    ]),
     description: {
       get() {
         return this.getShopInfos.description;
@@ -219,6 +236,9 @@ export default {
   },
 
   methods: {
+    showChangeImageDialog() {
+      this.$refs.ChangeImageDialog.show();
+    },
     showResetEmail() {
       this.$refs.ResetEmailDialog.show();
     },
@@ -243,6 +263,11 @@ export default {
         })
         .then(() => {
           this.$router.push("/GenerateTicket");
+        })
+        .catch((error) => {
+          alert('Une erreur s\'est produite');
+          Bugsnag.notify(error);
+          console.error(error);
         });
     },
   },

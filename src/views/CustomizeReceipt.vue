@@ -70,7 +70,7 @@
         <v-col cols="12" md="4">
           <material-card
             class="v-card-profile"
-            avatar="https://img.freepik.com/vecteurs-libre/illustration-vectorielle-outils-coiffeur-ciseaux-rasoir-poteau-ruban-echantillon-texte_74855-10555.jpg?size=338&ext=jpg&ga=GA1.2.1637736129.1624752000"
+            :avatar="getAvatarUrl"
           >
             <h3 class="pa-2 white--text">Preview</h3>
             <div class="d-flex justify-center align-center">
@@ -83,7 +83,7 @@
                       <v-col cols="12">
                         <v-avatar v-if="shopLogo" size="50">
                           <img
-                            src="https://img.freepik.com/vecteurs-libre/illustration-vectorielle-outils-coiffeur-ciseaux-rasoir-poteau-ruban-echantillon-texte_74855-10555.jpg?size=338&ext=jpg&ga=GA1.2.1637736129.1624752000"
+                            :src="getAvatarUrl"
                             alt="alt"
                           />
                         </v-avatar>
@@ -172,7 +172,6 @@ export default {
   components: { materialCard, QrcodeVue },
 
   mounted() {
-    console.log("test", this.getShopInfos)
     moment().locale("fr");
   },
   data() {
@@ -214,7 +213,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("defaultStore", ["getShopInfos", "getAccessToken"]),
+    ...mapGetters("defaultStore", ["getShopInfos", "getAccessToken", "getAvatarUrl"]),
   },
 
   methods: {
