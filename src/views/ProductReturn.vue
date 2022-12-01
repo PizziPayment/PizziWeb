@@ -1,131 +1,100 @@
 <template>
-  <material-card class="ma-12" max-width="95%">
-    <template v-slot:heading>
-      <div class="display-2 font-weight-light">
-        {{ $translate.getTranslation("Product Return") }}
-      </div>
-      <div class="subtitle-1 font-weight-light ml-6">
-        {{ $translate.getTranslation("Enter returned product informations") }}
-      </div>
-    </template>
-    <!-- <div
-      class="ml-3 text-left font-weight-bold text-uppercase"
-      style="font-size: 12px"
-    >
-      Enter the returned product pizzi ID
-    </div>
-    <v-text-field
-      label="Pizzi ID"
-      outlined
-      v-model="pizziId"
-      color="rgb(112, 192, 242)"
-      append-icon="mdi-undo"
-      prefix="#"
-      @keyup.enter="returnProduct()"
-      @click="returnProduct()"
-      class="mx-2 mt-1 mb-4"
-    >
-    </v-text-field>
-    <div
-      class="ml-3 text-left font-weight-bold text-uppercase"
-      style="font-size: 12px"
-    >
-      Enter the reason why the product is returned
-    </div>
-    <v-text-field
-      label="Reason"
-      outlined
-      v-model="returnedReason"
-      color="rgb(112, 192, 242)"
-      @keyup.enter="returnProduct()"
-      @click="returnProduct()"
-      class="mx-2 mt-1 mb-4"
-    >
-    </v-text-field> -->
-    <v-form ref="form" v-model="valid" lazy-validation>
-      <v-text-field
-        v-model="receiptId"
-        :rules="nameRules"
-        label="ID du reçu"
-        required
-      ></v-text-field>
-      <div v-if="!itemSelected">
-        <v-btn @click="openItemSelectionDialog()" color="primary">{{ this.$translate.getTranslation('Select item') }}</v-btn>
-      </div>
-      <div v-else>
-        <span> {{ itemSelected.name + ' - ' + `( #${itemSelected.id} )`}}</span>
-        <v-btn @click="openItemSelectionDialog()" >change</v-btn>
-      </div>
-      <!-- <v-text-field
-        v-model="itemId"
-        :rules="nameRules"
-        label="ID de l'item"
-        required
-      ></v-text-field> -->
+  <v-app class="containerThemeStyle">
+    <v-container fluid class="background containerThemeStyle">
+      <v-card class="mt-4 mx-2 pa-4">
+        <v-card-title>
+          <v-text-field
+            v-model="search"
+            prepend-inner-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+            clearable
+          ></v-text-field>
+          <v-btn @click.stop="openProductReturnDialog()" class="mx-3" color="#17C19D">
+            {{ $translate.getTranslation("add") }}
+          </v-btn>
+          <v-btn flat icon color="#17C19D" @click.stop="loadProductReturns()">
+            <v-icon>mdi-refresh</v-icon>
+          </v-btn>
+        </v-card-title>
+        <div v-if="productReturnCertificates.length > 0">
+          <v-data-table
+            class="itemsTable"
+            @click:row="openReceipt"
+            :headers="headers"
+            :items="productReturnCertificates"
+            multisort
+            pagination.sync="pagination"
+            item-key="id"
+            :items-per-page="10"
+            :loading="loading"
+            loading-text="Loading... Please wait"
+            :search="search"
+            :footer-props="{
+              showFirstLastPage: true,
+              firstIcon: 'mdi-arrow-collapse-left',
+              lastIcon: 'mdi-arrow-collapse-right',
+              prevIcon: 'mdi-minus',
+              nextIcon: 'mdi-plus',
+            }"
+          >
+            <template v-slot:item.return_date="{ item }">
+              <v-chip dark>
+                <!-- {{ item }} -->
+                {{ moment(item.return_date).format("LLL") }}
+              </v-chip>
+            </template>
+            <template v-slot:item.receipt_item="{ item }">
+              <v-chip dark>
+                {{ item.receipt_item.shop_item.name }}
+              </v-chip>
+            </template>
+          </v-data-table>
+        </div>
+        <div v-else>
+          <div class="mx-auto" width="500">
+            <h3>
+              {{
+                $translate.getTranslation(
+                  "No product return certificate found"
+                )
+              }}
+            </h3>
+          </div>
+        </div>
+      </v-card>
 
-      <v-text-field
-        v-model="returnedReason"
-        :label="this.$translate.getTranslation('Returned reason')"
-        required
-      ></v-text-field>
-      <div class="my-6">
-        <v-btn
-          :disabled="!valid"
-          color="success"
-          class="mr-4"
-          @click="saveProductReturn"
-        >
-          {{ this.$translate.getTranslation("Validate") }}
-        </v-btn>
-
-        <v-btn color="error" class="mr-4" @click="reset">
-          {{ this.$translate.getTranslation("Reset") }}
-        </v-btn>
-      </div>
-    </v-form>
-    <v-divider class="my-4"></v-divider>
-    <v-card elevation="0">
-      <v-card-title>
-        {{ this.$translate.getTranslation("Last Returned Products") }}
-        <v-spacer></v-spacer>
-        <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          :label="$translate.getTranslation('Search')"
-          single-line
-          hide-details
-        ></v-text-field>
-      </v-card-title>
-      <v-data-table
-        :headers="headers"
-        :items="returnedProducts"
-        :search="search"
-      ></v-data-table>
-    </v-card>
-    <ProductsDialog ref="productDialog" @itemSelected="changeItemSelected($event)"/>
-  </material-card>
+      <ProductReturnDialog ref="productReturnDialog" @productReturned="loadProductReturns()"/>
+      <ReceiptView ref="receiptView" />
+    </v-container>
+  </v-app>
 </template>
 
 <script>
-import materialCard from "@/components/MaterialCard.vue";
 import axios from "axios";
-import { mapGetters } from "vuex";
 import Bugsnag from "@bugsnag/js";
-import ProductsDialog from "../components/dialog/ProductsDialog.vue";
+import moment from "moment";
+import { mapGetters } from "vuex";
+import ProductReturnDialog from "../components/dialog/ProductReturnDialog.vue";
+import ReceiptView from "@/components/dialog/ReceiptView.vue";
 
+moment.locale('fr')
 export default {
   props: ["value"],
-  components: { materialCard, ProductsDialog },
+  components: { ProductReturnDialog, ReceiptView },
 
   computed: {
     ...mapGetters("defaultStore", ["getAccessToken"]),
   },
   data() {
     return {
+      moment,
       valid: null,
       receiptId: null,
       quantity: 1,
       itemId: null,
+      loading: false,
       returnedReason: null,
       nameRules: [
         (v) => !!v || this.$translate.getTranslation("Required")
@@ -133,59 +102,52 @@ export default {
       search: "",
       headers: [
         {
-          text: "Product item Id",
+          text: "Id du reçu",
           align: "start",
           filterable: true,
-          value: "name",
+          value: "id",
         },
+        { text: "Item", value: "receipt_item" },
         { text: "Raison", value: "reason" },
-        { text: "Date", value: "date" },
+        { text: "Date", value: "return_date" },
       ],
       returnedProducts: [],
+      productReturnCertificates: [],
       itemSelected: null,
     };
   },
+  mounted() {
+    this.loadProductReturns()
+  },
   methods: {
-    saveProductReturn() {
-      this.$refs.form.validate();
+    openProductReturnDialog() {
+      this.$refs.productReturnDialog.show()
+    },
+
+    openReceipt(row) {
+      this.$refs.receiptView.show(row.receipt_item.receipt_id);
+    },
+
+    loadProductReturns() {
+      this.loading = true;
       const bearerAuth = {
         Authorization: "Bearer " + this.getAccessToken,
       };
-      const body = {
-        receipt_item_id: this.receipt_item_id,
-        quantity: this.quantity ? this.quantity : 1,
-        reason: this.returnedReason ? this.returnedReason : ''
-      };
       axios
-        .post(
-          process.env.VUE_APP_RESOURCE_URL + "/shops/me/receipts/" + this.receiptId + "/product_return_certificates",
-          body,
-          {
-            headers: bearerAuth,
-          }
-        )
+        .get(process.env.VUE_APP_RESOURCE_URL + "/shops/me/product_return_certificates", {
+          headers: bearerAuth,
+        })
         .then((response) => {
-          console.log("res", response)
-          // load product returns
+          if (response.data) {
+            this.productReturnCertificates = response.data;
+            this.loading = false;
+          }
         })
         .catch((error) => {
-          Bugsnag.notify(error)
-          console.error(error)
+          this.loading = false;
+          console.error(error);
+          Bugsnag.notify(error);
         });
-      this.$refs.form.reset();
-    },
-
-    openItemSelectionDialog() {
-      this.$refs.productDialog.show()
-    },
-
-    changeItemSelected(event) {
-      console.log('ev', event)
-      this.itemSelected = event
-    },
-
-    reset() {
-      this.$refs.form.reset();
     },
   },
 };

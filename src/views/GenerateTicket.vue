@@ -235,6 +235,7 @@ import axios from "axios";
 import Bugsnag from "@bugsnag/js";
 import { mapGetters } from "vuex";
 
+moment.locale('fr')
 export default {
   components: {
     CalculatorDialog,

@@ -48,7 +48,7 @@
           <div>{{ product.quantity }} x {{ product.product_name }}</div>
         </v-col>
         <v-col class="d-flex justify-end mr-4">
-          <div>{{ product.unit_price }}€</div>
+          <div>{{ parseInt(product.unit_price) / 1000 }}€</div>
         </v-col>
       </v-row>
       <v-divider></v-divider>
@@ -63,13 +63,13 @@
           <v-col class="font-weight-bold d-flex justify-start ml-4">
             Total HT
           </v-col>
-          <v-col class="d-flex justify-end mr-4"> {{ receipt.total_ht }} € </v-col>
+          <v-col class="d-flex justify-end mr-4"> {{ parseInt(receipt.total_ht) / 1000 }} € </v-col>
         </v-row>
         <v-row dense class="pt-1">
           <v-col class="font-weight-bold d-flex justify-start ml-4">
             Total TTC
           </v-col>
-          <v-col class="d-flex justify-end mr-4"> {{ receipt.total_ttc }} € </v-col>
+          <v-col class="d-flex justify-end mr-4"> {{ parseInt(receipt.total_ttc) / 1000 }} € </v-col>
         </v-row>
         <v-divider></v-divider>
         <v-btn @click.stop="exportReceipt" class="ma-4" color="grey"> {{ $translate.getTranslation("Export in PDF") }} <v-icon>mdi-share</v-icon> </v-btn>
@@ -86,6 +86,7 @@ import { mapGetters } from "vuex";
 import moment from "moment";
 import ExportReceiptDialog from "@/components/dialog/ExportReceiptDialog.vue";
 
+moment.locale('fr')
 export default {
   components: { ExportReceiptDialog },
   data: () => ({
