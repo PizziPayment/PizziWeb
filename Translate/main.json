@@ -268,5 +268,10 @@
     },
     "Total (taxes included)": {
         "fr": "Total TTC"
+    "Change image": {
+        "fr": "Changer l'image"
+    },
+    "No product return certificate found": {
+        "fr": "Aucun certificat de retour de produit n'a été trouvé"
     }
 }
