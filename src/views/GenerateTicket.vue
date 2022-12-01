@@ -245,7 +245,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters("defaultStore", ["getAccessToken", "getShopCategories", "getAvatarUrl"]),
+    ...mapGetters("defaultStore", ["getAccessToken", "getShopCategories", "getAvatarUrl", "getShopInfos"]),
   },
 
   data: () => ({
@@ -430,25 +430,6 @@ export default {
       return parseFloat(result.toFixed(3));
     },
 
-    saveBlob(blob, filename) {
-      const link = document.createElement("a");
-      // create a blobURI pointing to our Blob
-      link.href = URL.createObjectURL(blob);
-      link.download = filename;
-      // some browser needs the anchor to be in the doc
-      document.body.append(link);
-      link.click();
-      link.remove();
-      // in case the Blob uses a lot of memory
-      setTimeout(() => URL.revokeObjectURL(link.href), 7000);
-    },
-
-    // randomColor() {
-    //   return (
-    //     "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0")
-    //   );
-    // },
-
     openQrCodeDialog(id, token) {
       this.$refs.QRCodeDialog.show(id, token);
     },
@@ -491,28 +472,28 @@ export default {
 
     getSocials() {
       let socials = {};
-      socials.website = "https://www.coiffurezimone.com";
-      socials.instagram = "coiffurezimone";
-      socials.linkedin = "coiffurezimone";
-      socials.snapchat = "coiffurezimone";
-      socials.tiktok = "coiffurezimone";
-      socials.facebook = "coiffurezimone";
-      socials.twitter = "coiffurezimone";
+      socials.website = this.getShopInfos.website ? this.getShopInfos.website : '';
+      socials.instagram = this.getShopInfos.instagram ? this.getShopInfos.instagram : '';
+      socials.linkedin = this.getShopInfos.linkedin ? this.getShopInfos.linkedin : '';
+      socials.snapchat = this.getShopInfos.snapchat ? this.getShopInfos.snapchat : '';
+      socials.tiktok = this.getShopInfos.tiktok ? this.getShopInfos.tiktok : '';
+      socials.facebook = this.getShopInfos.facebook ? this.getShopInfos.facebook : '';
+      socials.twitter = this.getShopInfos.twitter ? this.getShopInfos.twitter : '';
       return socials;
     },
 
     getVendor() {
       let vendor = {};
       // set header
-      vendor.logo = "";
-      vendor.name = "Faudra Tiff Hair";
-      vendor.siret = "4379217493821";
-      vendor.shopNumber = "562-234-43234";
+      vendor.logo = this.getAvatarUrl ? this.getAvatarUrl : '';
+      vendor.name = this.getShopInfos.name ? this.getShopInfos.name : '';
+      vendor.siret = this.getShopInfos.siret ? this.getShopInfos.siret : '';
+      vendor.shopNumber = this.getShopInfos.shopNumber ? this.getShopInfos.shopNumber : '';
       // set address
       vendor.address = {};
-      vendor.address.street = "19 rue jean soula";
-      vendor.address.city = "Bordeaux";
-      vendor.address.postalCode = "33000";
+      vendor.address.street = this.getShopInfos.address ? this.getShopInfos.address : '';
+      vendor.address.city = this.getShopInfos.city ? this.getShopInfos.city : '';
+      vendor.address.postalCode = this.getShopInfos.zipcode ? this.getShopInfos.zipcode : '';
       return vendor;
     },
 
