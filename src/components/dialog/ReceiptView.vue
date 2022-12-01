@@ -72,7 +72,7 @@
           <v-col class="d-flex justify-end mr-4"> {{ receipt.total_ttc }} € </v-col>
         </v-row>
         <v-divider></v-divider>
-        <v-btn @click.stop="exportReceipt" class="ma-4" color="grey"> Exporter en PDF <v-icon>mdi-share</v-icon> </v-btn>
+        <v-btn @click.stop="exportReceipt" class="ma-4" color="grey"> {{ $translate.getTranslation("Export in PDF") }} <v-icon>mdi-share</v-icon> </v-btn>
       </v-row>
     </v-card>
     <ExportReceiptDialog ref="ExportReceiptDialog" />

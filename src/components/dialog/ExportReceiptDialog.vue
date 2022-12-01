@@ -26,13 +26,13 @@
                           <td class="title">
                             <img
                               :src="require('@/assets/pizzi.png')"
-                              style="width: 100%; max-width: 200px max-height: 200px;"
+                              style="max-width: 200px max-height: 200px;"
                             />
                           </td>
 
                           <td>
                             Pizzi ID #: {{ receiptId }}<br />
-                            Date de création:
+                            {{ $translate.getTranslation("Creation date") }} :
                             {{ moment(receipt.creation_date).format("LLL")
                             }}<br />
                           </td>
@@ -56,9 +56,9 @@
                   </tr>
 
                   <tr class="heading">
-                    <td>Méthode de paiement</td>
+                    <td>{{ $translate.getTranslation("Payment method") }}</td>
 
-                    <td>Montant du paiement</td>
+                    <td>{{ $translate.getTranslation("Amount") }}</td>
                   </tr>
 
                   <tr class="details">
@@ -68,9 +68,9 @@
                   </tr>
 
                   <tr class="heading">
-                    <td>Produit</td>
+                    <td>{{ $translate.getTranslation("Product") }}</td>
 
-                    <td>Prix</td>
+                    <td>{{ $translate.getTranslation("Price") }}</td>
                   </tr>
 
                   <div v-for="(product, idx) in receipt.products" :key="idx">
@@ -85,13 +85,13 @@
 
                   <tr class="total">
                     <td></td>
-                    <td>Total HT: {{ receipt.total_ht / 1000 }} €</td>
+                    <td>{{ $translate.getTranslation("Total (without taxes)") }}: {{ receipt.total_ht / 1000 }} €</td>
                   </tr>
 
                   <tr class="total">
                     <td></td>
 
-                    <td>Total TTC: {{ receipt.total_ttc / 1000 }} €</td>
+                    <td>{{ $translate.getTranslation("Total (taxes included)") }}: {{ receipt.total_ttc / 1000 }} €</td>
                   </tr>
                 </table>
               </div>
