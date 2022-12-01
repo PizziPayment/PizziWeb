@@ -48,7 +48,7 @@
           <div>{{ product.quantity }} x {{ product.product_name }}</div>
         </v-col>
         <v-col class="d-flex justify-end mr-4">
-          <div>{{ product.unit_price }}€</div>
+          <div>{{ parseInt(product.unit_price) / 1000 }}€</div>
         </v-col>
       </v-row>
       <v-divider></v-divider>
@@ -63,13 +63,13 @@
           <v-col class="font-weight-bold d-flex justify-start ml-4">
             Total HT
           </v-col>
-          <v-col class="d-flex justify-end mr-4"> {{ receipt.total_ht }} € </v-col>
+          <v-col class="d-flex justify-end mr-4"> {{ parseInt(receipt.total_ht) / 1000 }} € </v-col>
         </v-row>
         <v-row dense class="pt-1">
           <v-col class="font-weight-bold d-flex justify-start ml-4">
             Total TTC
           </v-col>
-          <v-col class="d-flex justify-end mr-4"> {{ receipt.total_ttc }} € </v-col>
+          <v-col class="d-flex justify-end mr-4"> {{ parseInt(receipt.total_ttc) / 1000 }} € </v-col>
         </v-row>
       </v-row>
     </v-card>
@@ -82,6 +82,7 @@ import Bugsnag from "@bugsnag/js";
 import { mapGetters } from "vuex";
 import moment from "moment";
 
+moment.locale('fr')
 export default {
   props: ["value"],
   data: () => ({

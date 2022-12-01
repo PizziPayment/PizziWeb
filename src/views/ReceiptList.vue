@@ -24,6 +24,11 @@
               {{ moment(item.date).format("LLL") }}
             </v-chip>
           </template>
+          <template v-slot:item.vendor>
+            <v-chip dark>
+              {{ 'compte 1' }}
+            </v-chip>
+          </template>
         </v-data-table>
       </v-card>
     </v-container>
@@ -32,13 +37,14 @@
 </template>
 
 <script>
-// import moment from "moment";
+
 import axios from "axios";
 import Bugsnag from "@bugsnag/js";
 import moment from "moment";
 import { mapGetters } from "vuex";
 import ReceiptView from "@/components/dialog/ReceiptView.vue";
 
+moment.locale('fr')
 export default {
   components: { ReceiptView },
 
@@ -85,9 +91,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
           this.receipts = response.data;
-          console.log("t", this.receipts);
           this.convertPriceInMil();
         })
         .catch((error) => {
@@ -97,7 +101,6 @@ export default {
     },
 
     openReceipt(row) {
-      console.log(row);
       this.$refs.receiptView.show(row.receipt_id);
     },
   },
