@@ -19,6 +19,9 @@ export async function userLogout({ commit }) {
   commit("UPDATE_ACCESS_TOKEN", null);
   commit("UPDATE_REFRESH_TOKEN", null);
   commit("UPDATE_EXPIRATION_TOKEN", null);
+  commit("UPDATE_SHOP_INFOS", null);
+  commit("UPDATE_SHOP_CATEGORIES", null)
+  commit("UPDATE_AVATAR_URL", null)
 }
 
 export function setLanguage({ commit}, language ) {
