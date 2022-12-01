@@ -95,7 +95,6 @@ export default {
     },
 
     openReceipt(row) {
-      console.log(row);
       this.$refs.receiptView.show(row.receipt_id);
     },
   },
