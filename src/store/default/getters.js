@@ -21,3 +21,7 @@ export function getShopInfos (state) {
 export function getShopCategories (state) {
     return state.categories
 }
+
+export function getAvatarUrl (state) {
+    return state.avatarUrl
+}

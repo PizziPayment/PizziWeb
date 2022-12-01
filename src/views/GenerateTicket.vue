@@ -81,7 +81,7 @@
         <v-col cols="12" md="4">
           <material-card
             class="v-card-profile"
-            avatar="https://img.freepik.com/vecteurs-libre/illustration-vectorielle-outils-coiffeur-ciseaux-rasoir-poteau-ruban-echantillon-texte_74855-10555.jpg?size=338&ext=jpg&ga=GA1.2.1637736129.1624752000"
+            :avatar="getAvatarUrl"
           >
             <v-card-text class="text-center">
               <h6 class="display-1 mb-1 grey--text mb-8 mt-n8">
@@ -256,7 +256,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters("defaultStore", ["getAccessToken", "getShopCategories"]),
+    ...mapGetters("defaultStore", ["getAccessToken", "getShopCategories", "getAvatarUrl"]),
   },
 
   data: () => ({

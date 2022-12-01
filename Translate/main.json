@@ -248,6 +248,9 @@
     "Save pdf receipt": {
         "fr": "Enregistrer le reçu au format PDF"
     },
+    "Change image": {
+        "fr": "Changer l'image"
+    },
     "No product return certificate found": {
         "fr": "Aucun certificat de retour de produit n'a été trouvé"
     }

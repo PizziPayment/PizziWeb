@@ -48,3 +48,7 @@ export function UPDATE_SHOP_TWITTER(state, shopTwitter) {
 export function UPDATE_SHOP_CATEGORIES(state, categories) {
     state.categories = categories
 }
+
+export function UPDATE_AVATAR_URL(state, avatarUrl) {
+    state.avatarUrl = avatarUrl
+}

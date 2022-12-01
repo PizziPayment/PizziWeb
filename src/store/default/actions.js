@@ -35,3 +35,7 @@ export function setShopInfos({ commit }, shopInfos) {
 export function setShopCategories({ commit }, categories) {
   commit("UPDATE_SHOP_CATEGORIES", categories)
 }
+
+export function setAvatarUrl({ commit }, avatarUrl) {
+  commit("UPDATE_AVATAR_URL", avatarUrl)
+}
