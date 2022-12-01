@@ -85,9 +85,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
           this.receipts = response.data;
-          console.log("t", this.receipts);
           this.convertPriceInMil();
         })
         .catch((error) => {
