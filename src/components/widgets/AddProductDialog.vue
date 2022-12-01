@@ -33,6 +33,21 @@
                 clearable
               ></v-text-field>
             </v-row>
+            <v-row>
+              <v-expansion-panels inset>
+                <v-expansion-panel expand focusable>
+                  <v-expansion-panel-header>{{ $translate.getTranslation("Select item color") }}</v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  <v-color-picker
+                    v-model="colorSelected"
+                    class="ma-2"
+                    show-swatches
+                    hide-canvas
+                  ></v-color-picker>
+                </v-expansion-panel-content>
+                </v-expansion-panel>
+              </v-expansion-panels>
+            </v-row>
           </v-container>
         </v-card-text>
 
@@ -69,7 +84,8 @@ export default {
       name: "",
       price: "",
       dialog: false,
-      types: ['services', 'shampoing', 'homme', 'femme', 'enfants']
+      colorSelected: null,
+      types: ["services", "shampoing", "homme", "femme", "enfants"],
     };
   },
 
@@ -103,8 +119,9 @@ export default {
         items: [
           {
             name: this.name,
-            price: (parseInt(this.price) * 1000),
-            category: this.category
+            price: parseInt(this.price) * 1000,
+            category: this.category,
+            color: this.colorSelected ? this.colorSelected.hex : '#BDBDBD'
           },
         ],
       };

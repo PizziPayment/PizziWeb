@@ -35,7 +35,7 @@
                         >
                           <v-card
                             @click="addToItems(item)"
-                            color="grey"
+                            :color="item.color ? item.color : 'grey'"
                             dark
                             style="min-height: 60px"
                           >
