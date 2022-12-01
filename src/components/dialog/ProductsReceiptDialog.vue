@@ -16,14 +16,18 @@
         style="height: 40vh; overflow: auto"
         class="pa-3 themeStyleCard"
       >
-        <v-expansion-panels v-model="panel" multiple>
+      <div v-if="errorMessage" class="d-flex justify-center align-center">
+        <span class="red--text text-h6"> <v-icon color="red">mdi-alert-circle</v-icon> {{errorMessage}} </span>
+      </div>
+      <div>
+        <!-- <v-expansion-panels v-model="panel" multiple>
           <v-expansion-panel v-for="(category, i) in categoriesList" :key="i">
             <v-expansion-panel-header>
               <h3>{{ category.name.toUpperCase() }}</h3>
             </v-expansion-panel-header>
-            <v-expansion-panel-content>
+            <v-expansion-panel-content> -->
               <v-row dense style="overflow: auto">
-                <v-col v-for="(item, i) in category.items" :key="i" cols="6">
+                <v-col v-for="(item, i) in products" :key="i" cols="6">
                   <v-card
                     @click="itemSelected(item)"
                     color="grey"
@@ -38,11 +42,12 @@
                         class="d-flex flex-column justify-center align-start"
                         style="padding: 10px"
                       >
-                        <span class="text-h5"> {{ item.name }}</span>
+                        <span class="text-h5"> {{ item.product_name }}</span>
+                        <span class="text-h6"> {{ item.product_price }}</span>
                       </div>
 
-                      <div
-                        v-if="item.value"
+                      <!-- <div
+                        v-if="item.unit_price"
                         class="d-inline-flex justify-center align-center"
                         style="padding-right: 10px"
                       >
@@ -55,14 +60,15 @@
                         <v-btn icon @click="removeThisItem(item)">
                           <v-icon size="2em"> mdi-minus </v-icon>
                         </v-btn>
-                      </div>
+                      </div> -->
                     </div>
                   </v-card>
                 </v-col>
               </v-row>
-            </v-expansion-panel-content>
+            <!-- </v-expansion-panel-content>
           </v-expansion-panel>
-        </v-expansion-panels>
+        </v-expansion-panels> -->
+      </div>
       </v-container>
     </v-card>
   </v-dialog>
@@ -83,6 +89,8 @@ export default {
     loading: false,
     isVisible: false,
     products: [],
+    receiptId: null,
+    errorMessage: null
   }),
   computed: {
     ...mapGetters("defaultStore", [
@@ -92,8 +100,14 @@ export default {
     ]),
   },
   methods: {
-    show() {
-      this.loadShopItems();
+    show(receiptId) {
+      this.loading = true
+      this.products = null
+      this.errorMessage = null
+      this.receiptId = receiptId
+      if (this.receiptId) {
+        this.loadShopItems();
+      }
       this.isVisible = true;
     },
 
@@ -105,54 +119,24 @@ export default {
       this.$emit('itemSelected', item)
     },
 
-    getCategories() {
-      const uniqueArray = [...new Set(this.getShopCategories)];
-      return uniqueArray;
-    },
-
-    getCategoryItems(category) {
-      const res = [];
-      this.products.forEach((product) => {
-        if (product.category === category) {
-          res.push(product);
-        }
-      });
-      return res;
-    },
-
-    buildCategories() {
-      const list = [];
-      const categories = this.getCategories();
-
-      if (categories.length) {
-        categories.forEach((category) => {
-          list.push({
-            name: category.toLowerCase(),
-            items: this.getCategoryItems(category),
-          });
-        });
-      }
-      this.categoriesList = list;
-      console.log("te", this.categoriesList);
-    },
-
     loadShopItems() {
       this.loading = true;
       const bearerAuth = {
         Authorization: "Bearer " + this.getAccessToken,
       };
       axios
-        .get(process.env.VUE_APP_RESOURCE_URL + "/shops/me/items", {
+        .get(process.env.VUE_APP_RESOURCE_URL + "/shops/me/receipts/" + this.receiptId, {
           headers: bearerAuth,
         })
         .then((response) => {
-          if (response.data.items) {
-            this.products = response.data.items;
+          console.log('tqqtq', response)
+          if (response.data.products) {
+            this.products = response.data.products;
             this.loading = false;
-            this.buildCategories();
           }
         })
         .catch((error) => {
+          this.errorMessage = 'Une erreur est survenue, veuillez vérifier les informations.'
           this.loading = false;
           Bugsnag.notify(error);
           console.error(error);
