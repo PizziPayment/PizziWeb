@@ -11,11 +11,11 @@
         indeterminate
       ></v-progress-circular>
     </v-card>
-    <v-card v-else class="mx-auto" height="80vh" elevation="8" style="overflow-x: hidden; overflow-y: auto;">
+    <v-card v-else class="mx-auto" height="85vh" elevation="8" style="overflow-x: hidden; overflow-y: auto;">
       <v-row class="d-flex justify-center pa-4">
         <v-avatar size="100">
           <img
-            src="https://i.pinimg.com/236x/b4/29/f3/b429f319f9cb5e37affe1f74f5e8311f.jpg"
+            :src="getAvatarUrl"
             alt="Logo"
           />
         </v-avatar>
@@ -71,8 +71,11 @@
           </v-col>
           <v-col class="d-flex justify-end mr-4"> {{ parseInt(receipt.total_ttc) / 1000 }} € </v-col>
         </v-row>
+        <v-divider></v-divider>
+        <v-btn @click.stop="exportReceipt" class="ma-4" color="grey"> {{ $translate.getTranslation("Export in PDF") }} <v-icon>mdi-share</v-icon> </v-btn>
       </v-row>
     </v-card>
+    <ExportReceiptDialog ref="ExportReceiptDialog" />
   </v-dialog>
 </template>
 
@@ -81,10 +84,11 @@ import axios from "axios";
 import Bugsnag from "@bugsnag/js";
 import { mapGetters } from "vuex";
 import moment from "moment";
+import ExportReceiptDialog from "@/components/dialog/ExportReceiptDialog.vue";
 
 moment.locale('fr')
 export default {
-  props: ["value"],
+  components: { ExportReceiptDialog },
   data: () => ({
     moment,
     loading: false,
@@ -93,7 +97,7 @@ export default {
     receipt: null,
   }),
   computed: {
-    ...mapGetters("defaultStore", ["getAccessToken", "getShopInfos"]),
+    ...mapGetters("defaultStore", ["getAccessToken", "getShopInfos", "getAvatarUrl"]),
   },
   methods: {
     show(receiptId) {
@@ -102,6 +106,11 @@ export default {
     },
     close() {
       this.isVisible = false;
+    },
+    exportReceipt() {
+      if (this.receipt && this.receiptId) {
+        this.$refs.ExportReceiptDialog.show(this.receiptId, this.receipt)
+      }
     },
     getReceipt() {
       this.receipt = null;
