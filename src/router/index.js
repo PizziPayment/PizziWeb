@@ -5,13 +5,19 @@ import Home from '../views/Home.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  { path: "*", 
+  { path: "*",
   component: () => import(/* webpackChunkName: "about" */ '../views/Error404.vue')
   },
   {
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/Ble',
+    name: 'Ble',
+    component: () => import(/* webpackChunkName: "about" */ '../views/BleConnection.vue')
+
   },
   {
     path: '/about',
