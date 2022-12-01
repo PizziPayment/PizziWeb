@@ -71,6 +71,9 @@
     "Edit Profile": {
         "fr": "Editer le profil"
     },
+    "Edit Product": {
+        "fr": "Editer le produit"
+    },
     "Customize receipt": {
         "fr": "Customiser le reçu"
     },
@@ -247,6 +250,12 @@
     },
     "Save pdf receipt": {
         "fr": "Enregistrer le reçu au format PDF"
+    },
+    "Saved": {
+        "fr": "Sauvegarde réalisée"
+    },
+    "Select item color": {
+        "fr": "Choisir couleur de l'item"
     },
     "Export in PDF": {
         "fr": "Exporter au format PDF"

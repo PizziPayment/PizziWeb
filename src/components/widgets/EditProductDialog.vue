@@ -3,7 +3,7 @@
     <v-dialog v-model="dialog" width="500" @click:outside="closeDialog()">
       <v-card elevation="5">
         <v-card-title class="text-h6" style="background-color: #05c39b;">
-          Edit product
+          {{ $translate.getTranslation("Edit Product") }}
         </v-card-title>
 
         <v-card-text v-if="oldItem" class="mt-6">
@@ -35,6 +35,21 @@
                 clearable
               ></v-text-field>
             </v-row>
+            <v-row>
+              <v-expansion-panels inset>
+                <v-expansion-panel expand focusable>
+                  <v-expansion-panel-header>{{ $translate.getTranslation("Select item color") }}</v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  <v-color-picker
+                    :v-model="oldItem.color ? oldItem.color : '#BDBDBD'"
+                    class="ma-2"
+                    show-swatches
+                    hide-canvas
+                  ></v-color-picker>
+                </v-expansion-panel-content>
+                </v-expansion-panel>
+              </v-expansion-panels>
+            </v-row>
           </v-container>
         </v-card-text>
 
@@ -43,13 +58,13 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="green" text @click="editItem()">
-            Save
+            {{ $translate.getTranslation('Save') }}
           </v-btn>
         </v-card-actions>
       </v-card>
       <v-snackbar color="green" v-model="snackbar" :timeout="1500">
         <div class="text-center">
-          Saved
+          {{ $translate.getTranslation('Saved') }}
         </div>
       </v-snackbar>
     </v-dialog>
@@ -101,8 +116,9 @@ export default {
       };
       const body = {
         name: this.oldItem.name,
-        price: parseFloat(this.oldItem.price),
-        category: this.oldItem.category
+        price: parseInt(this.oldItem.price) * 1000,
+        category: this.oldItem.category,
+        color: this.oldItem.color ? this.oldItem.color : '#BDBDBD'
       };
       axios
         .patch(process.env.VUE_APP_RESOURCE_URL + "/shops/me/items/" + this.oldItem.id , body, {
