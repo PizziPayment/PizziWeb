@@ -248,6 +248,26 @@
     "Save pdf receipt": {
         "fr": "Enregistrer le reçu au format PDF"
     },
+    "Export in PDF": {
+        "fr": "Exporter au format PDF"
+    },
+    "Creation date": {
+        "fr": "Date de création"
+    },
+    "Payment method": {
+        "fr": "Méthode de paiement"
+    },
+    "Amount": {
+        "fr": "Montant"
+    },
+    "Product": {
+        "fr": "Produit"
+    },
+    "Total (without taxes)": {
+        "fr": "Total HT"
+    },
+    "Total (taxes included)": {
+        "fr": "Total TTC"
     "Change image": {
         "fr": "Changer l'image"
     },
