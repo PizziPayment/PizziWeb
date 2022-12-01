@@ -21,6 +21,7 @@
     "secure-ls": "^1.2.6",
     "vue": "^2.7.4",
     "vue-echarts": "^6.0.0-rc.6",
+    "vue-html2pdf": "^1.8.0",
     "vue-router": "^3.2.0",
     "vuelidate": "^0.7.7",
     "vuetify": "^2.4.0",

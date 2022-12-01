@@ -7,6 +7,7 @@ export default function() {
     language: 'fr',
     isDarkTheme: true,
     categories: [],
+    avatarUrl: null,
     shopInfos : {
       id:'',
       siret:'',
