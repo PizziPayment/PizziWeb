@@ -11,7 +11,7 @@
         indeterminate
       ></v-progress-circular>
     </v-card>
-    <v-card v-else class="mx-auto" height="80vh" elevation="8" style="overflow-x: hidden; overflow-y: auto;">
+    <v-card v-else class="mx-auto" height="85vh" elevation="8" style="overflow-x: hidden; overflow-y: auto;">
       <v-row class="d-flex justify-center pa-4">
         <v-avatar size="100">
           <img
@@ -71,8 +71,11 @@
           </v-col>
           <v-col class="d-flex justify-end mr-4"> {{ receipt.total_ttc }} € </v-col>
         </v-row>
+        <v-divider></v-divider>
+        <v-btn @click.stop="exportReceipt" class="ma-4" color="grey"> {{ $translate.getTranslation("Export in PDF") }} <v-icon>mdi-share</v-icon> </v-btn>
       </v-row>
     </v-card>
+    <ExportReceiptDialog ref="ExportReceiptDialog" />
   </v-dialog>
 </template>
 
@@ -81,9 +84,10 @@ import axios from "axios";
 import Bugsnag from "@bugsnag/js";
 import { mapGetters } from "vuex";
 import moment from "moment";
+import ExportReceiptDialog from "@/components/dialog/ExportReceiptDialog.vue";
 
 export default {
-  props: ["value"],
+  components: { ExportReceiptDialog },
   data: () => ({
     moment,
     loading: false,
@@ -101,6 +105,11 @@ export default {
     },
     close() {
       this.isVisible = false;
+    },
+    exportReceipt() {
+      if (this.receipt && this.receiptId) {
+        this.$refs.ExportReceiptDialog.show(this.receiptId, this.receipt)
+      }
     },
     getReceipt() {
       this.receipt = null;
