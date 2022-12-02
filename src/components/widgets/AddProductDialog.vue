@@ -11,7 +11,7 @@
             <v-row>
               <v-combobox
                 v-model="category"
-                :items="types"
+                :items="getCategories()"
                 :label="$translate.getTranslation('Categories')"
                 chips
               ></v-combobox>
@@ -90,7 +90,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters("defaultStore", ["getAccessToken"]),
+    ...mapGetters("defaultStore", ["getAccessToken", "getShopCategories"]),
   },
 
   methods: {
@@ -110,6 +110,11 @@ export default {
     openSnackbar() {
       this.snackbar = true;
     },
+
+    getCategories() {
+       const uniqueArray = [...new Set(this.getShopCategories)];
+       return uniqueArray;
+     },
 
     async saveItem() {
       const bearerAuth = {
