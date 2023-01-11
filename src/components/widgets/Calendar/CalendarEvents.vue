@@ -13,7 +13,7 @@
             </v-badge>
           </div>
         </div>
-        <div v-else>Pas d'evenement a ce jour</div>
+        <div v-else>Pas d'évènement ce jour</div>
       </v-col>
       <v-col cols="4">
         <v-pagination
