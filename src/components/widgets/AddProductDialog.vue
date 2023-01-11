@@ -124,7 +124,7 @@ export default {
         items: [
           {
             name: this.name,
-            price: parseInt(this.price) * 1000,
+            price: parseFloat(this.price) * 1000,
             category: this.category,
             color: this.colorSelected ? this.colorSelected.hex : '#BDBDBD'
           },
